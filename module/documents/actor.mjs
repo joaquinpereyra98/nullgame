@@ -1,5 +1,5 @@
 /**
- * Extend the base Actor class to implement additional system-specific logic.
+ * Extend the base Actor document game.nullgame
  * @extends {Actor}
  */
 export class NullGameActor extends Actor {
