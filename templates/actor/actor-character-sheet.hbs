@@ -1,0 +1,20 @@
+<form class="{{cssClass}} {{actor.type}}" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+        <div class="header-container">
+            <div class="first-header-container">
+                <h1 class="charname"><input name="name" type="text" value="{{actor.name}}"
+                        placeholder="{{localize 'NULL_GAME.SheetPH.Name'}}" /></h1>
+                <div class="level-container">
+                    <input type="text" name="system.level" value="{{system.level}}"
+                        data-dtype="Number" />
+                        <label for="system.level">{{localize 'NULL_GAME.SheetLabel.Level'}}</label>
+                </div>
+            </div>
+            <div class="second-header-conteiner">
+                
+            </div>
+        </div>
+    </header>
+
+</form>
