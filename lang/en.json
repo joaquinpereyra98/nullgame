@@ -1,10 +1,23 @@
 {
-    "NULL_GAME":{
-        "SheetPH":{
-            "Name":"Name"
+    "NULL_GAME": {
+        "SheetPH": {
+            "Name": "Name",
+            "Bar": "Bar"
         },
-        "SheetLabel":{
+        "SheetLabel": {
             "Level": "Level"
+        },
+        "SizesLabel": {
+            "Small": "Small",
+            "Medium": "Medium",
+            "Large": "Large",
+            "Huge": "Huge"
+        },
+        "Tabs": {
+            "Features": "Features",
+            "Effects": "Effects",
+            "Skills": "Skills",
+            "Biography": "Biography"
         }
     }
 }

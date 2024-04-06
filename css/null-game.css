@@ -1,6 +1,6 @@
 * {
     --inputColor: rgba(0, 0, 0, 0.05);
-    --borderBox: groove #ffffffab;
+    --borderBox: groove;
 }
 
 .flex-cont {
@@ -15,11 +15,13 @@
     }
 }
 .sheet-header{
-    border-bottom: 2px groove;
+    border: var(--borderBox);
+    border-width: 0 0 2px 0;
     padding-bottom: 5px;
 }
 .header-container{
-    border-left: 2px groove;
+    border: var(--borderBox);
+    border-width: 0 0 0 2px;
     padding-left: 5px;
 }
 .first-header-container {
@@ -55,16 +57,27 @@
 
     .input-bordeless {
         background-color: rgba(0, 0, 0, 0);
+        border-width: 0;
+        padding: 0 5px;
+    }
+    .input-bordeless:focus{
+        box-shadow: none;
+        background: var(--inputColor);
+    }
+    .tb-header-secondTextBox{
         border: var(--borderBox);
-        border-width: 0 2px;
-        padding: 0 5px 0 1px;
+        border-width:0 2px
     }
 
     .select-header {
         border: var(--borderBox);
-        border-width: 0 2px;
+        border-width: 0 2px 0 0;
         background: 0;
         margin: 0 1px;
+    }
+    .select-header:focus{
+        box-shadow: none;
+        background: var(--inputColor);
     }
 }
 
@@ -96,4 +109,14 @@
         background: 0;
         border: 0;
     }
+    .input-bordeless:focus{
+        box-shadow: none;
+        background: var(--inputColor);
+    }
+}
+
+.sheet nav.sheet-tabs{
+    margin: 0;
+    border: var(--borderBox);
+    border-width: 0 0 2px 0;
 }

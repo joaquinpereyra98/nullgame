@@ -6,7 +6,7 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
     return {
       bars: new fields.SchemaField({
         firstBar: new fields.SchemaField({
-          label: new fields.StringField({ required: true, initial:"Main HP" }),
+          label: new fields.StringField({ ...requiredStringer}),
           value: new fields.NumberField({
             ...requiredInteger,
             initial: 10,

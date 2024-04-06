@@ -1,7 +1,8 @@
 <form class="{{cssClass}} {{actor.type}}" autocomplete="off">
     <header class="sheet-header">
         <div class="img-container" style="flex: auto;">
-           <img class="profile-img" style="height: auto; flex: 2;" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+            <img class="profile-img" style="height: auto; flex: 2;" src="{{actor.img}}" data-edit="img"
+                title="{{actor.name}}" height="100" width="100" />
         </div>
         <div class="header-container" style="flex: 7;">
             <div class="first-header-container flex-cont">
@@ -10,22 +11,24 @@
                         placeholder="{{localize 'NULL_GAME.SheetPH.Name'}}" />
                 </div>
                 <div class="level-container">
-                    <input type="number" name="system.level" value="{{system.level}}" class="header-input input-bordeless" data-dtype="Number" />
+                    <input type="number" name="system.level" value="{{system.level}}"
+                        class="header-input input-bordeless" data-dtype="Number" />
                     <label for="system.level">{{localize 'NULL_GAME.SheetLabel.Level'}}</label>
                 </div>
             </div>
             <div class="second-header-container flex-cont">
                 <select class="select-header" name="system.size" data-type="string">
                     {{#select system.size}}
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
-                        <option value="huge">Huge</option>
+                    <option value="small">{{localize 'NULL_GAME.SizesLabel.Small'}}</option>
+                    <option value="medium">{{localize 'NULL_GAME.SizesLabel.Medium'}}</option>
+                    <option value="large">{{localize 'NULL_GAME.SizesLabel.Large'}}</option>
+                    <option value="huge">{{localize 'NULL_GAME.SizesLabel.Huge'}}</option>
                     {{/select}}
                 </select>
                 <div class="text-header-container flex-cont">
                     {{#each system.textBoxs as |textBox key|}}
-                    <input class="tb-header input-bordeless" type="text" name="system.textBoxs.{{key}}" value="{{textBox}}">
+                    <input class="tb-header-{{key}} input-bordeless" type="text" name="system.textBoxs.{{key}}"
+                        value="{{textBox}}">
                     {{/each}}
                 </div>
             </div>
@@ -34,18 +37,41 @@
                 <div class="bar-header-container flex-cont">
                     <div class="bar-label-container">
                         <label for="system.bars.{{key}}">
-                            <input class="bar-header-label input-bordeless" type="text" name="system.bars.{{key}}.label" value="{{bar.label}}" placeholder="Custom Bar">
+                            <input class="bar-header-label input-bordeless" type="text" name="system.bars.{{key}}.label"
+                                value="{{bar.label}}" placeholder="{{localize 'NULL_GAME.SheetPH.Bar'}}">
                         </label>
                     </div>
                     <div class="bar-header-values flex-cont">
-                        <input class="bar-header-num input-bordeless" type="number" data-dtype="number" min="0" name="system.bars.{{key}}.value" value="{{bar.value}}">
+                        <input class="bar-header-num input-bordeless" type="number" data-dtype="number" min="0"
+                            max="{{bar.max}}" name="system.bars.{{key}}.value" value="{{bar.value}}">
                         <span class="slash-bar">/</span>
-                        <input class="bar-header-num input-bordeless" type="number" data-dtype="number" min="0" name="system.bars.{{key}}.max" value="{{bar.max}}">
+                        <input class="bar-header-num input-bordeless" type="number" data-dtype="number" min="0"
+                            name="system.bars.{{key}}.max" value="{{bar.max}}">
                     </div>
                 </div>
                 {{/each}}
             </div>
         </div>
     </header>
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="features">{{localize 'NULL_GAME.Tabs.Features'}}</a>
+        <a class="item" data-tab="effects">{{localize 'NULL_GAME.Tabs.Effects'}}</a>
+        <a class="item" data-tab="skills">{{localize 'NULL_GAME.Tabs.Skills'}}</a>
+        <a class="item" data-tab="biography">{{localize 'NULL_GAME.Tabs.Biography'}}</a>
+    </nav>
+    <section class="sheet-body">
+        <div class="tab features"data-tab="features">
+            <h1>Features</h1>
+        </div>
+        <div class="tab effects"data-tab="effects">
+            <h1>Effects</h1>
+        </div>
+        <div class="tab skills"data-tab="skills">
+            <h1>Skills</h1>
+        </div>
+        <div class="tab biography"data-tab="biography">
+            <h1>Biography</h1>
+        </div>
+    </section>
 
 </form>
