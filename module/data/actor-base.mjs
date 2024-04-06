@@ -6,13 +6,13 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
     return {
       bars: new fields.SchemaField({
         firstBar: new fields.SchemaField({
-          label: new fields.StringField({ ...requiredStringer }),
+          label: new fields.StringField({ required: true, initial:"Main HP" }),
           value: new fields.NumberField({
             ...requiredInteger,
             initial: 10,
             min: 0,
           }),
-          max: new fields.NumberField({ ...requiredInteger, initial: 10 }),
+          max: new fields.NumberField({ ...requiredInteger, initial: 10, min: 0 }),
         }),
         secondBar: new fields.SchemaField({
           label: new fields.StringField({ ...requiredStringer }),
@@ -33,7 +33,7 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
           max: new fields.NumberField({ ...requiredInteger, initial: 10 }),
         }),
       }),
-      biography: new fields.HTMLField(...requiredStringer),
+      biography: new fields.HTMLField({ ...requiredStringer }),
       textBoxs: new fields.SchemaField({
         firstTextBox: new fields.StringField({ ...requiredStringer }),
         secondTextBox: new fields.StringField({ ...requiredStringer }),

@@ -1,18 +1,49 @@
 <form class="{{cssClass}} {{actor.type}}" autocomplete="off">
     <header class="sheet-header">
-        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
-        <div class="header-container">
-            <div class="first-header-container">
-                <h1 class="charname"><input name="name" type="text" value="{{actor.name}}"
-                        placeholder="{{localize 'NULL_GAME.SheetPH.Name'}}" /></h1>
+        <div class="img-container" style="flex: auto;">
+           <img class="profile-img" style="height: auto; flex: 2;" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+        </div>
+        <div class="header-container" style="flex: 7;">
+            <div class="first-header-container flex-cont">
+                <div class="name-container">
+                    <input name="name" type="text" value="{{actor.name}}" class="header-input"
+                        placeholder="{{localize 'NULL_GAME.SheetPH.Name'}}" />
+                </div>
                 <div class="level-container">
-                    <input type="text" name="system.level" value="{{system.level}}"
-                        data-dtype="Number" />
-                        <label for="system.level">{{localize 'NULL_GAME.SheetLabel.Level'}}</label>
+                    <input type="number" name="system.level" value="{{system.level}}" class="header-input input-bordeless" data-dtype="Number" />
+                    <label for="system.level">{{localize 'NULL_GAME.SheetLabel.Level'}}</label>
                 </div>
             </div>
-            <div class="second-header-conteiner">
-                
+            <div class="second-header-container flex-cont">
+                <select class="select-header" name="system.size" data-type="string">
+                    {{#select system.size}}
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                        <option value="huge">Huge</option>
+                    {{/select}}
+                </select>
+                <div class="text-header-container flex-cont">
+                    {{#each system.textBoxs as |textBox key|}}
+                    <input class="tb-header input-bordeless" type="text" name="system.textBoxs.{{key}}" value="{{textBox}}">
+                    {{/each}}
+                </div>
+            </div>
+            <div class="third-header-container flex-cont">
+                {{#each system.bars as |bar key|}}
+                <div class="bar-header-container flex-cont">
+                    <div class="bar-label-container">
+                        <label for="system.bars.{{key}}">
+                            <input class="bar-header-label input-bordeless" type="text" name="system.bars.{{key}}.label" value="{{bar.label}}" placeholder="Custom Bar">
+                        </label>
+                    </div>
+                    <div class="bar-header-values flex-cont">
+                        <input class="bar-header-num input-bordeless" type="number" data-dtype="number" min="0" name="system.bars.{{key}}.value" value="{{bar.value}}">
+                        <span class="slash-bar">/</span>
+                        <input class="bar-header-num input-bordeless" type="number" data-dtype="number" min="0" name="system.bars.{{key}}.max" value="{{bar.max}}">
+                    </div>
+                </div>
+                {{/each}}
             </div>
         </div>
     </header>

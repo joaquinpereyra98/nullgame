@@ -21,7 +21,7 @@ export class NullGameActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
-    return `systems/null-game/templates/actor/actor-${this.actor.type}-sheet.hbs`;
+    return `systems/nullgame/templates/actor/actor-${this.actor.type}-sheet.hbs`;
   }
 
   /** @override */
