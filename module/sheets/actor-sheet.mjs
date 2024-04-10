@@ -70,6 +70,7 @@ export class NullGameActorSheet extends ActorSheet {
     }
     context.skills = skills;
     context.features = features;
+    context.freaturesCategories = ['uncategory'];
   }
 
   /* -------------------------------------------- */
