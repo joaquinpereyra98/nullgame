@@ -120,3 +120,43 @@
     border: var(--borderBox);
     border-width: 0 0 2px 0;
 }
+.tab.features{
+    padding: 5px;
+}
+.category-header{
+    align-items: center;
+    border: var(--borderBox);
+    border-width: 2px;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 2px;
+}
+.category-name{
+    flex: 10;
+    font-weight: bold;
+    .category-name-input{
+        font-weight: bold;
+        width: 95%;
+        padding-left: 5px;
+        border: 0;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    .category-name-input:focus{
+        box-shadow: none;
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+}
+.tool-section{
+    flex: 4;
+    display: flex;
+    .tool-button{
+     font-size: small;
+     padding: 0 2px;
+     border: 0;
+    }
+}
+.category-create{
+    font-size: medium;
+    border: 0;
+    padding: 0 2px;
+}

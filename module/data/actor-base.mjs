@@ -6,13 +6,17 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
     return {
       bars: new fields.SchemaField({
         firstBar: new fields.SchemaField({
-          label: new fields.StringField({ ...requiredStringer}),
+          label: new fields.StringField({ ...requiredStringer }),
           value: new fields.NumberField({
             ...requiredInteger,
             initial: 10,
             min: 0,
           }),
-          max: new fields.NumberField({ ...requiredInteger, initial: 10, min: 0 }),
+          max: new fields.NumberField({
+            ...requiredInteger,
+            initial: 10,
+            min: 0,
+          }),
         }),
         secondBar: new fields.SchemaField({
           label: new fields.StringField({ ...requiredStringer }),
@@ -40,7 +44,14 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
         thirdTextBox: new fields.StringField({ ...requiredStringer }),
       }),
       level: new fields.NumberField({...requiredStringer, min: 0}),
-      size: new fields.StringField({...requiredStringer})
+      size: new fields.StringField({...requiredStringer}),
+      categories: new fields.SchemaField({
+        features: new fields.ObjectField({ initial: {uncategorized: 'Uncategorized'}}),
+      })
     };
+  }
+  prepareBaseData() {
+    const deleteEmptyProperties = obj => Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== "" && v !== null));
+    this.categories.features=deleteEmptyProperties(this.categories.features);
   }
 }
