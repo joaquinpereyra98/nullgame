@@ -77,7 +77,7 @@ export class NullGameActorSheet extends ActorSheet {
 
   /* -------------------------------------------- */
   /**
-   * Handle creating a new Freature Category.
+   * Handle creating a new Feature Category.
    * @param {Event} event   The originating click event
    * @param {string} categoryName The name of the new category
    * @private
@@ -103,7 +103,7 @@ export class NullGameActorSheet extends ActorSheet {
     this.actor.update({"system.categories.features": featCategories});
   }
   /**
-   * Handle delete a freature Category.
+   * Handle delete a feature Category.
    * @param {Event} event  The originating click event
    * @private
    */
