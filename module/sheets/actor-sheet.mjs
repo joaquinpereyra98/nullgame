@@ -35,7 +35,6 @@ export class NullGameActorSheet extends ActorSheet {
       this._prepareCharacterData(context);
     }
     context.rollData = context.actor.getRollData();
-
     return context;
   }
 
@@ -59,7 +58,10 @@ export class NullGameActorSheet extends ActorSheet {
     const features = {};
     const catFeats = context.system.categories.features;
     for(let k in catFeats){
-      features[k]=[]
+      features[k]= {
+        label: catFeats[k],
+        items:[],
+      }
     }
  
     for (let i of context.items) {
@@ -68,11 +70,17 @@ export class NullGameActorSheet extends ActorSheet {
         skills.push(i);
       }
       else if (i.type === 'feature') {
-        features[i.category] ? features[i.category].push(i) : features['Uncategorized'].push(i);
+        if(features[i.system.category]){
+        features[i.system.category].items.push(i);
+      }else{
+          features.uncategorized.items.push(i);
+          this.actor.items.get(i._id).update({"system.category": "uncategorized"});
+        }
       }
     }
     context.skills = skills;
     context.features = features;
+    console.log(features)
   }
 
   /* -------------------------------------------- */
@@ -122,14 +130,14 @@ export class NullGameActorSheet extends ActorSheet {
    */
   async _onItemCreate(event) {
     event.preventDefault();
-    /*
+    
     const type = event.currentTarget.dataset.type;
     const data = { ...event.currentTarget.dataset };
     const name = `New ${type.capitalize()}`;
     const itemData = { name, type, system: { ...data } };
     delete itemData.system.type;
     return await Item.create(itemData, { parent: this.actor }); 
-    */
+    
   }
   /** @override */
   activateListeners(html) {
@@ -137,5 +145,10 @@ export class NullGameActorSheet extends ActorSheet {
     html.on("click", ".category-create", this._onCategoryCreate.bind(this));
     html.on("click", ".item-create", this._onItemCreate.bind(this));
     html.on("click", ".delete-category", this._onCategoryDelete.bind(this));
+    html.on("click", ".item-edit", (ev) => {
+      const id = ev.currentTarget.dataset.id;
+      const item = this.actor.items.get(id);
+      item.sheet.render(true);
+    })
   }
 }

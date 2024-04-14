@@ -26,7 +26,6 @@
       context.rollData = this.item.getRollData();
       context.system = itemData.system;
       context.flags = itemData.flags;
-  
       return context;
     }
   

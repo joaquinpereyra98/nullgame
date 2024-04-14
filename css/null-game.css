@@ -160,3 +160,15 @@
     border: 0;
     padding: 0 2px;
 }
+.category-body{
+    .item-list-component{
+        padding: 1px 10px;
+        .item-name{
+            flex: 7;
+            justify-content: flex-start;
+        }
+        .item-control{
+            flex: 3;
+        }
+    }
+}

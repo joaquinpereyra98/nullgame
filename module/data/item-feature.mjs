@@ -31,4 +31,9 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
         category: new fields.StringField({...requiredString})
       };
     }
+    prepareBaseData() {
+      if(this.category===""){
+        this.category= 'uncategorized';
+      }
+    }
   }

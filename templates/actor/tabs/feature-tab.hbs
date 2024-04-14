@@ -1,21 +1,53 @@
-{{#each system.categories.features as |categoryLabel categoryKey|}}
-{{#unless (eq categoryKey 'uncategorized')}}
-<div class="category-header flex-cont">
-    <div class="category-name">
-        <input class="category-name-input" type="text" name="system.categories.features.{{categoryKey}}" value="{{categoryLabel}}">
+{{#each features as |category categoryKey|}}
+    {{#unless (eq categoryKey 'uncategorized')}}
+        <div class="category-header flex-cont">
+            <div class="category-name">
+                <input class="category-name-input" type="text" name="system.categories.features.{{categoryKey}}" value="{{category.label}}">
+            </div>
+            <div class="tool-section">
+                <button data-type='features' data-category='{{categoryKey}}' class="tool-button create-button">Add Item</button>
+                <button data-type='features' data-category='{{categoryKey}}' class="tool-button delete-category">Del. Cat.</button>
+            </div>
+        </div>
+        <div class="category-body">
+        {{#each category.items as |item id|}}
+             <div class="item-list-component flex-cont">
+            <div class="item-name flex-cont">
+                <div class='item-image'>
+                    <a class='rollable' data-roll-type='item'>
+                        <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
+                    </a>
+                </div>
+                <h4>{{item.name}}</h4>
+            </div>
+            <div class='item-controls'>
+                <button class="item-control item-edit" data-id="{{item._id}}">Edit Item</button>
+            </div>
+        </div>
+        {{/each}}
     </div>
-    <div class="tool-section">
-        <button data-type='features' data-category='{{categoryKey}}' class="tool-button create-button">Add Item</button>
-        <button data-type='features' data-category="{{categoryKey}}" class="tool-button delete-category">Del. Cat.</button>
-    </div>
-</div>
-{{/unless}}
+    {{/unless}}
 {{/each}}
-<div class="category-header flex-cont">
-    <div class="category-name">
-        {{system.categories.features.uncategorized}}
+<div class="uncategorized-feature-container">
+    <div class="category-header flex-cont">
+        <div class="category-name">{{features.uncategorized.label}}</div>
+        <div class="tool-section"><button class="category-create">Add Category</button></div>
     </div>
-    <div class="tool-section">
-        <button class="category-create">Add Category</button>
+    <div class="category-body">
+        {{#each features.uncategorized.items as |item id|}}
+        <div class="item-list-component flex-cont">
+            <div class="item-name flex-cont">
+                <div class='item-image'>
+                    <a class='rollable' data-roll-type='item'>
+                        <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
+                    </a>
+                </div>
+                <h4>{{item.name}}</h4>
+            </div>
+            <div class='item-controls'>
+                <button class="item-control item-edit" data-id="{{item._id}}">Edit Item</button>
+            </div>
+        </div>
+        {{/each}}
     </div>
 </div>
