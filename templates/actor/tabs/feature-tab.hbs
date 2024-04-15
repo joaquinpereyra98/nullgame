@@ -1,37 +1,59 @@
 {{#each features as |category categoryKey|}}
-    {{#unless (eq categoryKey 'uncategorized')}}
-        <div class="category-header flex-cont">
-            <div class="category-name">
-                <input class="category-name-input" type="text" name="system.categories.features.{{categoryKey}}" value="{{category.label}}">
-            </div>
-            <div class="tool-section">
-                <button data-type='features' data-category='{{categoryKey}}' class="tool-button create-button">Add Item</button>
-                <button data-type='features' data-category='{{categoryKey}}' class="tool-button delete-category">Del. Cat.</button>
-            </div>
-        </div>
-        <div class="category-body">
-        {{#each category.items as |item id|}}
-             <div class="item-list-component flex-cont">
-            <div class="item-name flex-cont">
-                <div class='item-image'>
-                    <a class='rollable' data-roll-type='item'>
-                        <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
-                    </a>
-                </div>
-                <h4>{{item.name}}</h4>
-            </div>
-            <div class='item-controls'>
-                <button class="item-control item-edit" data-id="{{item._id}}">Edit Item</button>
-            </div>
-        </div>
-        {{/each}}
+{{#unless (eq categoryKey 'uncategorized')}}
+<div class="category-header flex-cont">
+    <div class="category-name">
+        <input class="category-name-input" type="text" name="system.categories.features.{{categoryKey}}"
+            value="{{category.label}}">
     </div>
-    {{/unless}}
+    <div class="tool-section">
+        <a class="tool-button add-button create-item" data-type='feature' data-category='{{categoryKey}}'>
+            <span class="span-button">
+                <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
+                Create Item{{!TODO localize }}
+            </span>
+        </a>
+        <a class="tool-button delete-button delete-category" data-type='feature' data-category='{{categoryKey}}'>
+            <img class="icon-img" src="systems/nullgame/assets/delete.svg">
+        </a>
+    </div>
+</div>
+<div class="category-body">
+    {{#each category.items as |item id|}}
+    <div class="item-list-component flex-cont">
+        <div class="item-name flex-cont">
+            <div class='item-image'>
+                <a class='rollable item-image-button' data-roll-type='item'>
+                    <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
+                </a>
+            </div>
+            <span>
+                {{item.name}}
+            </span>
+        </div>
+        <div class='item-controls'>
+            <a class="edit-button item-edit" data-id="{{item._id}}">
+                <img class="icon-img" src="systems/nullgame/assets/edit.svg">
+            </a>
+            <a class="tool-button delete-button delete-item" data-id="{{item._id}}">
+                <img class="icon-img" src="systems/nullgame/assets/delete.svg">
+            </a>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/unless}}
 {{/each}}
 <div class="uncategorized-feature-container">
     <div class="category-header flex-cont">
         <div class="category-name">{{features.uncategorized.label}}</div>
-        <div class="tool-section"><button class="category-create">Add Category</button></div>
+        <div class="tool-section">
+            <a class="tool-button add-button create-category" data-type='features' data-category='{{categoryKey}}'>
+            <span class="span-button">
+                <img class="icon-img" src="systems/nullgame/assets/playlist_add.svg">
+                Create Category {{!TODO localize }}
+            </span>
+        </a>
+            </div>
     </div>
     <div class="category-body">
         {{#each features.uncategorized.items as |item id|}}
@@ -42,10 +64,14 @@
                         <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
                     </a>
                 </div>
-                <h4>{{item.name}}</h4>
+                <span>
+                    {{item.name}}
+                </span>
             </div>
             <div class='item-controls'>
-                <button class="item-control item-edit" data-id="{{item._id}}">Edit Item</button>
+                <a class="edit-button item-edit" data-id="{{item._id}}">
+                    <img class="icon-img" src="systems/nullgame/assets/edit.svg">
+                </a>
             </div>
         </div>
         {{/each}}

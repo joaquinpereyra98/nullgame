@@ -80,7 +80,6 @@ export class NullGameActorSheet extends ActorSheet {
     }
     context.skills = skills;
     context.features = features;
-    console.log(features)
   }
 
   /* -------------------------------------------- */
@@ -133,18 +132,23 @@ export class NullGameActorSheet extends ActorSheet {
     
     const type = event.currentTarget.dataset.type;
     const data = { ...event.currentTarget.dataset };
-    const name = `New ${type.capitalize()}`;
+    const name = `New ${type.capitalize()}`; //TODO localize
     const itemData = { name, type, system: { ...data } };
     delete itemData.system.type;
-    return await Item.create(itemData, { parent: this.actor }); 
+    return await Item.create(itemData, { parent: this.actor });
     
   }
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-    html.on("click", ".category-create", this._onCategoryCreate.bind(this));
-    html.on("click", ".item-create", this._onItemCreate.bind(this));
+    html.on("click", ".create-category", this._onCategoryCreate.bind(this));
     html.on("click", ".delete-category", this._onCategoryDelete.bind(this));
+    html.on("click", ".create-item", this._onItemCreate.bind(this));
+    html.on("click", ".delete-item", (ev)=>{
+      const id = ev.currentTarget.dataset.id;
+      const item = this.actor.items.get(id);
+      item.delete();
+    });
     html.on("click", ".item-edit", (ev) => {
       const id = ev.currentTarget.dataset.id;
       const item = this.actor.items.get(id);

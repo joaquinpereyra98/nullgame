@@ -46,7 +46,7 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
       level: new fields.NumberField({...requiredStringer, min: 0}),
       size: new fields.StringField({...requiredStringer}),
       categories: new fields.SchemaField({
-        features: new fields.ObjectField({ initial: {uncategorized: 'Uncategorized'}}),
+        features: new fields.ObjectField({ initial: {uncategorized: 'Uncategorized'}}),//TODO localize
       })
     };
   }
