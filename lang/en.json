@@ -17,7 +17,9 @@
             "Features": "Features",
             "Effects": "Effects",
             "Skills": "Skills",
-            "Biography": "Biography"
+            "Biography": "Biography",
+            "Description": "Description",
+            "Details": "Details"
         }
     }
 }

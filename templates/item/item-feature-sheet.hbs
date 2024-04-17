@@ -1,27 +1,40 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <div class="img-container">
+      <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100" />
+    </div>
     <div class="header-container">
       <div class="first-header-container flex-cont">
         <div class="name-container">
-          <input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'NULL_GAME.SheetPH.Name'}}"/>
+          <input name="name" class="header-input" type="text" value="{{item.name}}"
+            placeholder="{{localize 'NULL_GAME.SheetPH.Name'}}" />
         </div>
       </div>
       <div class="second-header-container flex-cont">
-        <select name="system.category" data-type="string">
+        <select class="select-category" name="system.category" data-type="string">
           {{#select system.category}}
-            {{#each item.actor.system.categories.features as |category key|}}
-            <option value="{{key}}">{{category}}</option>
-            {{/each}}
+          {{#each features as |category key|}}
+          <option value="{{key}}">
+            {{#if (ne key "uncategorized")}}
+            {{category}}
+            {{/if}}
+          </option>
+          {{/each}}
           {{/select}}
         </select>
       </div>
 
     </div>
   </header>
-
+  <nav class="sheet-tabs tabs">
+    <a class="item" data-tab="description">{{localize 'NULL_GAME.Tabs.Description'}}</a>
+    <a class="item" data-tab="details">{{localize 'NULL_GAME.Tabs.Details'}}</a>
+  </nav>
   <section class="sheet-body">
-    
+    <div class="tab description" data-tab="description">
+      {{> 'systems/nullgame/templates/item/tabs/description-tab.hbs'}}
+    </div>
+    <div class="tab details" data-tab="details"></div>
   </section>
 
 </form>

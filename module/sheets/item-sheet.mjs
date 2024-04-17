@@ -9,6 +9,13 @@
         classes: ['null-game', 'sheet', 'item'],
         width: 520,
         height: 480,
+        tabs: [
+          {
+            navSelector: ".sheet-tabs",
+            contentSelector: ".sheet-body",
+            initial: "description",
+          },
+        ],
       });
     }
   
@@ -22,6 +29,7 @@
     /** @override */
     getData() {
       const context = super.getData();
+      context.features = context.item.actor?.system.categories.features || {uncategorized: "Uncategorized"};
       const itemData = context.data;
       context.rollData = this.item.getRollData();
       context.system = itemData.system;
