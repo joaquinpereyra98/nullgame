@@ -3,6 +3,7 @@
     "types": ["character"]
   },
   "Item": {
-    "types": ["feature"]
+    "types": ["feature"],
+    "htmlFields": ["descriptions.description"]
   }
 }

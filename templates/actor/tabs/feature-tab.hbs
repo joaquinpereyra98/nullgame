@@ -47,12 +47,19 @@
     <div class="category-header flex-cont">
         <div class="category-name">{{features.uncategorized.label}}</div>
         <div class="tool-section">
-            <a class="tool-button add-button create-category" data-type='features' data-category='{{categoryKey}}'>
-            <span class="span-button">
-                <img class="icon-img" src="systems/nullgame/assets/playlist_add.svg">
-                Create Category {{!TODO localize }}
-            </span>
-        </a>
+            <a class="tool-button add-button create-item" data-type='feature' data-category='{{uncategorized}}'>
+                <span class="span-button">
+                    <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
+                    Create Item{{!TODO localize }}
+                </span>
+            </a>
+            <a class="tool-button add-button create-category" data-type='features'>
+                <span class="span-button">
+                    <img class="icon-img" src="systems/nullgame/assets/playlist_add.svg">
+                    Create Category {{!TODO localize }}
+                </span>
+            </a>
+            
             </div>
     </div>
     <div class="category-body">

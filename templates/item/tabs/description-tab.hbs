@@ -2,7 +2,16 @@
     <div class="properties-container">
         <h3>Properties</h3>
     </div>
-    <div class="description-container">
-        <h3>Description</h3>
+    <div class="description-container accordion-container">
+        <div class="accordion-headers" data-element="description">
+            <span class="span-button flex-cont">
+                <img class="icon-img" src="systems/nullgame/assets/expand_more.svg">
+            </span>
+            Description
+        </div>
+        <div class="accordion-content{{ifThen isExtend "" " extended"}}">
+            {{editor descriptionHTML target="system.descriptions.description" button=true editable=editable
+            engine="prosemirror" collaborate=false}}
+        </div>
     </div>
 </div>

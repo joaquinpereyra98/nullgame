@@ -5,7 +5,9 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
       const requiredString = { required: true, blank: true };
       const requiredNumber = { required: true, min: 0 };
       return {
-        description: new fields.HTMLField({...requiredString}),
+        descriptions: new fields.SchemaField({
+          description: new fields.HTMLField({...requiredString}),
+        }),
         details: new fields.SchemaField({
           duration: new fields.SchemaField({
             value: new fields.NumberField({...requiredNumber}),
