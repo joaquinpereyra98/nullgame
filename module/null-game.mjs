@@ -8,7 +8,8 @@ import NullGameFeatureData from './data/item-feature.mjs';
 async function preloadHandlebarsTemplates () {
   return loadTemplates([
     'systems/nullgame/templates/actor/tabs/feature-tab.hbs',
-    'systems/nullgame/templates/item/tabs/description-tab.hbs'
+    'systems/nullgame/templates/item/tabs/description-tab.hbs',
+    'systems/nullgame/templates/item/tabs/details-tab.hbs'
   ]);
 };
 

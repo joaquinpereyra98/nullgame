@@ -1,0 +1,58 @@
+<div class="details-tab">
+    <div class="usage-container">
+        <h3>Feature Usage</h3>
+        <div class="target-container flex-cont">
+            <label class="label-usage" for="system.details.target">Target</label> {{! TODO localize}}
+            <div class="usage-inputs-container">
+                <input type="text" class="input-box" name="system.details.target.value"
+                    value="{{system.details.target.value}}">
+
+                <select class="input-box" name="system.details.target.type">
+                    {{#select system.details.target.type}}
+                    <option value="circular">Circular</option>
+                    <option value="cone">Cone</option>
+                    <option value="ray">Ray</option>
+                    <option value="square">Square</option>
+                    <option value="self">Self</option>
+                    <option value="creature">Creature</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+        <div class="range-container flex-cont">
+            <label class="label-usage" for="system.details.range">Range</label> {{! TODO localize}}
+            <div class="usage-inputs-container">
+                <input class="input-box" type="number" name="system.details.range.normal"
+                    value="{{system.details.range.normal}}">
+                <input class="input-box" type="number" name="system.details.range.long"
+                    value="{{system.details.range.long}}">
+                <select class="input-box" name="system.details.range.units"></select>
+            </div>
+
+        </div>
+        <div class="duration-container flex-cont">
+            <label class="label-usage" for="system.details.duration">Duration</label>{{! TODO localize}}
+            <div class="usage-inputs-container">
+                <input class="input-box" type="number" data-dtype="Number" name="system.details.duration.value"
+                    value="{{system.details.duration.value}}">
+                <select class="input-box" name="system.details.duration.units">
+                    {{#select system.details.duration.units}}
+                    {{/select}}
+                </select>
+            </div>
+
+        </div>
+        <div class="consumption-container flex-cont">
+            <label class="label-usage" for="system.details.consumption">Resources</label>{{! TODO localize}}
+            <div class="usage-inputs-container">
+                <input class="input-box" type="text" name="system.details.consumption.qty">
+                <select class="input-box" name="system.details.consumption.rsc"></select>
+                <select class="input-box" name="system.details.consumption.rscType"></select>
+            </div>
+
+        </div>
+    </div>
+    <div class="attack-container">
+
+    </div>
+</div>

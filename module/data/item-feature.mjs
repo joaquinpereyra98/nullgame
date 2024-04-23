@@ -14,8 +14,8 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
             units: new fields.StringField({...requiredString})
           }),
           range: new foundry.data.fields.SchemaField({
-            min: new foundry.data.fields.NumberField({...requiredNumber}),
-            max: new foundry.data.fields.NumberField({...requiredNumber}),
+            normal: new foundry.data.fields.NumberField({...requiredNumber}),
+            long: new foundry.data.fields.NumberField({...requiredNumber}),
             units: new foundry.data.fields.StringField({...requiredString})
           }),
           target: new foundry.data.fields.SchemaField({
@@ -24,6 +24,11 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
           }),
             actionType: new fields.StringField({...requiredString}),
             formula: new fields.StringField({...requiredString}),
+            consumption: new fields.SchemaField({
+              qty: new fields.NumberField({...requiredNumber}),
+              rsc: new fields.StringField({...requiredString}),
+              rscType: new fields.StringField({...requiredString})
+            })
         }),
         roll: new fields.SchemaField({
             diceNum: new fields.NumberField({nullable: false, integer: true, initial: 1, min: 1 }),

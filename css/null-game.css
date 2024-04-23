@@ -428,4 +428,28 @@
 
     }
 
+    .details-tab{
+        .usage-container{
+            .label-usage{
+                flex: 3;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .usage-inputs-container{
+                flex: 7;
+                display: flex;
+                
+                .input-box{
+                    flex: 1;
+                    height: 27px;
+                    border: 0;
+                    margin: 2px 5px;
+                    background-color: var(--backBGMoreOpacity);
+                }
+            }
+        }
+    }
+
 }
