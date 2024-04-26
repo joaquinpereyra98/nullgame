@@ -32,6 +32,9 @@ export class NullGameItemSheet extends ItemSheet {
       uncategorized: "Uncategorized",
     };
     const itemData = context.data;
+    if(context.item.actor){
+      this._findResources(context);
+    }
     context.rollData = this.item.getRollData();
     context.system = itemData.system;
     context.flags = itemData.flags;
@@ -44,21 +47,21 @@ export class NullGameItemSheet extends ItemSheet {
   }
 
   /* -------------------------------------------- */
-
+  _findResources(context) {
+    const actor = context.item.actor;
+    context.consumableResources = { //TODO add label and localize
+      bars: actor.system.bars,
+      items: actor.items.filter(item => item.system.isResource)
+    }
+  }
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-     html.on("click", ".accordion-headers", (ev) => {
-        const img = $(ev.currentTarget).find('.icon-img');
-        const imgPath = 'systems/nullgame/assets/expand_'
-        if(this.accordionState){
-          img.css({"rotate": "0deg"});
-        } else{
-          img.css({"rotate": "180deg"});
-        }
+     html.on("click", ".accordion-headers", (ev) => {   
+       const img = $(ev.currentTarget).find(".icon-img");
+       img.css("rotate", this.accordionState ? "0deg" : "180deg");
        $(ev.currentTarget).next(".accordion-content").slideToggle(500);
        this.accordionState = !this.accordionState;
-       
      });
     if (!this.isEditable) return;
   }

@@ -23,10 +23,16 @@
             <label class="label-usage" for="system.details.range">Range</label> {{! TODO localize}}
             <div class="usage-inputs-container">
                 <input class="input-box" type="number" name="system.details.range.normal"
-                    value="{{system.details.range.normal}}">
+                    value="{{system.details.range.normal}}" title="Normal Range"> {{! TODO changed title by tooltip}}
                 <input class="input-box" type="number" name="system.details.range.long"
-                    value="{{system.details.range.long}}">
-                <select class="input-box" name="system.details.range.units"></select>
+                    value="{{system.details.range.long}}" title="Long Range"> {{! TODO changed title by tooltip}}
+                <select class="input-box" name="system.details.range.units">
+                    {{#select system.details.range.units}}
+                    <option value="sq">Squares</option>
+                    <option value="miles">Miles</option>
+                    <option value="meters">Meters</option>
+                    {{/select}}
+                </select>
             </div>
 
         </div>
@@ -35,19 +41,37 @@
             <div class="usage-inputs-container">
                 <input class="input-box" type="number" data-dtype="Number" name="system.details.duration.value"
                     value="{{system.details.duration.value}}">
-                <select class="input-box" name="system.details.duration.units">
-                    {{#select system.details.duration.units}}
-                    {{/select}}
-                </select>
+                    <span class="unit-label">Rounds</span>
             </div>
 
         </div>
         <div class="consumption-container flex-cont">
             <label class="label-usage" for="system.details.consumption">Resources</label>{{! TODO localize}}
             <div class="usage-inputs-container">
-                <input class="input-box" type="text" name="system.details.consumption.qty">
-                <select class="input-box" name="system.details.consumption.rsc"></select>
-                <select class="input-box" name="system.details.consumption.rscType"></select>
+                <input class="input-box" type="number" name="system.details.consumption.qty" value="{{system.details.consumption.qty}}">
+                <select class="input-box" name="system.details.consumption.rscType">
+                    {{#select system.details.consumption.rscType}}
+                            <option value=""></option>
+                        {{#each consumableResources as |rsc key|}}
+                            <option value="{{key}}">{{key}}</option>  {{! TODO localize}}
+                        {{/each}}
+                    {{/select}}
+                </select>
+                <select class="input-box" name="system.details.consumption.rsc">
+                    {{#select system.details.consumption.rsc}}
+                    {{#if (eq system.details.consumption.rscType 'bars')}}
+                        {{#each consumableResources.bars as |bar barKey|}}
+                        <option value="{{barKey}}">{{bar.label}}</option>
+
+                        {{/each}}
+                    {{else if (eq system.details.consumption.rscType 'items')}}
+                        {{#each consumableResources.items as |item itemKey|}}
+                        <option value="{{item.id}}">{{item.name}}</option>
+                        {{/each}}
+                    {{/if}}
+                    {{/select}}
+                    
+                </select>
             </div>
 
         </div>

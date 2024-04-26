@@ -35,7 +35,9 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
             diceSize: new fields.StringField({ initial: "d20" }),
             diceBonus: new fields.StringField({ blank: true })
         }),
-        category: new fields.StringField({...requiredString})
+        category: new fields.StringField({...requiredString}),
+        isResource: new fields.BooleanField({inital: false}),
+        quantity: new fields.NumberField({min:0, inital: 0})
       };
     }
     prepareBaseData() {

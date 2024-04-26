@@ -345,11 +345,43 @@
 
     .second-header-container {
         justify-content: flex-start;
-
-        .select-category {
-            min-width: 30%;
-            border: 0;
+        .second-header-box {
+                flex: 1;
+                .select-category {
+                    border: 0;
+                    width: 100%;
+                    background-color: var(--backBGMoreOpacity);
+                }
         }
+        .ammo-checkbox-header {
+            border: var(--borderBox);
+            border-width: 0 2px;
+            margin: 0 5px;
+            padding: 0 3px;
+            justify-content: center;
+            align-items: center;
+
+            .ammo-label {
+                display: flex;
+                align-items: center;
+            }
+        }
+        .ammo-quantity-header {
+            justify-content: space-between;
+            align-items: center;
+
+            .ammo-label {
+                display: flex;
+                align-items: center;
+            }
+
+            .quantity-input {
+                max-width: 80%;
+                border: 0;
+                background-color: var(--backBGMoreOpacity);
+            }
+        }
+        
     }
 
     .description-tab {
@@ -447,6 +479,12 @@
                     border: 0;
                     margin: 2px 5px;
                     background-color: var(--backBGMoreOpacity);
+                    text-align: center;
+                }
+                .unit-label{
+                flex: 1;
+                display: flex;
+                align-items: center;
                 }
             }
         }

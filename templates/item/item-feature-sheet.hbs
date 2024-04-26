@@ -11,19 +11,31 @@
         </div>
       </div>
       <div class="second-header-container flex-cont">
-        <select class="select-category" name="system.category" data-type="string">
-          {{#select system.category}}
-          {{#each features as |category key|}}
-          <option value="{{key}}">
-            {{#if (ne key "uncategorized")}}
-            {{category}}
-            {{/if}}
-          </option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="category-select-header second-header-box">
+          <select class="select-category" name="system.category" data-type="string">
+            {{#select system.category}}
+            {{#each features as |category key|}}
+            <option value="{{key}}">
+              {{#if (ne key "uncategorized")}}
+              {{category}}
+              {{/if}}
+            </option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
+        <div class="ammo-checkbox-header flex-cont second-header-box">
+          <label class="ammo-label" for="system.isResource">Is Ammo:</label>
+          <input name="system.isResource" type="checkbox" value="{{system.isResource}}" {{checked system.isResource}}
+            data-dtype="Boolean">
+        </div>
+        {{#if system.isResource}}
+        <div class="ammo-quantity-header flex-cont second-header-box">
+          <label class="ammo-label" for="system.quantity"> Quantity:</label>
+          <input class="quantity-input" type="number" name="system.quantity" value="{{system.quantity}}">
+        </div>
+        {{/if}}
       </div>
-
     </div>
   </header>
   <nav class="sheet-tabs tabs">
