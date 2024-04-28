@@ -238,8 +238,6 @@
                 filter: var(--blackButtonColor);
                 opacity: 0.5;
             }
-
-            ;
         }
 
         .add-button:hover img {
@@ -461,6 +459,7 @@
     }
 
     .details-tab{
+
         .usage-container{
             .label-usage{
                 flex: 3;
@@ -485,6 +484,79 @@
                 flex: 1;
                 display: flex;
                 align-items: center;
+                }
+            }
+        }
+
+        .attack-container{
+
+            .label-attack{
+                flex: 3;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .attack-inputs-container{
+                flex: 7;
+                .attack-type-select{
+                    border: 0;
+                    background: var(--backBGMoreOpacity);
+                    width: 50%;
+                    text-align: center;
+                    margin: 0 5px;
+                }
+                .formula-container{
+                    padding: 3px 0;
+                }
+                .formula-container:hover{
+                    background-color: var(--backBGLittleOpacity);
+                }
+                .input-box{
+                    flex: 1;
+                    height: 27px;
+                    border: 0;
+                    margin: 2px 5px;
+                    background-color: var(--backBGMoreOpacity);
+                    text-align: center;
+                }
+                .delete-button{
+                    display: flex;
+                    align-items: center;
+
+                    .icon-img {
+                        transition: 200ms all;
+                        border: 0;
+                        height: 70%;
+                        max-width: fit-content;
+                        filter: var(--redDeleteColor);
+                        opacity: 0.5;
+                    }
+
+                    &:hover .icon-img {
+                        transform: scale(1.1);
+                        opacity: 1;
+                    }
+                }
+                
+            }
+            .add-button-container{
+                display: flex;
+                justify-content: flex-end;
+                .add-button{
+                    
+                    .icon-img{
+                        transition: 200ms all;
+                        border: 0;
+                        height: 90%;
+                        max-width: fit-content;
+                        filter: var(--blackButtonColor);
+                        opacity: 0.5;
+                    }
+                    &:hover .icon-img{
+                        transform: scale(1.1);
+                        opacity: 1;
+                    }
                 }
             }
         }

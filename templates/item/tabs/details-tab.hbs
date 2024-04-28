@@ -77,6 +77,44 @@
         </div>
     </div>
     <div class="attack-container">
-
+        <h3>Feature Attack</h3>
+        <div class="action-type-container flex-cont">
+            <label class="label-attack" for="system.details.attackType">Attack Type</label> {{! TODO localize}}
+            <div class="attack-inputs-container">
+                <select class="attack-type-select" name="system.details.attackType">
+                    {{#select system.details.attackType}}
+                        <option value="none-attack"></option>
+                        <option value="melee-attack">Melee Attack</option>
+                        <option value="range-attack">Range Attack</option>
+                        <option value="spell-attack">Spell Attack</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+        <div class="damage-formula-container flex-cont">
+            <label for="system.rollFormula.damagesFormulas" class="label-attack"> Damage Formulas </label> {{! TODO localize}}
+            <div class="formulas-container attack-inputs-container">
+                {{#each system.rollFormula.damagesFormulas as |damageFormula key| }}
+                <div class="damageFormula.{{key}}.container flex-cont formula-container">
+                    <input type="text" class="input-box" name="system.rollFormula.damagesFormulas.{{key}}.formula" value="{{damageFormula.formula}}" placeholder="2d6">
+                    <input type="text" class="input-box"  name="system.rollFormula.damagesFormulas.{{key}}.type" value="{{damageFormula.type}}" placeholder="Fire"> {{! TODO localize}}
+                    <a class="delete-damage-formula delete-button" data-key="{{key}}">
+                        <img class="icon-img" src="systems/nullgame/assets/delete.svg">
+                    </a>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="add-button-container">
+            <a class="add-damage-formula add-button" title="add damage"> {{!TODO use tooltip, localize}}
+                <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
+                </a>
+        </div>
+        <div class="other-formula-container flex-cont">
+            <label class="label-attack" for="system.rollFormula.formula"> Other Formula</label> {{! TODO localize}}
+            <div class="attack-inputs-container">
+                <input type="text" class="input-box"  name="system.rollFormula.formula" value="{{system.rollFormula.formula}}">
+            </div>
+        </div>
     </div>
 </div>

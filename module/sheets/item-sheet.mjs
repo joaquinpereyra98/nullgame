@@ -63,6 +63,18 @@ export class NullGameItemSheet extends ItemSheet {
        $(ev.currentTarget).next(".accordion-content").slideToggle(500);
        this.accordionState = !this.accordionState;
      });
+     html.on("click", ".add-damage-formula", (ev) => {
+      ev.preventDefault();
+      const dmgArray = this.item.system.rollFormula.damagesFormulas;
+      dmgArray.push({formula: '',type: ''});
+      this.item.update({'system.rollFormula.damagesFormulas': dmgArray});
+     });
+     html.on("click", ".delete-damage-formula", (ev) =>{
+      ev.preventDefault();
+      const dmgArray = this.item.system.rollFormula.damagesFormulas;
+      dmgArray.splice(ev.currentTarget.dataset.key, 1)[0];
+      this.item.update({'system.rollFormula.damagesFormulas': dmgArray});
+     })
     if (!this.isEditable) return;
   }
 }

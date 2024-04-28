@@ -22,18 +22,16 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
             value: new foundry.data.fields.StringField({...requiredString}),
             type: new foundry.data.fields.StringField({...requiredString}),
           }),
-            actionType: new fields.StringField({...requiredString}),
-            formula: new fields.StringField({...requiredString}),
-            consumption: new fields.SchemaField({
-              qty: new fields.NumberField({...requiredNumber}),
-              rsc: new fields.StringField({...requiredString}),
-              rscType: new fields.StringField({...requiredString})
-            })
+          attackType: new fields.StringField({...requiredString}),
+          consumption: new fields.SchemaField({
+            qty: new fields.NumberField({...requiredNumber}),
+            rsc: new fields.StringField({...requiredString}),
+            rscType: new fields.StringField({...requiredString})
+          })
         }),
-        roll: new fields.SchemaField({
-            diceNum: new fields.NumberField({nullable: false, integer: true, initial: 1, min: 1 }),
-            diceSize: new fields.StringField({ initial: "d20" }),
-            diceBonus: new fields.StringField({ blank: true })
+        rollFormula: new fields.SchemaField({
+          formula: new fields.StringField({blank: true}),
+          damagesFormulas: new fields.ArrayField(new fields.ObjectField())
         }),
         category: new fields.StringField({...requiredString}),
         isResource: new fields.BooleanField({inital: false}),
