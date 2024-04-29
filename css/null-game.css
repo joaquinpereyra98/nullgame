@@ -1,7 +1,7 @@
 :root {
     --backBGLittleOpacity: rgba(0, 0, 0, 0.05);
     --backBGMoreOpacity: rgba(0, 0, 0, 0.1);
-    --borderBox: 0 groove;
+    --borderBox: 0 groove rgb(238, 238, 238);
     --redDeleteColor: invert(11%) sepia(80%) saturate(6573%) hue-rotate(10deg) brightness(91%) contrast(119%);
 }
 
@@ -282,6 +282,9 @@
     padding: 0 5px;
     background-color: var(--backBGMoreOpacity);
 }
+.null-game.item .description-tab .accordion-container .accordion-content.extended {
+    display: none;
+}
 .null-game.item .description-tab .accordion-container .accordion-content .editor{
     height: 100%;
 }
@@ -328,5 +331,9 @@
 }
 .null-game.item .details-tab .usage-container .usage-inputs-container .formula-container:hover{
     background-color: var(--backBGLittleOpacity);
+}
+.null-game.item .details-tab .attack-container .add-button-container{
+    display: flex;
+    justify-content: flex-end;
 }
 /*******************************************************************************/
