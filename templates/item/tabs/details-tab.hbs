@@ -3,7 +3,7 @@
         <h3>Feature Usage</h3>
         <div class="target-container flex-cont">
             <label class="label-usage" for="system.details.target">Target</label> {{! TODO localize}}
-            <div class="usage-inputs-container">
+            <div class="usage-inputs-container flex-cont">
                 <input type="text" class="input-box" name="system.details.target.value"
                     value="{{system.details.target.value}}">
 
@@ -21,7 +21,7 @@
         </div>
         <div class="range-container flex-cont">
             <label class="label-usage" for="system.details.range">Range</label> {{! TODO localize}}
-            <div class="usage-inputs-container">
+            <div class="usage-inputs-container flex-cont">
                 <input class="input-box" type="number" name="system.details.range.normal"
                     value="{{system.details.range.normal}}" title="Normal Range"> {{! TODO changed title by tooltip}}
                 <input class="input-box" type="number" name="system.details.range.long"
@@ -38,16 +38,16 @@
         </div>
         <div class="duration-container flex-cont">
             <label class="label-usage" for="system.details.duration">Duration</label>{{! TODO localize}}
-            <div class="usage-inputs-container">
+            <div class="usage-inputs-container flex-cont">
                 <input class="input-box" type="number" data-dtype="Number" name="system.details.duration.value"
                     value="{{system.details.duration.value}}">
-                    <span class="unit-label">Rounds</span>
+                    <span class="unit-label center-align">Rounds</span>
             </div>
 
         </div>
         <div class="consumption-container flex-cont">
             <label class="label-usage" for="system.details.consumption">Resources</label>{{! TODO localize}}
-            <div class="usage-inputs-container">
+            <div class="usage-inputs-container flex-cont">
                 <input class="input-box" type="number" name="system.details.consumption.qty" value="{{system.details.consumption.qty}}">
                 <select class="input-box" name="system.details.consumption.rscType">
                     {{#select system.details.consumption.rscType}}
@@ -98,14 +98,14 @@
                 <div class="damageFormula.{{key}}.container flex-cont formula-container">
                     <input type="text" class="input-box" name="system.rollFormula.damagesFormulas.{{key}}.formula" value="{{damageFormula.formula}}" placeholder="2d6">
                     <input type="text" class="input-box"  name="system.rollFormula.damagesFormulas.{{key}}.type" value="{{damageFormula.type}}" placeholder="Fire"> {{! TODO localize}}
-                    <a class="delete-damage-formula delete-button" data-key="{{key}}">
+                    <a class="delete-damage-formula delete-button center-align" data-key="{{key}}">
                         <img class="icon-img" src="systems/nullgame/assets/delete.svg">
                     </a>
                 </div>
                 {{/each}}
             </div>
         </div>
-        <div class="add-button-container">
+        <div class="add-button-container center-align">
             <a class="add-damage-formula add-button" title="add damage"> {{!TODO use tooltip, localize}}
                 <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                 </a>

@@ -1,10 +1,10 @@
 <form class="{{cssClass}} {{actor.type}}" autocomplete="off">
     <header class="sheet-header">
-        <div class="img-container">
+        <div class="img-container flex-cont" style="flex:auto">
             <img class="profile-img" src="{{actor.img}}" data-edit="img"
                 title="{{actor.name}}" height="100" width="100" />
         </div>
-        <div class="header-container">
+        <div class="header-container" style="flex: 7;">
             <div class="first-header-container flex-cont">
                 <div class="name-container">
                     <input name="name" type="text" value="{{actor.name}}" class="header-input"

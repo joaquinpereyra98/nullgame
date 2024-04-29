@@ -1,6 +1,6 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <div class="img-container">
+    <div class="img-container flex-cont">
       <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100" />
     </div>
     <div class="header-container">
@@ -31,7 +31,7 @@
         </div>
         {{#if system.isResource}}
         <div class="ammo-quantity-header flex-cont second-header-box">
-          <label class="ammo-label" for="system.quantity"> Quantity:</label>
+          <label class="ammo-label center-align" for="system.quantity"> Quantity:</label>
           <input class="quantity-input" type="number" name="system.quantity" value="{{system.quantity}}">
         </div>
         {{/if}}

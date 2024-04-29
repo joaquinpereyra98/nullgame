@@ -3,148 +3,147 @@
     --backBGMoreOpacity: rgba(0, 0, 0, 0.1);
     --borderBox: 0 groove;
     --redDeleteColor: invert(11%) sepia(80%) saturate(6573%) hue-rotate(10deg) brightness(91%) contrast(119%);
-    --blackButtonColor: invert(0%) sepia(8%) saturate(656%) hue-rotate(343deg) brightness(96%) contrast(84%);
-    --blackButtonColorSaturate: invert(0%) sepia(1%) saturate(6205%) hue-rotate(328deg) brightness(132%) contrast(92%);
 }
 
 .flex-cont {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: space-around;
-    -ms-flex-pack: distribute;
     justify-content: space-around;
 }
-
+.center-align{
+    display: flex;
+    align-items: center;
+}
+/* ++++++++++++++++++++++++++++++ ICONS BUTTON ++++++++++++++++++++++++++*/
+.null-game .delete-button .icon-img{
+    filter: var(--redDeleteColor);
+}
+.null-game .icon-img{
+    transition: 200ms all;
+    border: 0;
+    opacity: 0.5;
+}
+.null-game .delete-button:hover .icon-img,
+.null-game .add-button:hover .icon-img,
+.null-game .edit-button:hover .icon-img
+{
+    transform: scale(1.1);
+    opacity: 1;
+}
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 .null-game header.sheet-header {
     border: var(--borderBox);
     border-bottom-width: 2px;
     padding-bottom: 5px;
     align-items: stretch;
+}
 
-    .img-container {
-        display: flex;
+.null-game header.sheet-header .img-container .profile-img {
+    margin: 0;
+    border: 0;
+    height: auto;
+    flex: 2;
+}
 
-        .profile-img {
-            margin: 0;
-            border: 0;
-            height: auto;
-            -webkit-box-flex: 2;
-            -ms-flex: 2;
-            flex: 2;
-        }
-    }
+.null-game header.sheet-header .header-container {
+    border: var(--borderBox);
+    border-left-width: 2px;
+    padding-left: 5px;
+    margin-left: 5px;
+}
 
-    .header-container {
-        border: var(--borderBox);
-        border-left-width: 2px;
-        padding-left: 5px;
-        margin-left: 5px;
+.null-game header.sheet-header .header-container .first-header-container .header-input {
+    border: 0;
+    height: auto;
+    background: var(--backBGLittleOpacity);
+}
 
-        .first-header-container {
-            .header-input {
-                border: 0;
-                height: auto;
-                background: var(--backBGLittleOpacity)
-            }
+.null-game header.sheet-header .header-container .first-header-container .name-container {
+    flex: 8;
+}
 
-            .name-container {
-                -webkit-box-flex: 8;
-                -ms-flex: 8;
-                flex: 8;
+.null-game header.sheet-header .header-container .first-header-container .name-container .header-input {
+    font-size: xxx-large;
+}
 
-                .header-input {
-                    font-size: xxx-large;
-                }
-            }
+.null-game header.sheet-header .header-container .first-header-container .level-container {
+    text-align: center;
+    flex: 2;
+}
 
-            .level-container {
-                text-align: center;
-                -webkit-box-flex: 2;
-                -ms-flex: 2;
-                flex: 2;
+.null-game header.sheet-header .header-container .first-header-container .level-container .header-input {
+    font-size: xx-large;
+}
 
-                .header-input {
-                    font-size: xx-large;
-                }
-            }
-        }
+.null-game header.sheet-header .header-container .second-header-container {
+    border: var(--borderBox);
+    border-width: 2px 0;
+    padding: 2px 0;
+    margin: 5px 0;
+}
 
-        .second-header-container {
-            border: var(--borderBox);
-            border-width: 2px 0;
-            padding: 2px 0;
-            margin: 5px 0;
+.null-game header.sheet-header .header-container .second-header-container .input-bordeless {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    padding: 0 5px;
+}
 
-            .input-bordeless {
-                background-color: rgba(0, 0, 0, 0);
-                border-width: 0;
-                padding: 0 5px;
-            }
+.null-game header.sheet-header .header-container .second-header-container .input-bordeless:focus {
+    box-shadow: none;
+    background: var(--backBGLittleOpacity);
+}
 
-            .input-bordeless:focus {
-                box-shadow: none;
-                background: var(--backBGLittleOpacity);
-            }
+.null-game header.sheet-header .header-container .second-header-container .tb-header-secondTextBox {
+    border: var(--borderBox);
+    border-width: 0 2px;
+}
 
-            .tb-header-secondTextBox {
-                border: var(--borderBox);
-                border-width: 0 2px
-            }
+.null-game header.sheet-header .header-container .second-header-container .select-header {
+    border: var(--borderBox);
+    border-right-width: 0 2px 0 0;
+    background: 0;
+    margin: 0 1px;
+}
 
-            .select-header {
-                border: var(--borderBox);
-                border-right-width: 0 2px 0 0;
-                background: 0;
-                margin: 0 1px;
-            }
+.null-game header.sheet-header .header-container .second-header-container .select-header:focus {
+    box-shadow: none;
+    background: var(--backBGLittleOpacity);
+}
 
-            .select-header:focus {
-                box-shadow: none;
-                background: var(--backBGLittleOpacity);
-            }
-        }
+.null-game header.sheet-header .header-container .third-header-container {
+    text-align: center;
+    border: var(--borderBox);
+    border-width: 2px 0;
+}
 
-        .third-header-container {
-            text-align: center;
-            border: var(--borderBox);
-            border-width: 2px 0;
+.null-game header.sheet-header .header-container .third-header-container .bar-header-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5px;
+}
 
-            .bar-header-container {
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                -ms-flex-direction: column;
-                flex-direction: column;
-                border-width: 0;
-                margin: 0 5px;
+.null-game header.sheet-header .header-container .third-header-container .bar-header-container .bar-label-container {
+    border: var(--borderBox);
+    border-bottom-width: 2px;
+}
 
-                .bar-label-container {
-                    border: var(--borderBox);
-                    border-bottom-width: 2px;
-                }
+.null-game header.sheet-header .header-container .third-header-container .bar-header-container .bar-header-num {
+    font-size: large;
+}
 
-                .bar-header-num {
-                    font-size: large;
-                }
+.null-game header.sheet-header .header-container .third-header-container .bar-header-container .slash-bar {
+    opacity: 0.6;
+    font-size: larger;
+    font-weight: bold;
+}
 
-                .slash-bar {
-                    opacity: 0.6;
-                    font-size: larger;
-                    font-weight: bold;
-                }
-            }
+.null-game header.sheet-header .header-container .third-header-container .input-bordeless {
+    background: 0;
+    border: 0;
+}
 
-            .input-bordeless {
-                background: 0;
-                border: 0;
-            }
-
-            .input-bordeless:focus {
-                box-shadow: none;
-                background: var(--backBGLittleOpacity);
-            }
-        }
-    }
+.null-game header.sheet-header .header-container .third-header-container .input-bordeless:focus {
+    box-shadow: none;
+    background: var(--backBGLittleOpacity);
 }
 
 .null-game.sheet nav.sheet-tabs {
@@ -152,414 +151,182 @@
     border: var(--borderBox);
     border-bottom-width: 2px;
 }
+.null-game .tab.features .category-header {
+    align-items: center;
+    border: var(--borderBox);
+    border-width: 2px;
+    background-color: var(--backBGLittleOpacity);
+    padding: 2px;
+}
+.null-game .tab.features .category-name {
+    flex: 10;
+    font-weight: bold;
+}
+.null-game .tab.features .category-name .category-name-input {
+    font-weight: bold;
+    width: 95%;
+    padding-left: 5px;
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+.null-game .tab.features .category-name .category-name-input:focus {
+    box-shadow: none;
+    background-color: var(--backBGMoreOpacity);
+}
+.null-game .tab.features .tool-section {
+    display: flex;
+    justify-content: flex-end;
+}
+.null-game .tab.features .tool-section .tool-button,
+.null-game .tab.features .tool-section .create-category {
+    font-size: small;
+    padding: 0 2px;
+    border: 0;
+}
+.null-game .tab.features .tool-section .tool-button .span-button,
+.null-game .tab.features .tool-section .add-button{
+    font-size: small;
+}
 
+.null-game .tab.features .category-body .item-list-component {
+    padding: 0px 10px;
+}
+.null-game .tab.features .category-body .item-list-component .item-name {
+    flex: 7;
+    justify-content: flex-start;
+    align-items: center;
+}
+.null-game .tab.features .category-body .item-list-component .item-name .item-image {
+    margin-right: 5px;
+}
+
+.null-game .tab.features .category-body .item-list-component .item-controls {
+    flex: 3;
+    justify-content: flex-end;
+}
+.null-game .tab.features .category-body .item-list-component:hover {
+    background-color: var(--backBGLittleOpacity);
+}
 .null-game .tab.features {
     padding: 5px;
-
-    .category-header {
-        align-items: center;
-        border: var(--borderBox);
-        border-width: 2px;
-        background-color: var(--backBGLittleOpacity);
-        padding: 2px;
-    }
-
-    .category-name {
-        -webkit-box-flex: 10;
-        -ms-flex: 10;
-        flex: 10;
-        font-weight: bold;
-
-        .category-name-input {
-            font-weight: bold;
-            width: 95%;
-            padding-left: 5px;
-            border: 0;
-            background-color: rgba(0, 0, 0, 0);
-        }
-
-        .category-name-input:focus {
-            box-shadow: none;
-            background-color: var(--backBGMoreOpacity);
-        }
-
-    }
-
-    .tool-section {
-        -webkit-box-flex: 4;
-        -ms-flex: 4;
-        flex: 4;
-        display: flex;
-        justify-content: flex-end;
-
-        .tool-button {
-            font-size: small;
-            padding: 0 2px;
-            border: 0;
-
-            .span-button {
-                font-size: small;
-                display: flex;
-                align-items: center;
-            }
-        }
-
-        .create-category {
-            font-size: medium;
-            border: 0;
-            padding: 0 2px;
-        }
-
-        .delete-button {
-            .icon-img {
-                transition: 200ms all;
-                border: 0;
-                height: 90%;
-                max-width: fit-content;
-                filter: var(--redDeleteColor);
-                opacity: 0.5;
-            }
-
-            &:hover img {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-        }
-
-        .add-button {
-            display: flex;
-            align-items: center;
-
-            .icon-img {
-                transition: 200ms all;
-                border: 0;
-                height: 90%;
-                max-width: fit-content;
-                filter: var(--blackButtonColor);
-                opacity: 0.5;
-            }
-        }
-
-        .add-button:hover img {
-            filter: var(--blackButtonColorSaturate);
-            transform: scale(1.1);
-            opacity: 1;
-        }
-    }
-
-    .category-body {
-
-        .item-list-component {
-            padding: 0px 10px;
-
-            .item-name {
-                -webkit-box-flex: 7;
-                -ms-flex: 7;
-                flex: 7;
-                justify-content: flex-start;
-                align-items: center;
-
-                .item-image {
-                    display: flex;
-                    align-items: center;
-                    margin-right: 5px;
-
-                    .item-image-button {
-                        display: flex;
-                        align-items: center;
-                    }
-                }
-            }
-
-            .item-controls {
-                -webkit-box-flex: 3;
-                -ms-flex: 3;
-                flex: 3;
-                justify-content: flex-end;
-                display: flex;
-                align-items: center;
-
-                .edit-button .icon-img {
-                    transition: 200ms all;
-                    border: 0;
-                    height: 70%;
-                    max-width: fit-content;
-                    opacity: 0.5;
-                }
-
-                .edit-button:hover .icon-img {
-                    transform: scale(1.1);
-                    opacity: 1;
-                }
-
-                .delete-button .icon-img {
-                    transition: 200ms all;
-                    border: 0;
-                    height: 70%;
-                    max-width: fit-content;
-                    filter: var(--redDeleteColor);
-                    opacity: 0.5;
-                }
-
-                .delete-button:hover img {
-                    transform: scale(1.1);
-                    opacity: 1;
-                }
-            }
-        }
-
-        .item-list-component:hover {
-            background-color: var(--backBGLittleOpacity);
-        }
-    }
 }
-
-.null-game.actor {
-    .img-container {
-        -webkit-box-flex: auto;
-        -ms-flex: auto;
-        flex: auto;
-    }
-
-    .header-container {
-        -webkit-box-flex: 7;
-        -ms-flex: 7;
-        flex: 7;
-    }
+.null-game.item .header-container {
+    flex: 4;
 }
-
-.null-game.item {
-    .img-container {
-        flex: 1;
-        -webkit-box-flex: 1;
-        -ms-flex: 1;
-    }
-
-    .header-container {
-        flex: 4;
-        -webkit-box-flex: 4;
-        -ms-flex: 4;
-    }
-
-    .second-header-container {
-        justify-content: flex-start;
-        .second-header-box {
-                flex: 1;
-                .select-category {
-                    border: 0;
-                    width: 100%;
-                    background-color: var(--backBGMoreOpacity);
-                }
-        }
-        .ammo-checkbox-header {
-            border: var(--borderBox);
-            border-width: 0 2px;
-            margin: 0 5px;
-            padding: 0 3px;
-            justify-content: center;
-            align-items: center;
-
-            .ammo-label {
-                display: flex;
-                align-items: center;
-            }
-        }
-        .ammo-quantity-header {
-            justify-content: space-between;
-            align-items: center;
-
-            .ammo-label {
-                display: flex;
-                align-items: center;
-            }
-
-            .quantity-input {
-                max-width: 80%;
-                border: 0;
-                background-color: var(--backBGMoreOpacity);
-            }
-        }
-        
-    }
-
-    .description-tab {
-        display: flex;
-
-        .properties-container {
-            border: var(--borderBox);
-            padding: 0 5px;
-            border-right-width: 2px;
-            -webkit-box-flex: 2;
-            -ms-flex: 2;
-            flex: 2;
-        }
-
-        .accordion-container {
-            -webkit-box-flex: 6;
-            -ms-flex: 6;
-            flex: 6;
-            height: 15em;
-            padding: 2px 5px;
-
-            .accordion-headers {
-                display: flex;
-                align-items: center;
-                border: var(--borderBox);
-                border-width: 2px;
-                background-color: var(--backBGLittleOpacity);
-                padding: 2px;
-                padding-left: 5px;
-                font-weight: bold;
-                cursor: pointer;
-
-                .span-button {
-                    display: flex;
-                }
-
-                .icon-img {
-                    transition: 500ms all;
-                    border: 0;
-                    height: 1.5em;
-                    max-width: fit-content;
-                    opacity: 0.5;
-                    display: flex;
-                }
-
-            }
-
-            .accordion-headers:hover {
-                background-color: var(--backBGMoreOpacity)
-            }
-
-            .accordion-content {
-                min-height: 2.5em;
-                max-height: 9em;
-                overflow-y: auto;
-                height: 100%;
-                padding: 0 5px;
-                background-color: var(--backBGMoreOpacity);
-
-                &.extended {
-                    display: none;
-                }
-
-                .editor,
-                .prosemirror {
-                    height: 100%;
-
-                    .editor-container {
-                        min-height: -webkit-fill-available;
-                    }
-                }
-            }
-
-
-        }
-
-    }
-
-    .details-tab{
-
-        .usage-container{
-            .label-usage{
-                flex: 3;
-                text-align: center;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .usage-inputs-container{
-                flex: 7;
-                display: flex;
-                
-                .input-box{
-                    flex: 1;
-                    height: 27px;
-                    border: 0;
-                    margin: 2px 5px;
-                    background-color: var(--backBGMoreOpacity);
-                    text-align: center;
-                }
-                .unit-label{
-                flex: 1;
-                display: flex;
-                align-items: center;
-                }
-            }
-        }
-
-        .attack-container{
-
-            .label-attack{
-                flex: 3;
-                text-align: center;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .attack-inputs-container{
-                flex: 7;
-                .attack-type-select{
-                    border: 0;
-                    background: var(--backBGMoreOpacity);
-                    width: 50%;
-                    text-align: center;
-                    margin: 0 5px;
-                }
-                .formula-container{
-                    padding: 3px 0;
-                }
-                .formula-container:hover{
-                    background-color: var(--backBGLittleOpacity);
-                }
-                .input-box{
-                    flex: 1;
-                    height: 27px;
-                    border: 0;
-                    margin: 2px 5px;
-                    background-color: var(--backBGMoreOpacity);
-                    text-align: center;
-                }
-                .delete-button{
-                    display: flex;
-                    align-items: center;
-
-                    .icon-img {
-                        transition: 200ms all;
-                        border: 0;
-                        height: 70%;
-                        max-width: fit-content;
-                        filter: var(--redDeleteColor);
-                        opacity: 0.5;
-                    }
-
-                    &:hover .icon-img {
-                        transform: scale(1.1);
-                        opacity: 1;
-                    }
-                }
-                
-            }
-            .add-button-container{
-                display: flex;
-                justify-content: flex-end;
-                .add-button{
-                    
-                    .icon-img{
-                        transition: 200ms all;
-                        border: 0;
-                        height: 90%;
-                        max-width: fit-content;
-                        filter: var(--blackButtonColor);
-                        opacity: 0.5;
-                    }
-                    &:hover .icon-img{
-                        transform: scale(1.1);
-                        opacity: 1;
-                    }
-                }
-            }
-        }
-    }
-
+.null-game.item .second-header-container .second-header-box {
+    flex: 1;
 }
+.null-game.item .second-header-container .select-category {
+    border: 0;
+    width: 100%;
+    background-color: var(--backBGMoreOpacity);
+}
+.null-game.item .second-header-container .ammo-checkbox-header {
+    border: var(--borderBox);
+    border-width: 0 2px;
+    margin: 0 5px;
+    padding: 0 3px;
+    justify-content: center;
+    align-items: center;
+}
+.null-game.item .second-header-container .ammo-quantity-header {
+    justify-content: space-between;
+    align-items: center;
+}
+.null-game.item .second-header-container .ammo-quantity-header .quantity-input {
+    max-width: 80%;
+    border: 0;
+    background-color: var(--backBGMoreOpacity);
+}
+.null-game.item .description-tab .properties-container {
+    border: var(--borderBox);
+    padding: 0 5px;
+    border-right-width: 2px;
+    flex: 2;
+}
+/*
+*
+* START ACCORDION STYLE ITEM SHEET
+*
+*/
+.null-game.item .description-tab .accordion-container{
+    flex: 6;
+    height: 15em;
+    padding: 2px 5px;
+}
+.null-game.item .description-tab .accordion-container .accordion-headers{
+    border: var(--borderBox);
+    border-width: 2px;
+    background-color: var(--backBGLittleOpacity);
+    padding: 2px;
+    padding-left: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.null-game.item .description-tab .accordion-container .accordion-headers .icon-img{
+    transition: 500ms all;
+    border: 0;
+    height: 1.5em;
+    max-width: fit-content;
+    opacity: 0.5;
+    display: flex;
+}
+.null-game.item .description-tab .accordion-container .accordion-headers:hover {
+    background-color: var(--backBGMoreOpacity)
+}
+.null-game.item .description-tab .accordion-container .accordion-content {
+    min-height: 2.5em;
+    max-height: 9em;
+    overflow-y: auto;
+    height: 100%;
+    padding: 0 5px;
+    background-color: var(--backBGMoreOpacity);
+}
+.null-game.item .description-tab .accordion-container .accordion-content .editor{
+    height: 100%;
+}
+.null-game.item .description-tab .accordion-container .accordion-content .editor .editor-container {
+    min-height: -webkit-fill-available;
+}
+/*
+*
+* END ACCORDION STYLE ITEM SHEET
+*
+*/
+.null-game.item .details-tab .usage-container .label-usage,
+.null-game.item .details-tab .attack-container .label-attack{
+    flex: 3;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.null-game.item .details-tab .usage-container .usage-inputs-container,
+.null-game.item .details-tab .attack-container .attack-inputs-container{
+    flex: 7;
+}
+.null-game.item .details-tab .input-box{
+    flex: 1;
+    height: 27px;
+    border: 0;
+    margin: 2px 5px;
+    background-color: var(--backBGMoreOpacity);
+    text-align: center;
+}
+.null-game.item .details-tab .usage-container .usage-inputs-container .unit-label{
+    flex: 1;
+}
+.null-game.item .details-tab .attack-container .attack-inputs-container .attack-type-select{
+    border: 0;
+    background: var(--backBGMoreOpacity);
+    width: 50%;
+    text-align: center;
+    margin: 0 5px;
+}
+.null-game.item .details-tab .usage-container .usage-inputs-container .formula-container{
+    padding: 3px 0;
+}
+.null-game.item .details-tab .usage-container .usage-inputs-container .formula-container:hover{
+    background-color: var(--backBGLittleOpacity);
+}
+/*******************************************************************************/

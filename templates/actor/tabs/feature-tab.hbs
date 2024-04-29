@@ -6,8 +6,8 @@
             value="{{category.label}}">
     </div>
     <div class="tool-section">
-        <a class="tool-button add-button create-item" data-type='feature' data-category='{{categoryKey}}'>
-            <span class="span-button">
+        <a class="tool-button add-button create-item center-align" data-type='feature' data-category='{{categoryKey}}'>
+            <span class="span-button center-align">
                 <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                 Create Item{{!TODO localize }}
             </span>
@@ -21,8 +21,8 @@
     {{#each category.items as |item id|}}
     <div class="item-list-component flex-cont">
         <div class="item-name flex-cont">
-            <div class='item-image'>
-                <a class='rollable item-image-button' data-roll-type='item'>
+            <div class='item-image center-align'>
+                <a class='rollable item-image-button center-align' data-roll-type='item'>
                     <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
                 </a>
             </div>
@@ -30,7 +30,7 @@
                 {{item.name}}
             </span>
         </div>
-        <div class='item-controls'>
+        <div class='item-controls center-align'>
             <a class="edit-button item-edit" data-id="{{item._id}}">
                 <img class="icon-img" src="systems/nullgame/assets/edit.svg">
             </a>
@@ -48,13 +48,13 @@
         <div class="category-name">{{features.uncategorized.label}}</div>
         <div class="tool-section">
             <a class="tool-button add-button create-item" data-type='feature' data-category='{{uncategorized}}'>
-                <span class="span-button">
+                <span class="span-button center-align">
                     <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                     Create Item{{!TODO localize }}
                 </span>
             </a>
             <a class="tool-button add-button create-category" data-type='features'>
-                <span class="span-button">
+                <span class="span-button center-align">
                     <img class="icon-img" src="systems/nullgame/assets/playlist_add.svg">
                     Create Category {{!TODO localize }}
                 </span>
@@ -75,7 +75,7 @@
                     {{item.name}}
                 </span>
             </div>
-            <div class='item-controls'>
+            <div class='item-controls center-align'>
                 <a class="edit-button item-edit" data-id="{{item._id}}">
                     <img class="icon-img" src="systems/nullgame/assets/edit.svg">
                 </a>
