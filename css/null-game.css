@@ -213,6 +213,13 @@
 .null-game.item .header-container {
     flex: 4;
 }
+.null-game.item .header-container .first-header-container .level-container{
+    display:flex;
+    flex-direction: column;
+}
+.null-game.item .header-container .first-header-container .level-container .label-level{
+    font-size: 40px;
+}
 .null-game.item .second-header-container .second-header-box {
     flex: 1;
 }
@@ -221,22 +228,29 @@
     width: 100%;
     background-color: var(--backBGMoreOpacity);
 }
-.null-game.item .second-header-container .ammo-checkbox-header {
+.null-game.item .second-header-container .middle-border-container{
     border: var(--borderBox);
     border-width: 0 2px;
     margin: 0 5px;
     padding: 0 3px;
+}
+.null-game.item .second-header-container .ammo-checkbox-header,
+.null-game.item .second-header-container .rolleable-checkbox-header{
+    display: flex;
     justify-content: center;
     align-items: center;
 }
-.null-game.item .second-header-container .ammo-quantity-header {
-    justify-content: space-between;
+.null-game.item .second-header-container .ammo-quantity-header,
+.null-game.item .second-header-container .level-input-header,
+.null-game.item .second-header-container .exp-input-header{ 
+    justify-content: space-around;
     align-items: center;
 }
-.null-game.item .second-header-container .ammo-quantity-header .quantity-input {
-    max-width: 80%;
+.null-game.item .second-header-container .item-header-input {
+    max-width: 60%;
     border: 0;
     background-color: var(--backBGMoreOpacity);
+    text-align: center;
 }
 .null-game.item .description-tab .properties-container {
     border: var(--borderBox);
@@ -336,4 +350,6 @@
     display: flex;
     justify-content: flex-end;
 }
-/*******************************************************************************/
+.null-game.item .description-skill .editor{
+    min-height: 5.5em;
+}

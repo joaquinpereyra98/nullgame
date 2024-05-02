@@ -24,7 +24,7 @@
             {{/select}}
           </select>
         </div>
-        <div class="ammo-checkbox-header flex-cont second-header-box">
+        <div class="ammo-checkbox-header middle-border-container second-header-box">
           <label class="ammo-label" for="system.isResource">Is Ammo:</label>
           <input name="system.isResource" type="checkbox" value="{{system.isResource}}" {{checked system.isResource}}
             data-dtype="Boolean">
@@ -32,7 +32,7 @@
         {{#if system.isResource}}
         <div class="ammo-quantity-header flex-cont second-header-box">
           <label class="ammo-label center-align" for="system.quantity"> Quantity:</label>
-          <input class="quantity-input" type="number" name="system.quantity" value="{{system.quantity}}">
+          <input class="item-header-input quantity-input" type="number" name="system.quantity" value="{{system.quantity}}">
         </div>
         {{/if}}
       </div>

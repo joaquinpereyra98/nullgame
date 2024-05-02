@@ -4,6 +4,7 @@ import NullGameActorData from './data/actor-base.mjs';
 import { NullGameItem } from './documents/item.mjs';
 import { NullGameItemSheet } from './sheets/item-sheet.mjs';
 import NullGameFeatureData from './data/item-feature.mjs';
+import NullGameSkillData from './data/item-skill.mjs';
 
 async function preloadHandlebarsTemplates () {
   return loadTemplates([
@@ -26,6 +27,7 @@ Hooks.once('init', function () {
     }
     CONFIG.Item.dataModels = {
       feature: NullGameFeatureData,
+      skill: NullGameSkillData
     }
     Actors.unregisterSheet('core', ActorSheet);
     Actors.registerSheet('null-game', NullGameActorSheet, {

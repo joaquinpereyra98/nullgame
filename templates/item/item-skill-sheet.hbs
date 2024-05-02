@@ -1,0 +1,40 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <div class="img-container flex-cont">
+      <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="100" width="100" />
+    </div>
+    <div class="header-container">
+      <div class="first-header-container flex-cont">
+        <div class="name-container">
+          <input name="name" class="header-input" type="text" value="{{item.name}}"
+            placeholder="{{localize 'NULL_GAME.SheetPH.Name'}}" />
+        </div>
+        <div class="level-container">
+          <label class="label-level"> {{system.advancement.level}}</label>
+          <label class="level-label" for="system.advancement.level">
+            Level  {{! TODO localize}}
+          </label>
+        </div>
+      </div>
+      <div class="second-header-container flex-cont">
+        <div class="rolleable-checkbox-header center-align second-header-box">
+          <label class="rolleable-label" for="system.isRolleable">Is Rolleable:</label> {{! TODO localize}}
+          <input name="system.isRolleable" type="checkbox" value="{{system.isRolleable}}" {{checked system.isRolleable}}
+            data-dtype="Boolean">
+        </div>
+        <div class="exp-input-header middle-border-container center-align second-header-box">
+          <label class="exp-label" for="system.advancement.experience">Exp{{! TODO localize}}</label>
+          <input class="item-header-input" type="number" value="{{system.advancement.experience}}" name="system.advancement.experience">
+        </div>
+      </div>
+    </div>
+  </header>
+  <section class="sheet-body">
+    <h2>Description</h2>
+    <div class="description-skill" >
+      {{editor descriptionHTML target="system.descriptions.description" button=true editable=editable
+            engine="prosemirror" collaborate=false}}
+    </div>
+  </section>
+
+</form>
