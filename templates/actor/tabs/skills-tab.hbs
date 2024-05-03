@@ -1,0 +1,45 @@
+<div class="skills-tab">
+    <div class="create-skill-container">
+        <a class="tool-button add-button create-item center-align">
+            <span class="span-button center-align">
+                <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
+                Create Item{{!TODO localize }}
+            </span>
+        </a>
+    </div>
+
+    {{#each skills as |skill skillKey|}}
+    <div class="skill-conntainer flex-cont">
+        <div class="accordion-skill-container">
+            <div class="accordion-headers center-align" data-key="{{skill._id}}">
+                <span class="span-button flex-cont">
+                    <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state skill._id) "rotate: 180deg" "rotate: 0deg"}}" src="systems/nullgame/assets/expand_more.svg">
+                </span>
+                <div class="item-name center-align">
+                    <div class='item-image center-align'>
+                        <img src='{{skill.img}}' title='{{item.name}}' width='24' height='24' />
+                    </div>
+                    <span class="skill-name-span">
+                        {{skill.name}}
+                    </span>
+                </div>
+                <div class='item-controls center-align'>
+                    <a class="edit-button item-edit" data-id="{{skill._id}}">
+                        <img class="icon-img" src="systems/nullgame/assets/edit.svg">
+                    </a>
+                    <a class="delete-button delete-item" data-id="{{skill._id}}">
+                        <img class="icon-img" src="systems/nullgame/assets/delete.svg">
+                    </a>
+                </div>
+            </div>
+            <div class="accordion-content {{ifThen (lookup ../state skill._id) "" "hidden"}}">
+                {{{skill.system.descriptions.description}}}
+            </div>
+        </div>
+        <a class="skill-roll-container">
+            <div class="dice-container">d20 +</div>
+            <div for="skill.system.advancement.mod" class="mod-container">{{skill.system.advancement.mod}}</div>
+        </a>
+    </div>
+    {{/each}}
+</div>

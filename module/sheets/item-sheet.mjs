@@ -58,7 +58,7 @@ export class NullGameItemSheet extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
      html.on("click", ".accordion-headers", (ev) => {   
-       const img = $(ev.currentTarget).find(".icon-img");
+       const img = $(ev.currentTarget).find(".accordion-icon");
        img.css("rotate", this.accordionState ? "0deg" : "180deg");
        $(ev.currentTarget).next(".accordion-content").slideToggle(500);
        this.accordionState = !this.accordionState;

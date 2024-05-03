@@ -30,6 +30,7 @@ export class NullGameActorSheet extends ActorSheet {
     const actorData = context.data;
     context.system = actorData.system;
     context.flags = actorData.flags;
+    context.state = this.accordionState;
     if (actorData.type == 'character') {
       this._prepareItems(context);
       this._prepareCharacterData(context);
@@ -56,17 +57,17 @@ export class NullGameActorSheet extends ActorSheet {
   _prepareItems(context) {
     const skills = [];
     const features = {};
-    const catFeats = context.system.categories.features;
-    for(let k in catFeats){
+    const cf = context.system.categories.features;
+    for(let k in cf){
       features[k]= {
-        label: catFeats[k],
+        label: cf[k],
         items:[],
       }
     }
  
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
-      if (i.type === 'item') {
+      if (i.type === 'skill') {
         skills.push(i);
       }
       else if (i.type === 'feature') {
@@ -153,6 +154,14 @@ export class NullGameActorSheet extends ActorSheet {
       const id = ev.currentTarget.dataset.id;
       const item = this.actor.items.get(id);
       item.sheet.render(true);
-    })
+    });
+    html.on("click", ".accordion-headers", (ev) => {
+      const img = $(ev.currentTarget).find(".accordion-icon");
+      const key = ev.currentTarget.dataset.key;
+      this.accordionState = this.accordionState || {};
+      this.accordionState[key] = !this.accordionState[key];
+      img.css("rotate", this.accordionState[key] ? "180deg" : "0deg");
+      $(ev.currentTarget).next(".accordion-content").slideToggle(500);
+    });
   }
 }

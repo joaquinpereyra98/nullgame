@@ -17,6 +17,8 @@ export default class NullGameSkillData extends foundry.abstract.TypeDataModel {
       };
     }
     prepareBaseData(){
-      this.advancement.level = Math.floor(this.advancement.experience / 5);
+      let level= this.advancement.level
+      level = Math.floor(this.advancement.experience / 5);
+      this.advancement.mod = level >= 75 ? 10 : level >= 65 ? 8 : level >= 50 ? 6 : level>= 40 ? 4 : level >= 25 ? 3 : level >= 15 ? 2 : level >= 5 ? 1 : 0;
     }
   }

@@ -29,7 +29,40 @@
     transform: scale(1.1);
     opacity: 1;
 }
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/* ++++++++++++++++++++++++++++++ ACCORDION ++++++++++++++++++++++++++*/
+.null-game .accordion-headers {
+    border: var(--borderBox);
+    border-width: 2px;
+    background-color: var(--backBGLittleOpacity);
+    padding: 2px;
+    padding-left: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.null-game .accordion-headers .icon-img{
+    transition: 500ms all;
+    border: 0;
+    height: 1.5em;
+    max-width: fit-content;
+    opacity: 0.5;
+    display: flex;
+}
+.null-game .accordion-headers:hover {
+    background-color: var(--backBGMoreOpacity)
+}
+.null-game .accordion-content {
+    min-height: 2.5em;
+    max-height: 9em;
+    overflow-y: auto;
+    padding: 0 5px;
+    background-color: var(--backBGMoreOpacity);
+    overflow-wrap: break-word;
+}
+.null-game .accordion-content.hidden {
+    display: none;
+}
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/*/
 .null-game header.sheet-header {
     border: var(--borderBox);
     border-bottom-width: 2px;
@@ -151,18 +184,18 @@
     border: var(--borderBox);
     border-bottom-width: 2px;
 }
-.null-game .tab.features .category-header {
+.null-game.actor .tab.features .category-header {
     align-items: center;
     border: var(--borderBox);
     border-width: 2px;
     background-color: var(--backBGLittleOpacity);
     padding: 2px;
 }
-.null-game .tab.features .category-name {
+.null-game.actor .tab.features .category-name {
     flex: 10;
     font-weight: bold;
 }
-.null-game .tab.features .category-name .category-name-input {
+.null-game.actor .tab.features .category-name .category-name-input {
     font-weight: bold;
     width: 95%;
     padding-left: 5px;
@@ -173,43 +206,78 @@
     box-shadow: none;
     background-color: var(--backBGMoreOpacity);
 }
-.null-game .tab.features .tool-section {
+.null-game.actor .tab.features .tool-section {
     display: flex;
     justify-content: flex-end;
 }
-.null-game .tab.features .tool-section .tool-button,
-.null-game .tab.features .tool-section .create-category {
+.null-game.actor .tab.features .tool-section .tool-button,
+.null-game.actor .tab.features .tool-section .create-category {
     font-size: small;
     padding: 0 2px;
     border: 0;
 }
-.null-game .tab.features .tool-section .tool-button .span-button,
-.null-game .tab.features .tool-section .add-button{
+.null-game.actor .tab.features .tool-section .tool-button .span-button,
+.null-game.actor .tab.features .tool-section .add-button{
     font-size: small;
 }
 
-.null-game .tab.features .category-body .item-list-component {
+.null-game.actor .tab.features .category-body .item-list-component {
     padding: 0px 10px;
 }
-.null-game .tab.features .category-body .item-list-component .item-name {
+.null-game.actor .tab.features .category-body .item-list-component .item-name {
     flex: 7;
     justify-content: flex-start;
     align-items: center;
 }
-.null-game .tab.features .category-body .item-list-component .item-name .item-image {
+.null-game.actor .tab.features .category-body .item-list-component .item-name .item-image {
     margin-right: 5px;
 }
 
-.null-game .tab.features .category-body .item-list-component .item-controls {
+.null-game.actor .tab.features .category-body .item-list-component .item-controls {
     flex: 3;
     justify-content: flex-end;
 }
-.null-game .tab.features .category-body .item-list-component:hover {
+.null-game.actor .tab.features .category-body .item-list-component:hover {
     background-color: var(--backBGLittleOpacity);
 }
-.null-game .tab.features {
+.null-game.actor .tab.features {
     padding: 5px;
 }
+.null-game.actor .skills-tab .create-skill-container{
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 2px;
+}
+.null-game.actor .skills-tab .skill-conntainer .accordion-skill-container {
+    flex: 8;
+    max-width: 80%;
+}
+.null-game.actor .skills-tab .skill-conntainer .accordion-skill-container .accordion-headers {
+    justify-content: space-between;
+}
+.null-game.actor .skills-tab .skill-conntainer .accordion-skill-container .accordion-headers .skill-name-span {
+    margin: 0 2px;
+}
+
+.null-game.actor .skills-tab .skill-conntainer .skill-roll-container{
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.null-game.actor .skills-tab .skill-conntainer .skill-roll-container .dice-container{
+    font-size: x-large;
+    font-weight: bold;
+}
+.null-game.actor .skills-tab .skill-conntainer .skill-roll-container .mod-container{
+    background: var(--backBGMoreOpacity);
+    padding: 5px;
+    font-size: large;
+    font-weight: bold;
+}
+
+/*++++++++++++++++++++++++++++++++++++ ITEM SHEET +++++++++++++++++++++++++++++++++++++++++++++++*/
+
 .null-game.item .header-container {
     flex: 4;
 }
@@ -258,46 +326,14 @@
     border-right-width: 2px;
     flex: 2;
 }
-/*
-*
-* START ACCORDION STYLE ITEM SHEET
-*
-*/
+/* ++++++++++++++++++++++++++++++ ACCORDION ITEM ++++++++++++++++++++++++++*/
 .null-game.item .description-tab .accordion-container{
     flex: 6;
     height: 15em;
     padding: 2px 5px;
 }
-.null-game.item .description-tab .accordion-container .accordion-headers{
-    border: var(--borderBox);
-    border-width: 2px;
-    background-color: var(--backBGLittleOpacity);
-    padding: 2px;
-    padding-left: 5px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.null-game.item .description-tab .accordion-container .accordion-headers .icon-img{
-    transition: 500ms all;
-    border: 0;
-    height: 1.5em;
-    max-width: fit-content;
-    opacity: 0.5;
-    display: flex;
-}
-.null-game.item .description-tab .accordion-container .accordion-headers:hover {
-    background-color: var(--backBGMoreOpacity)
-}
-.null-game.item .description-tab .accordion-container .accordion-content {
-    min-height: 2.5em;
-    max-height: 9em;
-    overflow-y: auto;
+.null-game.item .description-tab .accordion-content{
     height: 100%;
-    padding: 0 5px;
-    background-color: var(--backBGMoreOpacity);
-}
-.null-game.item .description-tab .accordion-container .accordion-content.extended {
-    display: none;
 }
 .null-game.item .description-tab .accordion-container .accordion-content .editor{
     height: 100%;
@@ -305,11 +341,7 @@
 .null-game.item .description-tab .accordion-container .accordion-content .editor .editor-container {
     min-height: -webkit-fill-available;
 }
-/*
-*
-* END ACCORDION STYLE ITEM SHEET
-*
-*/
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 .null-game.item .details-tab .usage-container .label-usage,
 .null-game.item .details-tab .attack-container .label-attack{
     flex: 3;
@@ -351,5 +383,5 @@
     justify-content: flex-end;
 }
 .null-game.item .description-skill .editor{
-    min-height: 5.5em;
+    min-height: 150px;
 }
