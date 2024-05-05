@@ -70,8 +70,10 @@
             {{> "systems/nullgame/templates/actor/tabs/skills-tab.hbs"}}
         </div>
         <div class="tab biography"data-tab="biography">
-            <h1>Biography</h1>
+            <div class="biography-editor-container">
+                {{editor biographyHTML target="system.biography" button=true editable=editable
+            engine="prosemirror" collaborate=false}}
+            </div>
         </div>
     </section>
-
 </form>

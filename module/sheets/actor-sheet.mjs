@@ -25,12 +25,16 @@ export class NullGameActorSheet extends ActorSheet {
   }
 
   /** @override */
-  getData() {
+  async getData() {
     const context = super.getData();
     const actorData = context.data;
     context.system = actorData.system;
     context.flags = actorData.flags;
     context.state = this.accordionState;
+    context.biographyHTML = await TextEditor.enrichHTML(
+      actorData.system.biography,
+      { async: true }
+    );
     if (actorData.type == 'character') {
       this._prepareItems(context);
       this._prepareCharacterData(context);

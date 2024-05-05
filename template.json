@@ -1,6 +1,7 @@
 {
   "Actor": {
-    "types": ["character"]
+    "types": ["character"],
+    "htmlFields": ["biography"]
   },
   "Item": {
     "types": ["feature", "skill"],

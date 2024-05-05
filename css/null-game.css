@@ -275,7 +275,14 @@
     font-size: large;
     font-weight: bold;
 }
-
+.null-game.actor .biography-editor-container{
+    padding: 5px;
+}
+.null-game.actor .biography-editor-container,
+.null-game.actor .biography-editor-container .editor,
+.null-game.actor .biography-editor-container .prosemirror .editor-container {
+    min-height: 12em;
+}
 /*++++++++++++++++++++++++++++++++++++ ITEM SHEET +++++++++++++++++++++++++++++++++++++++++++++++*/
 
 .null-game.item .header-container {

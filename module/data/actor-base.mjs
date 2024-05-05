@@ -37,7 +37,7 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
           max: new fields.NumberField({ ...requiredInteger, initial: 10 }),
         }),
       }),
-      biography: new fields.HTMLField({ ...requiredStringer }),
+      biography: new fields.HTMLField({ required: true, initial: '<div style="display: flex;"><div style="flex: 50%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 50%; padding-left: 10px;"><p></p></div></div>' }),
       textBoxs: new fields.SchemaField({
         firstTextBox: new fields.StringField({ ...requiredStringer }),
         secondTextBox: new fields.StringField({ ...requiredStringer }),

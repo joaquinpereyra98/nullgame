@@ -10,15 +10,15 @@ export default class NullGameSkillData extends foundry.abstract.TypeDataModel {
         }),
         isRolleable: new fields.BooleanField({ initial: false}),
         advancement: new fields.SchemaField({
-            experience: new fields.NumberField({...requiredNumber}),
-            mod: new fields.NumberField({...requiredNumber}),
-            level: new fields.NumberField({...requiredNumber})
+            experience: new fields.NumberField({...requiredNumber, max: 75}),
+            mod: new fields.NumberField({...requiredNumber, max: 10}),
+            level: new fields.NumberField({...requiredNumber, max:15})
         })
       };
     }
     prepareBaseData(){
-      let level= this.advancement.level
-      level = Math.floor(this.advancement.experience / 5);
-      this.advancement.mod = level >= 75 ? 10 : level >= 65 ? 8 : level >= 50 ? 6 : level>= 40 ? 4 : level >= 25 ? 3 : level >= 15 ? 2 : level >= 5 ? 1 : 0;
+      let exp= this.advancement.experience;
+      this.advancement.level = Math.floor(exp / 5);
+      this.advancement.mod = exp >= 75 ? 10 : exp >= 65 ? 8 : exp >= 50 ? 6 : exp>= 40 ? 4 : exp >= 25 ? 3 : exp >= 15 ? 2 : exp >= 5 ? 1 : 0;
     }
   }
