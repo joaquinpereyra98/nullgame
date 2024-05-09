@@ -42,10 +42,16 @@
                 {{{skill.system.descriptions.description}}}
             </div>
         </div>
+        {{#if skill.system.isRolleable}}
         <a class="skill-roll-container roll-item" data-id="{{skill._id}}">
-            <div class="dice-container">d20 +</div>
-            <div for="skill.system.advancement.mod" class="mod-container">{{skill.system.advancement.mod}}</div>
+            <div class="dice-container">d20</div>
+            <div for="skill.system.advancement.mod" class="mod-container">+{{skill.system.advancement.mod}}</div>
         </a>
-    </div>
+        {{else}}
+        <div class="skill-roll-container">
+            <div for="skill.system.advancement.mod" class="mod-container">+{{skill.system.advancement.mod}}</div>
+        </div>
+        {{/if}}
+    </div>  
     {{/each}}
 </div>
