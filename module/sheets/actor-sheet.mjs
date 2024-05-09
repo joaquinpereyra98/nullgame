@@ -141,7 +141,16 @@ export class NullGameActorSheet extends ActorSheet {
     const itemData = { name, type, system: { ...data } };
     delete itemData.system.type;
     return await Item.create(itemData, { parent: this.actor });
-    
+  }
+  /**
+   * 
+   * 
+   */
+  async _onRollItem(ev) {
+    console.log("ROLL ITEM")
+    const id = ev.currentTarget.dataset.id;
+    const item = this.actor.items.get(id);
+    if (item) return item.roll();
   }
   /** @override */
   activateListeners(html) {
@@ -167,5 +176,6 @@ export class NullGameActorSheet extends ActorSheet {
       img.css("rotate", this.accordionState[key] ? "180deg" : "0deg");
       $(ev.currentTarget).next(".accordion-content").slideToggle(500);
     });
+    html.on("click", ".roll-item", this._onRollItem.bind(this));
   }
 }

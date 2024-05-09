@@ -32,24 +32,25 @@ export class NullGameItem extends Item {
   
       const speaker = ChatMessage.getSpeaker({ actor: this.actor });
       const rollMode = game.settings.get('core', 'rollMode');
-      const label = `[${item.type}] ${item.name}`;
-  
-      if (!this.system.formula) {
-        ChatMessage.create({
-          speaker: speaker,
-          rollMode: rollMode,
-          flavor: label,
-          content: item.system.description ?? '',
-        });
-      }
-      else {
+      const label = `[${item.type}] ${item.name}`; //TODO localize
+      
+      if (item.type === "skill") {
         const rollData = this.getRollData();
-        const roll = new Roll(rollData.formula, rollData.actor);
+        const roll = new Roll("1d20 + @advancement.mod", rollData);
+        const rollContainer = await roll.render();
+        const rendererMsg = await renderTemplate(
+          "systems/nullgame/templates/rolls/roll-template.hbs",
+          {
+            roll: rollContainer,
+            description: this.system.descriptions.description,
+          }
+        );
         roll.toMessage({
           speaker: speaker,
           rollMode: rollMode,
           flavor: label,
-        });
+          content: rendererMsg,
+        })
         return roll;
       }
     }
