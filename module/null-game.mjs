@@ -42,3 +42,8 @@ Hooks.once('init', function () {
   });
   preloadHandlebarsTemplates();
 });
+Hooks.on('renderChatMessage', (msg, html, msgData) => {
+  html.on('click','.roll-damage-chat', (ev)=>{
+    
+  })
+})

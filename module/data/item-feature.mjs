@@ -31,7 +31,8 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
         }),
         rollFormula: new fields.SchemaField({
           formula: new fields.StringField({blank: true}),
-          damagesFormulas: new fields.ArrayField(new fields.ObjectField())
+          damagesFormulas: new fields.ArrayField(new fields.ObjectField()),
+          skillMod: new fields.StringField({requiredString})
         }),
         category: new fields.StringField({...requiredString}),
         isResource: new fields.BooleanField({inital: false}),

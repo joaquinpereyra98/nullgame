@@ -1,6 +1,6 @@
 <div class="skills-tab">
     <div class="create-skill-container">
-        <a class="tool-button add-button create-item center-align" data-type='skill'>
+        <a class="tool-button icon-button create-item center-align" data-type='skill'>
             <span class="span-button center-align">
                 <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                 Create Skill{{!TODO localize }}
@@ -30,10 +30,10 @@
                     <label class="rank-skill">Level {{skill.system.advancement.level}}</label>  {{! TODO localize}}
                 </div>
                 <div class='item-controls center-align'>
-                    <a class="edit-button item-edit" data-id="{{skill._id}}">
+                    <a class="icon-button item-edit center-align" data-id="{{skill._id}}">
                         <img class="icon-img" src="systems/nullgame/assets/edit.svg">
                     </a>
-                    <a class="delete-button delete-item" data-id="{{skill._id}}">
+                    <a class="delete-button delete-item center-align" data-id="{{skill._id}}">
                         <img class="icon-img" src="systems/nullgame/assets/delete.svg">
                     </a>
                 </div>

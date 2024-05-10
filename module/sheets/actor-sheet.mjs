@@ -149,7 +149,9 @@ export class NullGameActorSheet extends ActorSheet {
   async _onRollItem(ev) {
     const id = ev.currentTarget.dataset.id;
     const item = this.actor.items.get(id);
-    if (item) return item.roll();
+    if (item){
+    console.log(item.type)
+    return item.roll()};
   }
   /** @override */
   activateListeners(html) {

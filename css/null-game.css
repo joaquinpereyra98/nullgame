@@ -21,10 +21,10 @@
     transition: 200ms all;
     border: 0;
     opacity: 0.5;
+    padding: 0 1px;
 }
 .null-game .delete-button:hover .icon-img,
-.null-game .add-button:hover .icon-img,
-.null-game .edit-button:hover .icon-img
+.null-game .icon-button:hover .icon-img
 {
     transform: scale(1.1);
     opacity: 1;
@@ -217,12 +217,12 @@
     border: 0;
 }
 .null-game.actor .tab.features .tool-section .tool-button .span-button,
-.null-game.actor .tab.features .tool-section .add-button{
+.null-game.actor .tab.features .tool-section .icon-button{
     font-size: small;
 }
 
 .null-game.actor .tab.features .category-body .item-list-component {
-    padding: 0px 10px;
+    padding: 2px 10px;
 }
 .null-game.actor .tab.features .category-body .item-list-component .item-name {
     flex: 7;
@@ -268,10 +268,11 @@
 .null-game.actor .skills-tab .skill-conntainer .skill-roll-container .dice-container{
     font-size: x-large;
     font-weight: bold;
+    margin-right: 4px;
 }
 .null-game.actor .skills-tab .skill-conntainer .skill-roll-container .mod-container{
     background: var(--backBGMoreOpacity);
-    padding: 5px;
+    padding: 3px;
     font-size: large;
     font-weight: bold;
 }
@@ -372,12 +373,12 @@
 .null-game.item .details-tab .usage-container .usage-inputs-container .unit-label{
     flex: 1;
 }
-.null-game.item .details-tab .attack-container .attack-inputs-container .attack-type-select{
+.null-game.item .details-tab .attack-container .attack-inputs-container .attack-input-select{
     border: 0;
     background: var(--backBGMoreOpacity);
     width: 50%;
     text-align: center;
-    margin: 0 5px;
+    margin: 2px 5px;
 }
 .null-game.item .details-tab .usage-container .usage-inputs-container .formula-container{
     padding: 3px 0;

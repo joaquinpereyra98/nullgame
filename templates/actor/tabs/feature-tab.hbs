@@ -6,7 +6,7 @@
             value="{{category.label}}">
     </div>
     <div class="tool-section">
-        <a class="tool-button add-button create-item center-align" data-type='feature' data-category='{{categoryKey}}'>
+        <a class="tool-button icon-button create-item center-align" data-type='feature' data-category='{{categoryKey}}'>
             <span class="span-button center-align">
                 <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                 Create Item{{!TODO localize }}
@@ -22,19 +22,20 @@
     <div class="item-list-component flex-cont">
         <div class="item-name flex-cont">
             <div class='item-image center-align'>
-                <a class='rollable item-image-button center-align' data-roll-type='item'>
-                    <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
-                </a>
+                <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
             </div>
             <span>
                 {{item.name}}
             </span>
         </div>
-        <div class='item-controls center-align'>
-            <a class="edit-button item-edit" data-id="{{item._id}}">
+        <div class='item-controls center-align'> 
+            <a class="icon-button roll-item center-align" data-id="{{item._id}}">
+                <img class="icon-img" src="systems/nullgame/assets/dice_d20.svg">
+            </a>
+            <a class="icon-button item-edit center-align" data-id="{{item._id}}">
                 <img class="icon-img" src="systems/nullgame/assets/edit.svg">
             </a>
-            <a class="tool-button delete-button delete-item" data-id="{{item._id}}">
+            <a class="tool-button delete-button delete-item center-align" data-id="{{item._id}}">
                 <img class="icon-img" src="systems/nullgame/assets/delete.svg">
             </a>
         </div>
@@ -47,13 +48,13 @@
     <div class="category-header flex-cont">
         <div class="category-name">{{features.uncategorized.label}}</div>
         <div class="tool-section">
-            <a class="tool-button add-button create-item" data-type='feature' data-category='{{uncategorized}}'>
+            <a class="tool-button icon-button create-item center-align" data-type='feature' data-category='{{uncategorized}}'>
                 <span class="span-button center-align">
                     <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                     Create Item{{!TODO localize }}
                 </span>
             </a>
-            <a class="tool-button add-button create-category" data-type='features'>
+            <a class="tool-button icon-button create-category center-align" data-type='features'>
                 <span class="span-button center-align">
                     <img class="icon-img" src="systems/nullgame/assets/playlist_add.svg">
                     Create Category {{!TODO localize }}
@@ -67,16 +68,14 @@
         <div class="item-list-component flex-cont">
             <div class="item-name flex-cont">
                 <div class='item-image'>
-                    <a class='rollable' data-roll-type='item'>
-                        <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
-                    </a>
+                    <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
                 </div>
                 <span>
                     {{item.name}}
                 </span>
             </div>
             <div class='item-controls center-align'>
-                <a class="edit-button item-edit" data-id="{{item._id}}">
+                <a class="icon-button item-edit center-align" data-id="{{item._id}}">
                     <img class="icon-img" src="systems/nullgame/assets/edit.svg">
                 </a>
             </div>

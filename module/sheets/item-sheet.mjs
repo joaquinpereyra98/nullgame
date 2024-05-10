@@ -33,6 +33,7 @@ export class NullGameItemSheet extends ItemSheet {
     };
     const itemData = context.data;
     if(context.item.actor){
+      context.actorSkils = context.item.actor.items.filter(item => item.type==='skill');
       this._findResources(context);
     }
     context.rollData = this.item.getRollData();

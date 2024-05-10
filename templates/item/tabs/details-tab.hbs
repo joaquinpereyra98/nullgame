@@ -41,36 +41,37 @@
             <div class="usage-inputs-container flex-cont">
                 <input class="input-box" type="number" data-dtype="Number" name="system.details.duration.value"
                     value="{{system.details.duration.value}}">
-                    <span class="unit-label center-align">Rounds</span>
+                <span class="unit-label center-align">Rounds</span>
             </div>
 
         </div>
         <div class="consumption-container flex-cont">
             <label class="label-usage" for="system.details.consumption">Resources</label>{{! TODO localize}}
             <div class="usage-inputs-container flex-cont">
-                <input class="input-box" type="number" name="system.details.consumption.qty" value="{{system.details.consumption.qty}}">
+                <input class="input-box" type="number" name="system.details.consumption.qty"
+                    value="{{system.details.consumption.qty}}">
                 <select class="input-box" name="system.details.consumption.rscType">
                     {{#select system.details.consumption.rscType}}
-                            <option value=""></option>
-                        {{#each consumableResources as |rsc key|}}
-                            <option value="{{key}}">{{key}}</option>  {{! TODO localize}}
-                        {{/each}}
+                    <option value=""></option>
+                    {{#each consumableResources as |rsc key|}}
+                    <option value="{{key}}">{{key}}</option> {{! TODO localize}}
+                    {{/each}}
                     {{/select}}
                 </select>
                 <select class="input-box" name="system.details.consumption.rsc">
                     {{#select system.details.consumption.rsc}}
                     {{#if (eq system.details.consumption.rscType 'bars')}}
-                        {{#each consumableResources.bars as |bar barKey|}}
-                        <option value="{{barKey}}">{{bar.label}}</option>
+                    {{#each consumableResources.bars as |bar barKey|}}
+                    <option value="{{barKey}}">{{bar.label}}</option>
 
-                        {{/each}}
+                    {{/each}}
                     {{else if (eq system.details.consumption.rscType 'items')}}
-                        {{#each consumableResources.items as |item itemKey|}}
-                        <option value="{{item.id}}">{{item.name}}</option>
-                        {{/each}}
+                    {{#each consumableResources.items as |item itemKey|}}
+                    <option value="{{item.id}}">{{item.name}}</option>
+                    {{/each}}
                     {{/if}}
                     {{/select}}
-                    
+
                 </select>
             </div>
 
@@ -81,23 +82,40 @@
         <div class="action-type-container flex-cont">
             <label class="label-attack" for="system.details.attackType">Attack Type</label> {{! TODO localize}}
             <div class="attack-inputs-container">
-                <select class="attack-type-select" name="system.details.attackType">
+                <select class="attack-input-select" name="system.details.attackType">
                     {{#select system.details.attackType}}
-                        <option value="none-attack"></option>
-                        <option value="melee-attack">Melee Attack</option>
-                        <option value="range-attack">Range Attack</option>
-                        <option value="spell-attack">Spell Attack</option>
+                    <option value="none-attack"></option>
+                    <option value="melee-attack">Melee Attack</option>
+                    <option value="range-attack">Range Attack</option>
+                    <option value="spell-attack">Spell Attack</option>
                     {{/select}}
                 </select>
             </div>
         </div>
+        <div class="modifier-skill-container flex-cont ">
+            <label class="label-attack" for="system.rollFormula.skillMod">Skill Modifier</label>
+            <div class="attack-inputs-container">
+                <select class="attack-input-select" name="system.rollFormula.skillMod">
+                    {{#select system.rollFormula.skillMod}}
+                    <option value=""></option>
+                    {{#each actorSkils as |skill|}}
+                    <option value="{{system.advancement.mod}}">{{skill.name}} (+{{system.advancement.mod}})</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+
+        </div>
         <div class="damage-formula-container flex-cont">
-            <label for="system.rollFormula.damagesFormulas" class="label-attack"> Damage Formulas </label> {{! TODO localize}}
+            <label for="system.rollFormula.damagesFormulas" class="label-attack"> Damage Formulas </label> {{! TODO
+            localize}}
             <div class="formulas-container attack-inputs-container">
                 {{#each system.rollFormula.damagesFormulas as |damageFormula key| }}
                 <div class="damageFormula.{{key}}.container flex-cont formula-container">
-                    <input type="text" class="input-box" name="system.rollFormula.damagesFormulas.{{key}}.formula" value="{{damageFormula.formula}}" placeholder="2d6">
-                    <input type="text" class="input-box"  name="system.rollFormula.damagesFormulas.{{key}}.type" value="{{damageFormula.type}}" placeholder="Fire"> {{! TODO localize}}
+                    <input type="text" class="input-box" name="system.rollFormula.damagesFormulas.{{key}}.formula"
+                        value="{{damageFormula.formula}}" placeholder="2d6">
+                    <input type="text" class="input-box" name="system.rollFormula.damagesFormulas.{{key}}.type"
+                        value="{{damageFormula.type}}" placeholder="Fire"> {{! TODO localize}}
                     <a class="delete-damage-formula delete-button center-align" data-key="{{key}}">
                         <img class="icon-img" src="systems/nullgame/assets/delete.svg">
                     </a>
@@ -106,14 +124,15 @@
             </div>
         </div>
         <div class="add-button-container">
-            <a class="add-damage-formula add-button center-align" title="add damage"> {{!TODO use tooltip, localize}}
+            <a class="add-damage-formula icon-button center-align" title="add damage"> {{!TODO use tooltip, localize}}
                 <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
-                </a>
+            </a>
         </div>
         <div class="other-formula-container flex-cont">
             <label class="label-attack" for="system.rollFormula.formula"> Other Formula</label> {{! TODO localize}}
             <div class="attack-inputs-container">
-                <input type="text" class="input-box"  name="system.rollFormula.formula" value="{{system.rollFormula.formula}}">
+                <input type="text" class="input-box" name="system.rollFormula.formula"
+                    value="{{system.rollFormula.formula}}">
             </div>
         </div>
     </div>
