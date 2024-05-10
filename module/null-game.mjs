@@ -44,6 +44,12 @@ Hooks.once('init', function () {
 });
 Hooks.on('renderChatMessage', (msg, html, msgData) => {
   html.on('click','.roll-damage-chat', (ev)=>{
-    
+    const formula = ev.currentTarget.dataset.dmgformula;
+    const roll = new Roll(formula);
+     roll.toMessage({
+      speaker: msgData.message.speaker,
+      flavor: msgData.message.flavor,
+      rollMode: game.settings.get("core", "rollMode"),
+    })
   })
 })

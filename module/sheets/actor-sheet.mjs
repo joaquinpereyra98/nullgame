@@ -143,15 +143,14 @@ export class NullGameActorSheet extends ActorSheet {
     return await Item.create(itemData, { parent: this.actor });
   }
   /**
-   * 
-   * 
+   * Roll the item associated with the event
+   * @param {Event} ev - The click event.
+   * @returns {Promise} - A promise that resolves to the result of the item roll.
    */
   async _onRollItem(ev) {
     const id = ev.currentTarget.dataset.id;
     const item = this.actor.items.get(id);
-    if (item){
-    console.log(item.type)
-    return item.roll()};
+    if (item)return item.roll();
   }
   /** @override */
   activateListeners(html) {

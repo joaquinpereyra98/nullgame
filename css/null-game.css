@@ -393,3 +393,17 @@
 .null-game.item .description-skill .editor{
     min-height: 150px;
 }
+/*++++++++++++++++++++++++++++++++++++ CHAT MESSAGE +++++++++++++++++++++++++++++++++++++++++++++++*/
+.message-content .roll-damage-container {
+    margin: 5px 15px;
+}
+.message-content .roll-damage-container .roll-damage-chat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--backBGLittleOpacity);
+}
+.message-content .roll-damage-container .icon-img{
+    border: 0;
+    margin: 2px 4px;
+}

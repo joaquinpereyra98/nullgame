@@ -43,5 +43,8 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
       if(this.category===""){
         this.category= 'uncategorized';
       }
+      if(this.rollFormula.formula === "") {
+        this.rollFormula.formula = null;
+      }
     }
   }

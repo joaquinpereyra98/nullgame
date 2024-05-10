@@ -2,8 +2,13 @@
     {{{descriptionContent}}}
 </div>
 <div class="roll-damage-container">
-    <button class="roll-damage-chat">Click Me!</button>
-    {{log @this}}
+    {{#if dmgFormula}}
+    <button class=" roll-button roll-damage-chat" data-dmgFormula="{{dmgFormula}}">
+        <img class="icon-img" src="systems/nullgame/assets/dice_d20.svg">
+        Roll Damage {{! TODO localize}}
+    </button>
+    {{/if}}
+    
 </div>
 <div class="rolls-container">
     {{{rollsContent}}}
