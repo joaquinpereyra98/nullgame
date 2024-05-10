@@ -121,8 +121,8 @@ export class NullGameActorSheet extends ActorSheet {
    */
    _onCategoryDelete(event) {
     event.preventDefault();
-    const { category, type } = event.currentTarget.dataset;
-    const categories = duplicate(this.actor.system.categories[type]);
+    const { category } = event.currentTarget.dataset;
+    const categories = duplicate(this.actor.system.categories.features);
     categories[category] = '';
     this.actor.update({ [`system.categories.features`]: categories });
   }

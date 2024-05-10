@@ -112,9 +112,9 @@
                 {{#each system.rollFormula.damagesFormulas as |damageFormula key| }}
                 <div class="damageFormula.{{key}}.container flex-cont formula-container">
                     <input type="text" class="input-box" name="system.rollFormula.damagesFormulas.{{key}}.formula"
-                        value="{{damageFormula.formula}}" placeholder="2d6">
+                        value="{{damageFormula.formula}}" placeholder="Formula of Damage"> {{! TODO localize}}  
                     <input type="text" class="input-box" name="system.rollFormula.damagesFormulas.{{key}}.type"
-                        value="{{damageFormula.type}}" placeholder="Fire"> {{! TODO localize}}
+                        value="{{damageFormula.type}}" placeholder="Type of Damage"> {{! TODO localize}}
                     <a class="delete-damage-formula delete-button center-align" data-key="{{key}}">
                         <img class="icon-img" src="systems/nullgame/assets/delete.svg">
                     </a>
