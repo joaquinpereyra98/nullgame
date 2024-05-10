@@ -37,8 +37,14 @@ export class NullGameItem extends Item {
     const rollData = deepClone(this.getRollData());
 
     if (this.type === "feature") {
-      parts.push(this.system.rollFormula.formula ?? "1d20");
-      dmgParts = this.system.rollFormula.damagesFormulas
+      const { rollFormula } = this.system;
+      parts.push(rollFormula.formula ?? "1d20");
+      console.log(rollFormula.skillMod)
+      if(rollFormula.skillMod !== ""){
+        const item = actor.items.get(rollFormula.skillMod);
+        parts.push(`${item.system.advancement.mod}[${item.name} Skill]`) //TODO localize
+      }
+      dmgParts = rollFormula.damagesFormulas
         .filter((dmg) => dmg.formula !== "" || dmg.type !== "")
         .map((dmg) => `${dmg.formula}[${dmg.type}]`);
     } else if (this.type === "skill") {

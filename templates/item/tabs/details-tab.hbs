@@ -99,12 +99,11 @@
                     {{#select system.rollFormula.skillMod}}
                     <option value=""></option>
                     {{#each actorSkils as |skill|}}
-                    <option value="{{system.advancement.mod}}">{{skill.name}} (+{{system.advancement.mod}})</option>
+                    <option value="{{skill._id}}">{{skill.name}} (+{{system.advancement.mod}})</option>
                     {{/each}}
                     {{/select}}
                 </select>
             </div>
-
         </div>
         <div class="damage-formula-container flex-cont">
             <label for="system.rollFormula.damagesFormulas" class="label-attack"> Damage Formulas </label> {{! TODO
