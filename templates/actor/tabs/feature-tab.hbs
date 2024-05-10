@@ -6,13 +6,14 @@
             value="{{category.label}}">
     </div>
     <div class="tool-section">
-        <a class="tool-button icon-button create-item center-align" data-type='feature' data-category='{{categoryKey}}'>
+        <a class="tool-button icon-button create-item center-align" data-type='features'
+            data-category='{{categoryKey}}'>
             <span class="span-button center-align">
                 <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                 Create Item{{!TODO localize }}
             </span>
         </a>
-        <a class="tool-button delete-button delete-category" data-type='feature' data-category='{{categoryKey}}'>
+        <a class="tool-button delete-button delete-category" data-type='features' data-category='{{categoryKey}}'>
             <img class="icon-img" src="systems/nullgame/assets/delete.svg">
         </a>
     </div>
@@ -20,18 +21,25 @@
 <div class="category-body">
     {{#each category.items as |item id|}}
     <div class="item-list-component flex-cont">
-        <div class="item-name flex-cont">
+        <div class="item-details flex-cont">
             <div class='item-image center-align'>
                 <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
             </div>
-            <span>
+            <span class="item-name item-detail-label">
                 {{item.name}}
             </span>
+            <div class="item-qty item-detail-label flex-cont">
+                {{#if item.system.isResource}}
+                <span class="qty-item-span"> Qty: {{item.system.quantity}} </span>
+                {{/if}}
+            </div>
         </div>
-        <div class='item-controls center-align'> 
+        <div class='item-controls center-align'>
+            {{#if (ne item.system.details.attackType 'none-attack')}}
             <a class="icon-button roll-item center-align" data-id="{{item._id}}">
                 <img class="icon-img" src="systems/nullgame/assets/dice_d20.svg">
             </a>
+            {{/if}}
             <a class="icon-button item-edit center-align" data-id="{{item._id}}">
                 <img class="icon-img" src="systems/nullgame/assets/edit.svg">
             </a>
@@ -48,7 +56,8 @@
     <div class="category-header flex-cont">
         <div class="category-name">{{features.uncategorized.label}}</div>
         <div class="tool-section">
-            <a class="tool-button icon-button create-item center-align" data-type='feature' data-category='{{uncategorized}}'>
+            <a class="tool-button icon-button create-item center-align" data-type='feature'
+                data-category='{{uncategorized}}'>
                 <span class="span-button center-align">
                     <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                     Create Item{{!TODO localize }}
@@ -60,23 +69,36 @@
                     Create Category {{!TODO localize }}
                 </span>
             </a>
-            
-            </div>
+
+        </div>
     </div>
     <div class="category-body">
         {{#each features.uncategorized.items as |item id|}}
         <div class="item-list-component flex-cont">
-            <div class="item-name flex-cont">
+            <div class="item-details flex-cont">
                 <div class='item-image'>
                     <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
                 </div>
-                <span>
+                <span class="item-name item-detail-label">
                     {{item.name}}
                 </span>
+                <div class="item-qty item-detail-label flex-cont">
+                    {{#if item.system.isResource}}
+                    <span class="qty-item-span"> Qty: {{item.system.quantity}} </span>
+                    {{/if}}
+                </div>
             </div>
             <div class='item-controls center-align'>
+                {{#if (ne item.system.details.attackType 'none-attack')}}
+                <a class="icon-button roll-item center-align" data-id="{{item._id}}">
+                    <img class="icon-img" src="systems/nullgame/assets/dice_d20.svg">
+                </a>
+                {{/if}}
                 <a class="icon-button item-edit center-align" data-id="{{item._id}}">
                     <img class="icon-img" src="systems/nullgame/assets/edit.svg">
+                </a>
+                <a class="tool-button delete-button delete-item center-align" data-id="{{item._id}}">
+                    <img class="icon-img" src="systems/nullgame/assets/delete.svg">
                 </a>
             </div>
         </div>
