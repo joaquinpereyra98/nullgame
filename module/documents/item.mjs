@@ -34,23 +34,13 @@ export class NullGameItem extends Item {
     const label = `[${this.type}] ${this.name}`; //TODO localize
     const parts = [];
     let dmgParts = [];
-    const rollData = this.getRollData();
+    const rollData = deepClone(this.getRollData());
 
     if (this.type === "feature") {
       parts.push(this.system.rollFormula.formula ?? "1d20");
       dmgParts = this.system.rollFormula.damagesFormulas
         .filter((dmg) => dmg.formula !== "" || dmg.type !== "")
         .map((dmg) => `${dmg.formula}[${dmg.type}]`);
-      const consum = this.system.details.consumption;
-      if (consum.rscType === "bars") {
-        actor.update({
-          [`system.bars.${consum.rsc}.value`]:
-            actor.system.bars[consum.rsc].value - consum.qty,
-        });
-      } else if (consum.rscType === "items") {
-        const ammo = actor.items.get(consum.rsc);
-        ammo.update({'system.quantity': ammo.system.quantity - consum.qty})
-      }
     } else if (this.type === "skill") {
       parts.push("1d20", "@advancement.mod");
     }

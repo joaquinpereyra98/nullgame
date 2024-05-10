@@ -150,7 +150,38 @@ export class NullGameActorSheet extends ActorSheet {
   async _onRollItem(ev) {
     const id = ev.currentTarget.dataset.id;
     const item = this.actor.items.get(id);
-    if (item)return item.roll();
+    const {consumption} = item.system.details;
+    if(item){
+      let rsc, label;
+      if(consumption.rscType === 'bars'){
+        rsc = this.actor.system.bars[consumption.rsc];
+        label = rsc.label;
+        if(rsc.value >= consumption.qty) {
+          this.actor.update({
+            [`system.bars.${consumption.rsc}.value`]:
+              this.actor.system.bars[consumption.rsc].value - consumption.qty,
+          });
+          return item.roll();
+        }
+      } else if (consumption.rscType === "items"){
+        rsc = this.actor.items.get(consumption.rsc);
+        label= rsc.name
+        if (rsc.system.quantity >= consumption.qty) {
+          rsc.update({'system.quantity': rsc.system.quantity - consumption.qty});
+          return item.roll();
+        }
+      }
+       const d = new Dialog({
+        title: "No enoght Resource", //TODO localize
+        content: `Currently does not have enough ${label} to use this feature`,
+        buttons: {
+          accept:{
+            label: "Accept"
+          }
+        }
+      }) 
+      return d.render(true)
+    } 
   }
   /** @override */
   activateListeners(html) {
