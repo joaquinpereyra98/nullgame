@@ -397,16 +397,16 @@
     min-height: 150px;
 }
 /*++++++++++++++++++++++++++++++++++++ CHAT MESSAGE +++++++++++++++++++++++++++++++++++++++++++++++*/
-.message-content .roll-damage-container {
+.message-content .button-chat-container {
     margin: 5px 15px;
 }
-.message-content .roll-damage-container .roll-damage-chat {
+.message-content .button-chat-container .button-chat {
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--backBGLittleOpacity);
 }
-.message-content .roll-damage-container .icon-img{
+.message-content .button-chat-container .icon-img{
     border: 0;
     margin: 2px 4px;
 }

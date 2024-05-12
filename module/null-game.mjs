@@ -5,6 +5,7 @@ import { NullGameItem } from './documents/item.mjs';
 import { NullGameItemSheet } from './sheets/item-sheet.mjs';
 import NullGameFeatureData from './data/item-feature.mjs';
 import NullGameSkillData from './data/item-skill.mjs';
+import AbilityTemplate from './utils/measuredTemplate.mjs';
 
 async function preloadHandlebarsTemplates () {
   return loadTemplates([
@@ -43,13 +44,21 @@ Hooks.once('init', function () {
   preloadHandlebarsTemplates();
 });
 Hooks.on('renderChatMessage', (msg, html, msgData) => {
-  html.on('click','.roll-damage-chat', (ev)=>{
+  html.on('click','.roll-damage-chat', (ev) => {
     const formula = ev.currentTarget.dataset.dmgformula;
     const roll = new Roll(formula);
      roll.toMessage({
-      speaker: msgData.message.speaker,
-      flavor: msgData.message.flavor,
+      speaker: msg.speaker,
+      flavor: msg.flavor,
       rollMode: game.settings.get("core", "rollMode"),
     })
-  })
-})
+  });
+
+  html.on('click', '.create-measured-template', async (ev) => {
+    const { itemid } = ev.currentTarget.dataset;
+    const item = game.actors.get(msg.speaker.actor).items.get(itemid);
+    if(item.hasAreaTarget){
+      await (AbilityTemplate.fromItem(item))?.drawPreview();
+    }
+  });
+});

@@ -4,6 +4,14 @@
  */
 export class NullGameItem extends Item {
   /**
+   * Checks if Item has area of targat for create Template Measures on Roll.
+   * @returns {boolean}
+   */
+  get hasAreaTarget() {
+    const { type } = this.system.details.target;
+    return type !== 'self' && type !== 'creature' && type !== '';
+  }
+  /**
    * Augment the basic Item data model with additional dynamic data.
    */
   prepareData() {
@@ -16,6 +24,8 @@ export class NullGameItem extends Item {
    */
   getRollData() {
     const rollData = { ...super.getRollData() };
+    rollData.itemID = this._id;
+    rollData.hasAreaTarget = this.hasAreaTarget;
     if (!this.actor) return rollData;
     rollData.actor = this.actor.getRollData();
 
@@ -39,7 +49,6 @@ export class NullGameItem extends Item {
     if (this.type === "feature") {
       const { rollFormula } = this.system;
       parts.push(rollFormula.formula ?? "1d20");
-      console.log(rollFormula.skillMod)
       if(rollFormula.skillMod !== ""){
         const item = actor.items.get(rollFormula.skillMod);
         parts.push(`${item.system.advancement.mod}[${item.name} Skill]`) //TODO localize

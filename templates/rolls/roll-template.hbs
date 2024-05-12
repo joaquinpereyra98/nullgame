@@ -1,15 +1,22 @@
 <div class="description-container">
     {{{descriptionContent}}}
 </div>
-<div class="roll-damage-container">
+<div class="button-chat-container">
     {{#if dmgFormula}}
-    <button class=" roll-button roll-damage-chat" data-dmgFormula="{{dmgFormula}}">
+    <button class=" button-chat roll-damage-chat" data-dmgFormula="{{dmgFormula}}">
         <img class="icon-img" src="systems/nullgame/assets/dice_d20.svg">
         Roll Damage {{! TODO localize}}
     </button>
     {{/if}}
-    
 </div>
+{{#if rollData.hasAreaTarget}}
+<div class="button-chat-container">
+    <button class="button-chat create-measured-template" data-itemID="{{rollData.itemID}}">
+        <i class="fa-solid fa-ruler" style="font-size: 24px;"></i>
+        Create Template {{!TODO localize}}
+    </button>
+</div>
+{{/if}}
 <div class="rolls-container">
     {{{rollsContent}}}
 </div>

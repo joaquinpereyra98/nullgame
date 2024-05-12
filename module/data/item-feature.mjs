@@ -19,7 +19,7 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
             units: new foundry.data.fields.StringField({...requiredString})
           }),
           target: new foundry.data.fields.SchemaField({
-            value: new foundry.data.fields.StringField({...requiredString}),
+            value: new foundry.data.fields.NumberField({...requiredNumber, initial: 0}),
             type: new foundry.data.fields.StringField({...requiredString}),
           }),
           attackType: new fields.StringField({...requiredString}),
