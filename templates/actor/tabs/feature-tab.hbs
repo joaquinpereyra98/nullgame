@@ -20,7 +20,8 @@
 </div>
 <div class="category-body">
     {{#each category.items as |item id|}}
-    <div class="item-list-component flex-cont">
+    <div class="item-list-component flex-cont accordion-headers" data-key="{{item._id}}">       
+        <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state item._id) "rotate: 180deg" "rotate: 0deg"}}" src="systems/nullgame/assets/expand_more.svg"> 
         <div class="item-details flex-cont">
             <div class='item-image center-align'>
                 <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
@@ -47,6 +48,9 @@
                 <img class="icon-img" src="systems/nullgame/assets/delete.svg">
             </a>
         </div>
+    </div>
+    <div class="accordion-content" {{ifThen (lookup ../state item._id) "" "hidden"}}>
+         {{{item.system.descriptions.description}}}
     </div>
     {{/each}}
 </div>

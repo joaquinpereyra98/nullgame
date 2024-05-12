@@ -8,9 +8,10 @@ export class NullGameItem extends Item {
    * @returns {boolean}
    */
   get hasAreaTarget() {
-    const { type } = this.system.details.target;
+    const { type } = this.system.details?.target ?? {};
     return type !== 'self' && type !== 'creature' && type !== '';
-  }
+}
+
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
