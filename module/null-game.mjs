@@ -11,6 +11,7 @@ async function preloadHandlebarsTemplates () {
   return loadTemplates([
     'systems/nullgame/templates/actor/tabs/feature-tab.hbs',
     'systems/nullgame/templates/actor/tabs/skills-tab.hbs',
+    'systems/nullgame/templates/actor/tabs/effects-tab.hbs',
     'systems/nullgame/templates/item/tabs/description-tab.hbs',
     'systems/nullgame/templates/item/tabs/details-tab.hbs'
   ]);

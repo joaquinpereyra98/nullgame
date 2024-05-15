@@ -20,6 +20,11 @@
             "Biography": "Biography",
             "Description": "Description",
             "Details": "Details"
+        },
+        "Effect": {
+            "Active": "Active Effects",
+            "Inactive": "Inactive Effects",
+            "Counter": "Counter"
         }
     }
 }

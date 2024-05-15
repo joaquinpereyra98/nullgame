@@ -1,0 +1,44 @@
+<div class="items-list effects-list">
+  {{#each effects as |section sid|}}
+  <div class="category-header flex-cont">
+    <label class="category-name effect-name ">{{localize section.label}}</label>
+    <div class="item-controls effect-controls ">
+      <a class="effect-control" data-action="create" data-type="{{section.type}}" title="create-effect">
+        <span class="icon-button center-align">
+          <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
+          {{localize "DOCUMENT.New" type="Effect"}}
+        </span>
+      </a>
+    </div>
+  </div>
+  <div class="category-body">
+    {{#each section.effects as |effect|}}
+    <div class="item-list-component flex-cont">
+      <div class="item-details flex-cont">
+        <div class='item-image center-align'>
+          <img src="{{effect.icon}}" width='24' height='24' />
+        </div>
+        <span class="item-name item-detail-label">{{effect.name}}</span>
+        <div class="effect-counter item-detail-label flex-cont">
+          <span>{{effect.sourceName}}</span>
+        </div>
+      </div>
+      <div class="item-controls center-align">
+        <a class="icon-button effect-control center-align" data-id="{{effect.id}}" data-action="toggle"
+          title="effect-toggle">
+          <i class=" icon-img fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}" style="font-size: 24px; margin: 0 3px;"></i>
+        </a>
+        <a class="icon-button effect-control center-align" data-id="{{effect.id}}" data-action="edit"
+          title="effect-edit">
+          <img class="icon-img" src="systems/nullgame/assets/edit.svg">
+        </a>
+        <a class="icon-button effect-control delete-button center-align" data-id="{{effect.id}}" data-action="delete"
+          title="effect-delete">
+          <img class="icon-img" src="systems/nullgame/assets/delete.svg">
+        </a>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/each}}
+</div>

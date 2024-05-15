@@ -35,22 +35,41 @@ export class NullGameActorSheet extends ActorSheet {
       actorData.system.biography,
       { async: true }
     );
-    if (actorData.type == 'character') {
+    if (actorData.type == "character") {
       this._prepareItems(context);
-      this._prepareCharacterData(context);
+      this.prepareEffects(context);
     }
     context.rollData = context.actor.getRollData();
     return context;
   }
 
   /**
-   * Organize and classify Items for Character sheets.
+   * Organize and classify Active Effects for Character sheets.
    *
    * @param {Object} actorData The actor to prepare.
    *
    * @return {undefined}
    */
-  _prepareCharacterData(context) {}
+  prepareEffects(context) {
+    const categories = {
+      active: {
+        type: "active",
+        label: game.i18n.localize("NULL_GAME.Effect.Active"),
+        effects: [],
+      },
+      inactive: {
+        type: "inactive",
+        label: game.i18n.localize("NULL_GAME.Effect.Inactive"),
+        effects: [],
+      },
+    };
+
+    for (let e of this.actor.allApplicableEffects()) {
+      categories[e.disabled ? "inactive" : "active"].effects.push(e);
+    }
+
+    context.effects = categories;
+  }
 
   /**
    * Organize and classify Items for Character sheets.
@@ -62,24 +81,25 @@ export class NullGameActorSheet extends ActorSheet {
     const skills = [];
     const features = {};
     const cf = context.system.categories.features;
-    for(let k in cf){
-      features[k]= {
+    for (let k in cf) {
+      features[k] = {
         label: cf[k],
-        items:[],
-      }
+        items: [],
+      };
     }
- 
+
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
-      if (i.type === 'skill') {
+      if (i.type === "skill") {
         skills.push(i);
-      }
-      else if (i.type === 'feature') {
-        if(features[i.system.category]){
-        features[i.system.category].items.push(i);
-      }else{
+      } else if (i.type === "feature") {
+        if (features[i.system.category]) {
+          features[i.system.category].items.push(i);
+        } else {
           features.uncategorized.items.push(i);
-          this.actor.items.get(i._id).update({"system.category": "uncategorized"});
+          this.actor.items
+            .get(i._id)
+            .update({ "system.category": "uncategorized" });
         }
       }
     }
@@ -94,36 +114,37 @@ export class NullGameActorSheet extends ActorSheet {
    * @param {string} categoryName The name of the new category
    * @private
    */
-  async _onCategoryCreate(event, categoryName = "New Category") { //TODO localize
+  async _onCategoryCreate(event, categoryName = "New Category") {
+    //TODO localize
     event.preventDefault();
     const featCategories = this.actor.system.categories.features;
 
     let countKey = 0;
-    let finalCategoryKey = 'category';
+    let finalCategoryKey = "category";
     while (featCategories[finalCategoryKey]) {
-    countKey++;
-    finalCategoryKey = `category${countKey}`;
-  }
-  let countName = 0;
-  let finalCategoryName = categoryName;
-  while(Object.values(featCategories).includes(finalCategoryName)){
-    countName++;
-    finalCategoryName= `${categoryName} (${countName})`;
-  }
-    featCategories[finalCategoryKey]=finalCategoryName;
-    featCategories['uncategorized']='Uncategorized'; //TODO localize
-    this.actor.update({"system.categories.features": featCategories});
+      countKey++;
+      finalCategoryKey = `category${countKey}`;
+    }
+    let countName = 0;
+    let finalCategoryName = categoryName;
+    while (Object.values(featCategories).includes(finalCategoryName)) {
+      countName++;
+      finalCategoryName = `${categoryName} (${countName})`;
+    }
+    featCategories[finalCategoryKey] = finalCategoryName;
+    featCategories["uncategorized"] = "Uncategorized"; //TODO localize
+    this.actor.update({ "system.categories.features": featCategories });
   }
   /**
    * Handle delete a feature Category.
    * @param {Event} event  The originating click event
    * @private
    */
-   _onCategoryDelete(event) {
+  _onCategoryDelete(event) {
     event.preventDefault();
     const { category } = event.currentTarget.dataset;
     const categories = duplicate(this.actor.system.categories.features);
-    categories[category] = '';
+    categories[category] = "";
     this.actor.update({ [`system.categories.features`]: categories });
   }
   /**
@@ -133,7 +154,7 @@ export class NullGameActorSheet extends ActorSheet {
    */
   async _onItemCreate(event) {
     event.preventDefault();
-    
+
     const type = event.currentTarget.dataset.type;
     const data = { ...event.currentTarget.dataset };
     const name = `New ${type.capitalize()}`; //TODO localize
@@ -186,9 +207,9 @@ export class NullGameActorSheet extends ActorSheet {
         });
         return d.render(true);
       } else if (item.type === "skill") {
-        return item.roll(); 
+        return item.roll();
       }
-    } 
+    }
   }
   /** @override */
   activateListeners(html) {
@@ -196,7 +217,7 @@ export class NullGameActorSheet extends ActorSheet {
     html.on("click", ".create-category", this._onCategoryCreate.bind(this));
     html.on("click", ".delete-category", this._onCategoryDelete.bind(this));
     html.on("click", ".create-item", this._onItemCreate.bind(this));
-    html.on("click", ".delete-item", (ev)=>{
+    html.on("click", ".delete-item", (ev) => {
       const id = ev.currentTarget.dataset.id;
       const item = this.actor.items.get(id);
       item.delete();
@@ -215,5 +236,29 @@ export class NullGameActorSheet extends ActorSheet {
       $(ev.currentTarget).next(".accordion-content").slideToggle(500);
     });
     html.on("click", ".roll-item", this._onRollItem.bind(this));
+    html.on("click", ".effect-control", (ev) => {
+      const data = ev.currentTarget.dataset;
+      const effect = this.actor.effects.get(data.id);
+      switch (data.action) {
+        case 'create':
+          return this.actor.createEmbeddedDocuments('ActiveEffect', [
+            {
+              name: game.i18n.format('DOCUMENT.New', {
+                type: game.i18n.localize('DOCUMENT.ActiveEffect'),
+              }),
+              icon: 'icons/svg/aura.svg',
+              origin: this.actor.uuid,
+              'duration.rounds': undefined,
+              disabled: data.type === 'inactive',
+            },
+          ]);
+        case 'edit':
+          return effect.sheet.render(true);
+        case 'delete':
+          return effect.delete();
+        case 'toggle':
+          return effect.update({ disabled: !effect.disabled });
+      }
+    });
   }
 }

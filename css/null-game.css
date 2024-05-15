@@ -184,14 +184,17 @@
     border: var(--borderBox);
     border-bottom-width: 2px;
 }
-.null-game.actor .tab.features .category-header {
+.null-game.actor .category-header {
     align-items: center;
     border: var(--borderBox);
     border-width: 2px;
     background-color: var(--backBGLittleOpacity);
     padding: 2px;
 }
-.null-game.actor .tab.features .category-name {
+.null-game.actor .category-header label{
+    padding:  0 5px;
+}
+.null-game.actor .category-name {
     flex: 10;
     font-weight: bold;
 }
@@ -220,36 +223,36 @@
 .null-game.actor .tab.features .tool-section .icon-button{
     font-size: small;
 }
-.null-game.actor .tab.features .category-body {
+.null-game.actor .category-body {
     margin: 0 5px;
 }
-.null-game.actor .tab.features .category-body .item-list-component {
+.null-game.actor .category-body .item-list-component {
     padding: 2px 4px;
 }
-.null-game.actor .tab.features .category-body .item-list-component .icon-img{
+.null-game.actor .category-body .item-list-component .icon-img{
     margin-left: -2px;
 }
-.null-game.actor .tab.features .category-body .item-list-component .item-details {
-    flex: 8;
+.null-game.actor .category-body .item-list-component .item-details {
+    flex: 9;
     justify-content: flex-start;
     align-items: center;
 }
-.null-game.actor .tab.features .category-body .item-list-component .item-details .item-detail-label {
+.null-game.actor .category-body .item-list-component .item-details .item-detail-label {
     flex: 5;
 }
-.null-game.actor .tab.features .category-body .item-list-component .item-details .item-image {
+.null-game.actor .category-body .item-list-component .item-details .item-image {
     margin-right: 5px;
 }
 
-.null-game.actor .tab.features .category-body .item-list-component .item-controls {
-    flex: 2;
+.null-game.actor .category-body .item-list-component .item-controls {
+    flex: 3;
     justify-content: flex-end;
 }
-.null-game.actor .tab.features .category-body .item-list-component:hover {
+.null-game.actor .category-body .item-list-component:hover {
     background-color: var(--backBGLittleOpacity);
 }
-.null-game.actor .tab.features {
-    padding: 5px;
+.null-game.actor, .null-game.actor .tab.effects{
+    padding: 5px 0;
 }
 .null-game.actor .skills-tab .create-skill-container{
     display: flex;
@@ -291,6 +294,16 @@
 .null-game.actor .biography-editor-container .editor,
 .null-game.actor .biography-editor-container .prosemirror .editor-container {
     min-height: 12em;
+}
+.null-game.actor .tab.effects .category-header .effect-source{
+    flex: 4;
+    display: flex;
+    justify-content: center;
+}
+.null-game.actor .tab.effects .category-header .item-controls{
+    flex: 4;
+    display: flex;
+    justify-content: flex-end;
 }
 /*++++++++++++++++++++++++++++++++++++ ITEM SHEET +++++++++++++++++++++++++++++++++++++++++++++++*/
 
