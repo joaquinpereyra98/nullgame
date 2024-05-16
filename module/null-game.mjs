@@ -6,6 +6,8 @@ import { NullGameItemSheet } from './sheets/item-sheet.mjs';
 import NullGameFeatureData from './data/item-feature.mjs';
 import NullGameSkillData from './data/item-skill.mjs';
 import AbilityTemplate from './utils/measuredTemplate.mjs';
+import { NullGameActiveEffect } from './documents/activeEffect.mjs';
+import { NullGameActiveEffectConfig } from './sheets/activeEffect-sheet.mjs';
 
 async function preloadHandlebarsTemplates () {
   return loadTemplates([
@@ -24,7 +26,8 @@ Hooks.once('init', function () {
     };
     CONFIG.Actor.documentClass = NullGameActor;
     CONFIG.Item.documentClass = NullGameItem;
-
+    CONFIG.ActiveEffect.documentClass = NullGameActiveEffect;
+    
     CONFIG.Actor.dataModels = {
       character: NullGameActorData,
     }
@@ -42,6 +45,12 @@ Hooks.once('init', function () {
     makeDefault: true,
     label: 'NULL_GAME.SheetLabels.Item',
   });
+  DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", ActiveEffectConfig);
+  DocumentSheetConfig.registerSheet(
+    ActiveEffect,
+    "null-game",
+    NullGameActiveEffectConfig
+  );
   preloadHandlebarsTemplates();
 });
 Hooks.on('renderChatMessage', (msg, html, msgData) => {
