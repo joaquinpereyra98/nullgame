@@ -260,5 +260,10 @@ export class NullGameActorSheet extends ActorSheet {
           return effect.update({ disabled: !effect.disabled });
       }
     });
+    html.on("input", ".effect-counter-input", (ev) => {
+      const data = ev.currentTarget.dataset;
+      const effect = this.actor.effects.get(data.id);
+      effect.counter = $(ev.currentTarget).val();
+    })
   }
 }

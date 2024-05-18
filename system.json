@@ -13,7 +13,7 @@
     "url": "[Link to repository]",
     "readme": "README.md",
     "bugs": "[Link issues or tickets]",
-    "version": "0.0.1",
+    "version": "0.7.5",
     "compatibility": {
       "minimum": 11,
       "verified": "11.315"

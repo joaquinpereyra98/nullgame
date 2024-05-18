@@ -295,15 +295,19 @@
 .null-game.actor .biography-editor-container .prosemirror .editor-container {
     min-height: 12em;
 }
-.null-game.actor .tab.effects .category-header .effect-source{
-    flex: 4;
-    display: flex;
-    justify-content: center;
-}
 .null-game.actor .tab.effects .category-header .item-controls{
-    flex: 4;
+    flex: 5;
     display: flex;
     justify-content: flex-end;
+}
+.null-game.actor .tab.effects .category-body .effect-counter {
+    flex: 2;
+}
+.null-game.actor .tab.effects .category-body .effect-counter .effect-counter-input {
+    text-align: center;
+    border: 0;
+    background: var(--backBGMoreOpacity);
+    font-size: large;
 }
 /*++++++++++++++++++++++++++++++++++++ ITEM SHEET +++++++++++++++++++++++++++++++++++++++++++++++*/
 

@@ -8,7 +8,7 @@ import NullGameSkillData from './data/item-skill.mjs';
 import AbilityTemplate from './utils/measuredTemplate.mjs';
 import { NullGameActiveEffect } from './documents/activeEffect.mjs';
 import { NullGameActiveEffectConfig } from './sheets/activeEffect-sheet.mjs';
-
+import { NullGameToken } from './utils/token.mjs';
 async function preloadHandlebarsTemplates () {
   return loadTemplates([
     'systems/nullgame/templates/actor/tabs/feature-tab.hbs',
@@ -35,6 +35,7 @@ Hooks.once('init', function () {
       feature: NullGameFeatureData,
       skill: NullGameSkillData
     }
+    CONFIG.Token.objectClass = NullGameToken;
     Actors.unregisterSheet('core', ActorSheet);
     Actors.registerSheet('null-game', NullGameActorSheet, {
     makeDefault: true,
@@ -71,4 +72,7 @@ Hooks.on('renderChatMessage', (msg, html, msgData) => {
       await (AbilityTemplate.fromItem(item))?.drawPreview();
     }
   });
+});
+Hooks.on("renderTokenHUD", function(tokenHud, html) {
+	console.log(tokenHud, html);
 });

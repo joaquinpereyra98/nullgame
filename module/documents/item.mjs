@@ -9,7 +9,7 @@ export class NullGameItem extends Item {
    */
   get hasAreaTarget() {
     const { type } = this.system.details?.target ?? {};
-    return type !== 'self' && type !== 'creature' && type !== '';
+    return ['circle', 'cone', 'ray', 'rect'].includes(type);
 }
 
   /**

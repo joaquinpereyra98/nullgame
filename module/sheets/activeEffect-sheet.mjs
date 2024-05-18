@@ -22,6 +22,5 @@ export class NullGameActiveEffectConfig extends ActiveEffectConfig {
     html.on('input', '.counter-input', (ev) => {
         this.document.counter = $(ev.currentTarget).val();
     });
-    html.on()
   }
 }

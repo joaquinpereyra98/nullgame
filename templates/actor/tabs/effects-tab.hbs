@@ -19,10 +19,10 @@
           <img src="{{effect.icon}}" width='24' height='24' />
         </div>
         <span class="item-name item-detail-label">{{effect.name}}</span>
-        <div class="effect-counter item-detail-label flex-cont">
-          <span>{{effect.counter}}</span>
-        </div>
       </div>
+      <div class="effect-counter flex-cont">
+          <input type="number" class="effect-counter-input" name="effect.counter" data-id="{{effect.id}}" value="{{effect.counter}}">
+        </div>
       <div class="item-controls center-align">
         <a class="icon-button effect-control center-align" data-id="{{effect.id}}" data-action="toggle"
           title="effect-toggle">
