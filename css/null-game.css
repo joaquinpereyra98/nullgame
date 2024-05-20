@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-around;
 }
-.center-align{
+.center-align {
     display: flex;
     align-items: center;
 }
@@ -431,4 +431,33 @@
 .message-content .button-chat-container .icon-img{
     border: 0;
     margin: 2px 4px;
+}
+/*++++++++++++++++++++++++++++++++++++ SETTING MENU +++++++++++++++++++++++++++++++++++++++++++++++*/
+
+.null-game.ae-config header {
+    border: var(--borderBox);
+    border-bottom-width: 2px;
+    margin: 4px 0px;
+}
+.null-game.ae-config .effect-item:hover {
+    background-color: var(--backBGLittleOpacity);
+}
+.null-game.ae-config .effect-item .effect-img {
+    border: 0;
+    background-color: black;
+    padding: 3px;
+    margin: 2px 0;
+    border-radius: 2px;
+}
+.null-game.ae-config .effect-item .input-text-effect {
+    width: 42%;
+}
+.null-game.ae-config .effect-item .input-text-effect label {
+    margin-right: 5px;
+    font-weight: bold;
+}
+.null-game.ae-config .effect-item .input-text-effect input {
+    border: 0;
+    text-align: center;
+    background-color: var(--backBGMoreOpacity);
 }

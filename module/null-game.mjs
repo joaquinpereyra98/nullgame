@@ -9,6 +9,7 @@ import AbilityTemplate from './utils/measuredTemplate.mjs';
 import { NullGameActiveEffect } from './documents/activeEffect.mjs';
 import { NullGameActiveEffectConfig } from './sheets/activeEffect-sheet.mjs';
 import { NullGameToken } from './utils/token.mjs';
+import { registerSystemSettings } from './utils/setting.mjs';
 async function preloadHandlebarsTemplates () {
   return loadTemplates([
     'systems/nullgame/templates/actor/tabs/feature-tab.hbs',
@@ -39,20 +40,24 @@ Hooks.once('init', function () {
     Actors.unregisterSheet('core', ActorSheet);
     Actors.registerSheet('null-game', NullGameActorSheet, {
     makeDefault: true,
-    label: 'NULL_GAME.SheetLabels.Actor',
+    label: "NULL_GAME.SheetLabels.Actor",
   });
   Items.unregisterSheet('core', ItemSheet);
   Items.registerSheet('null-game', NullGameItemSheet, {
     makeDefault: true,
-    label: 'NULL_GAME.SheetLabels.Item',
+    label: "NULL_GAME.SheetLabels.Item",
   });
+
   DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", ActiveEffectConfig);
   DocumentSheetConfig.registerSheet(
     ActiveEffect,
     "null-game",
     NullGameActiveEffectConfig
   );
+
+  // Preload templates and register system settings
   preloadHandlebarsTemplates();
+  registerSystemSettings();
 });
 Hooks.on('renderChatMessage', (msg, html, msgData) => {
   html.on('click','.roll-damage-chat', (ev) => {
@@ -72,7 +77,4 @@ Hooks.on('renderChatMessage', (msg, html, msgData) => {
       await (AbilityTemplate.fromItem(item))?.drawPreview();
     }
   });
-});
-Hooks.on("renderTokenHUD", function(tokenHud, html) {
-	console.log(tokenHud, html);
 });

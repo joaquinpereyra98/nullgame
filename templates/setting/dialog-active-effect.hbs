@@ -1,0 +1,23 @@
+<form>
+    <div class="inputs-dialog">
+        <div class="image-container">
+            <h2>Image</h2>
+            <a class="img-input">
+            <img src="{{icon}}" height="60" width="60">
+            <input type="text" name="icon" data-type="string" value="{{icon}}" disabled>
+            </a>
+        </div>
+        <div class="inputs-container">
+            <div class="id-container">
+                <h2>ID</h2>
+                The ID must be all lower case and no spaces.
+                <input type="text" name="id" data-type="string" value="{{id}}">
+            </div>
+            <div class="name-container">
+                <h2>{{localize "Name"}}:</h2>
+                <input type="text" name="name" data-type="string" value="{{name}}">
+            </div>
+        </div>
+        
+    </div>
+</form>

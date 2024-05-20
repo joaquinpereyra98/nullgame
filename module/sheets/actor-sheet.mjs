@@ -37,7 +37,7 @@ export class NullGameActorSheet extends ActorSheet {
     );
     if (actorData.type == "character") {
       this._prepareItems(context);
-      this.prepareEffects(context);
+      this._prepareEffects(context);
     }
     context.rollData = context.actor.getRollData();
     return context;
@@ -50,7 +50,7 @@ export class NullGameActorSheet extends ActorSheet {
    *
    * @return {undefined}
    */
-  prepareEffects(context) {
+  _prepareEffects(context) {
     const categories = {
       active: {
         type: "active",
@@ -114,7 +114,7 @@ export class NullGameActorSheet extends ActorSheet {
    * @param {string} categoryName The name of the new category
    * @private
    */
-  async _onCategoryCreate(event, categoryName = "New Category") {
+  async _onCategoryCreate(event, categoryName = game.i18n.format("DOCUMENT.New", {type: "Category"})) {
     //TODO localize
     event.preventDefault();
     const featCategories = this.actor.system.categories.features;

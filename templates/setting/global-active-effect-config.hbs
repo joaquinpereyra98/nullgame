@@ -1,0 +1,35 @@
+<form class="null-game ae-config">
+    <header>
+        <a class="icon-button create-effect center-align">
+            <span class="span-button center-align">
+                <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
+                {{localize "DOCUMENT.New" type="Effect"}}
+            </span>
+        </a>
+        <button class="shit-button">
+            Shit!
+        </button>
+    </header>
+    {{#each effects as |effect|}}
+    <div class="effect-item flex-cont">
+            <img class="effect-img" src="{{effect.icon}}" data-edit="img" title="{{effect.icon}}" height="35"
+                width="35" />
+        <div class="id-container input-text-effect center-align">
+            <label for="effect.id"> ID:</label>
+            <input type="text" value="{{effect.id}}" disabled>
+        </div>
+        <div class="name-container input-text-effect center-align">
+            <label for="effect.name">{{localize "Name"}}:</label>
+            <input type="text" value="{{effect.name}}" disabled>
+        </div>
+        <div class="buttons-container center-align">
+            <a class="icon-button edit-effect center-align" data-id="{{effect.id}}">
+                <img class="icon-img" src="systems/nullgame/assets/edit.svg">
+            </a>
+            <a class="delete-button delete-effect center-align" data-id="{{effect.id}}">
+                <img class="icon-img" src="systems/nullgame/assets/delete.svg">
+            </a>
+        </div>
+    </div>
+    {{/each}}
+</form>
