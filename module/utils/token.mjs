@@ -6,7 +6,6 @@ export class NullGameToken extends Token {
     this.effects.bg = this.effects.addChild(new PIXI.Graphics());
     this.effects.bg.visible = false;
     this.effects.overlay = null;
-
     // Categorize new effects
     const tokenEffects = this.document.effects;
     const actorEffects = this.actor?.temporaryEffects || [];
@@ -61,7 +60,6 @@ export class NullGameToken extends Token {
     let icon = new PIXI.Sprite(tex);
     if (tint) icon.tint = tint;
     this.effects.addChild(icon);
-    icon.name = src;
     if(ID) icon.id = ID;
     return icon;
   }
@@ -90,3 +88,15 @@ function createEffectCounter(cnt, icon) {
   return text;
 }
 
+export class NullGameTokenHUD extends TokenHUD {
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find(".status-effects").off("click", ".effect-control");
+    html.find(".status-effects").on("click", ".effect-control", this._onClickStatus.bind(this))
+  }
+  _onClickStatus(ev){
+    if(ev.shiftKey){
+      this._onToggleEffect(ev);
+    }
+  }
+}

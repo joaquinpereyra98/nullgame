@@ -40,6 +40,7 @@ export class NullGameActorSheet extends ActorSheet {
       this._prepareEffects(context);
     }
     context.rollData = context.actor.getRollData();
+    context.isGM = game.user.isGM;
     return context;
   }
 
@@ -63,12 +64,21 @@ export class NullGameActorSheet extends ActorSheet {
         effects: [],
       },
     };
+    const globalEffects =  {
+      type: "global",
+      effects: []
+    }
 
     for (let e of this.actor.allApplicableEffects()) {
-      categories[e.disabled ? "inactive" : "active"].effects.push(e);
+      if (e.statuses.size > 0) {
+        globalEffects.effects.push(e);
+      } else {
+        categories[e.disabled ? "inactive" : "active"].effects.push(e);
+      }
     }
 
     context.effects = categories;
+    context.globalEffects = globalEffects;
   }
 
   /**

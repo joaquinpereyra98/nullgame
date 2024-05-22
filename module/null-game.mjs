@@ -58,6 +58,7 @@ Hooks.once('init', function () {
   // Preload templates and register system settings
   preloadHandlebarsTemplates();
   registerSystemSettings();
+  CONFIG.statusEffects = foundry.utils.deepClone(game.settings.get("nullgame", "AEGlobalConfig"));
 });
 Hooks.on('renderChatMessage', (msg, html, msgData) => {
   html.on('click','.roll-damage-chat', (ev) => {

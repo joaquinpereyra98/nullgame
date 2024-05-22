@@ -42,3 +42,28 @@
   </div>
   {{/each}}
 </div>
+<div class="global-effect-grid">
+  {{#each globalEffects.effects as |effect|}}
+    <div class="global-effect-item center-align">
+      <div class='item-image center-align global-effect-image'>
+          <img class="effect-image" src="{{effect.icon}}" width='40' height='40' />
+        </div>
+      <div class="item-details global-effect-details">
+        <span class="item-name item-detail-label" style= "font-widg: bold">{{effect.name}}</span>
+        <input type="number" class="effect-counter-input" name="effect.counter" data-id="{{effect.id}}" value="{{effect.counter}}">
+      </div>
+      <div class="item-controls global-effect-controls">
+        <a class="icon-button effect-control center-align" data-id="{{effect.id}}" data-action="toggle"
+          title="effect-toggle">
+          <i class=" icon-img fas {{#if effect.disabled}}fa-toggle-on{{else}}fa-toggle-off{{/if}}" style="font-size: 24px; margin: 0 3px;"></i>
+        </a>
+        {{#if ../isGM}}
+        <a class="icon-button effect-control center-align" data-id="{{effect.id}}" data-action="edit"
+          title="effect-edit">
+          <img class="icon-img" src="systems/nullgame/assets/edit.svg">
+        </a>
+        {{/if}}
+      </div>
+    </div>
+  {{/each}}
+</div>

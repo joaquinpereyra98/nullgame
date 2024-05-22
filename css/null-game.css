@@ -309,6 +309,45 @@
     background: var(--backBGMoreOpacity);
     font-size: large;
 }
+.null-game.actor .tab.effects .global-effect-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 5px;
+    border-top: 2px groove;
+    margin-top: 5px;
+}
+.null-game.actor .tab.effects .global-effect-item{
+    margin: 2px;
+    border: 2px groove;
+    padding: 2px 4px;
+}
+.null-game.actor .tab.effects .global-effect-item:hover{
+    background-color: var(--backBGLittleOpacity);
+}
+.null-game.actor .tab.effects .global-effect-item .global-effect-image {
+    min-width: 40px;
+    height: 100%;
+    margin-right: 10px;
+}
+.null-game.actor .tab.effects .global-effect-item .global-effect-image .effect-image {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0;
+    padding: 5px;
+}
+.null-game.actor .tab.effects .global-effect-item .global-effect-details {
+    display: flex;
+    flex-direction: column;
+}
+.null-game.actor .tab.effects .global-effect-item .global-effect-details input {
+    width: 30%;
+    text-align: center;
+    border: 0;
+    background-color: var(--backBGMoreOpacity);
+}
+.null-game.actor .tab.effects .global-effect-item .global-effect-controls {
+    display: flex;
+    flex-direction: column;
+}
 /*++++++++++++++++++++++++++++++++++++ ITEM SHEET +++++++++++++++++++++++++++++++++++++++++++++++*/
 
 .null-game.item .header-container {

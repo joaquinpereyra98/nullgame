@@ -33,6 +33,10 @@ export function registerSystemSettings() {
     config: false,
     type: Array,
     default: AEDefault,
+    onChange: (val) => {
+      CONFIG.statusEffects = val;
+      canvas.tokens.hud.render();
+    }
   });
 }
 
@@ -105,8 +109,8 @@ class AEGlobal extends FormApplication {
     });
   }
   _updateObject(event, formData) {
-    this.render();
     game.settings.set("nullgame", "AEGlobalConfig", this.#effectsData);
+    this.render();
   }
 }
 async function dialogEffect(effectData) {
