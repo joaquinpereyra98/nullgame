@@ -477,6 +477,8 @@
     border: var(--borderBox);
     border-bottom-width: 2px;
     margin: 4px 0px;
+    display: flex;
+    justify-content: space-between;
 }
 .null-game.ae-config .effect-item:hover {
     background-color: var(--backBGLittleOpacity);

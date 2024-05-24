@@ -32,7 +32,7 @@ export function registerSystemSettings() {
     scope: "world",
     config: false,
     type: Array,
-    default: AEDefault,
+    default: AEDefault.map(ef=> ({...ef, name: game.i18n.localize(ef.name)})),
     onChange: (val) => {
       CONFIG.statusEffects = val;
       canvas.tokens.hud ?? render();
@@ -133,9 +133,34 @@ class AEGlobal extends FormApplication {
       }
       this._updateObject();
     });
-    html.on("click", ".shit-button", (ev) => {
-      this.#effectsData = AEDefault;
-      this._updateObject();
+    html.on("click", ".reset-button", async (ev) => {
+
+      await Dialog.confirm({
+        title: "Reset Active Effect Global",
+        content: "Are you sure you want to restore default values? This action cannot be undone.",
+        yes: (html) =>{
+          const globalEffectsData = AEDefault.map((e) => ({
+            name: game.i18n.localize(e.name),
+            disabled: true,
+            statuses: [e.id],
+            icon: e.icon,
+            origin: "Global Effect",
+            "duration.rounds": undefined,
+            flags: { nullgame: { global: e.id } },
+            description: e.description
+          }));
+          game.actors.forEach(actor=> { 
+            const ids = actor.effects.filter(ef => ef.isGlobal).map(ef=>ef._id)
+            actor.deleteEmbeddedDocuments('ActiveEffect', ids)
+            actor.createEmbeddedDocuments('ActiveEffect', globalEffectsData)
+          })
+          this.#effectsData = AEDefault.map(ef=> ({...ef, name: game.i18n.localize(ef.name)}));
+          this._updateObject();
+        },
+        no: (html) => {},
+        defaultYes: false,
+        rejectClose: true
+      })   
     });
   }
   _updateObject(event, formData) {
