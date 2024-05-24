@@ -5,4 +5,7 @@ export class NullGameActiveEffect extends ActiveEffect {
   set counter(val){
     this.setFlag('nullgame', 'counter', val);
   }
+  get isGlobal(){
+    return this.getFlag('nullgame','global') ? true : false;
+  }
 }

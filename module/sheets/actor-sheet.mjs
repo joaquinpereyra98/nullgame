@@ -70,7 +70,7 @@ export class NullGameActorSheet extends ActorSheet {
     }
 
     for (let e of this.actor.allApplicableEffects()) {
-      if (e.statuses.size > 0) {
+      if (e.isGlobal) {
         globalEffects.effects.push(e);
       } else {
         categories[e.disabled ? "inactive" : "active"].effects.push(e);

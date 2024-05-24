@@ -4,18 +4,36 @@
  */
 export class NullGameActor extends Actor {
   /** @override */
-  prepareData () {
-    super.prepareData();
-  }
-
-  /** @override */
-  prepareDerivedData () {
+  prepareDerivedData() {
     const actorData = this;
     const flags = actorData.flags.nullgame || {};
   }
 
   /** @override */
-  getRollData () {
-    return { ...super.getRollData(), ...this.system.getRollData?.() ?? null }
+  getRollData() {
+    return { ...super.getRollData(), ...(this.system.getRollData?.() ?? null) };
+  }
+  async _preCreate(data, options, userId) {
+    await super._preCreate(data, options, userId);
+
+    const globalEffectsData = game.settings
+      .get("nullgame", "AEGlobalConfig")
+      .map((e) => ({
+        name: game.i18n.localize(e.name),
+        disabled: true,
+        statuses: [e.id],
+        icon: e.icon,
+        origin: "Global Effect",
+        "duration.rounds": undefined,
+        flags: { nullgame: { global: e.id } },
+        description: e.description
+      }));
+
+    const effects = [
+      ...this.effects.map((e) => e.toObject()),
+      ...globalEffectsData,
+    ];
+
+    this.updateSource({ effects });
   }
 }

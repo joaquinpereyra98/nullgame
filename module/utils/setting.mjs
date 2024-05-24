@@ -35,8 +35,8 @@ export function registerSystemSettings() {
     default: AEDefault,
     onChange: (val) => {
       CONFIG.statusEffects = val;
-      canvas.tokens.hud.render();
-    }
+      canvas.tokens.hud ?? render();
+    },
   });
 }
 
@@ -87,6 +87,20 @@ class AEGlobal extends FormApplication {
       ef.id = newId;
 
       this.#effectsData.push(ef);
+      for (let actor of game.actors) {
+        actor.createEmbeddedDocuments("ActiveEffect", [
+          {
+            name: game.i18n.localize(ef.name),
+            disabled: true,
+            statuses: [ef.id],
+            icon: ef.icon,
+            origin: "Global Effect",
+            "duration.rounds": undefined,
+            flags: { nullgame: { global: ef.id } },
+            description: ef.description,
+          },
+        ]);
+      }
       this._updateObject();
     });
     html.on("click", ".edit-effect", async (ev) => {
@@ -96,11 +110,27 @@ class AEGlobal extends FormApplication {
       this.#effectsData = this.#effectsData.map((ef) =>
         ef.id === efID ? newData : ef
       );
+      for (let actor of game.actors) {
+        actor.effects
+          .find((ef) => ef.getFlag("nullgame", "global") === efID)
+          ?.update({
+            name: newData.name,
+            statuses: [newData.id],
+            icon: newData.icon,
+            flags: { nullgame: { global: newData.id } },
+            description: newData.description,
+          });
+      }
       this._updateObject();
     });
     html.on("click", ".delete-effect", async (ev) => {
       const efID = ev.currentTarget.dataset.id;
-      this.#effectsData = this.#effectsData.filter((el) => el.id !== efID);
+      this.#effectsData = this.#effectsData.filter((ef) => ef.id !== efID);
+      for (let actor of game.actors) {
+        actor.effects
+          .find((ef) => ef.getFlag("nullgame", "global") === efID)
+          ?.delete();
+      }
       this._updateObject();
     });
     html.on("click", ".shit-button", (ev) => {
@@ -116,7 +146,7 @@ class AEGlobal extends FormApplication {
 async function dialogEffect(effectData) {
   const htmlContent = await renderTemplate(
     "systems/nullgame/templates/setting/dialog-active-effect.hbs",
-    effectData
+    {...effectData}
   );
 
   return new Promise((resolve, reject) => {
