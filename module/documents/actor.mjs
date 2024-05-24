@@ -7,6 +7,7 @@ export class NullGameActor extends Actor {
   prepareDerivedData() {
     const actorData = this;
     const flags = actorData.flags.nullgame || {};
+    this.update({prototypeToken:{height:actorData.system.size,width:actorData.system.size }})
   }
 
   /** @override */
@@ -33,7 +34,6 @@ export class NullGameActor extends Actor {
       ...this.effects.map((e) => e.toObject()),
       ...globalEffectsData,
     ];
-
-    this.updateSource({ effects });
+    this.updateSource({ effects, prototypeToken: {actorLink: true} });
   }
 }
