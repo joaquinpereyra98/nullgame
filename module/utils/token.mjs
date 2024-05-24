@@ -49,10 +49,13 @@ export class NullGameToken extends Token {
       counterContainer.name = "effectCounters";
       this.effectCounters = this.addChild(counterContainer);
     }
-    for (let sprite of this.effects.children.filter(effect => effect.isSprite && effect.id)) {
-      const eff = actorEffects.find(effect => sprite.id === effect._id);
-      if (eff) this.effectCounters.addChild(createEffectCounter(eff.counter, sprite)); 
-  }
+    for (let sprite of this.effects.children.filter(
+      (effect) => effect.isSprite && effect.id
+    )) {
+      const eff = actorEffects.find((effect) => sprite.id === effect._id);
+      if (eff)
+        this.effectCounters.addChild(createEffectCounter(eff.counter, sprite));
+    }
   }
   async _drawEffect(src, tint, ID) {
     if (!src) return;
@@ -60,10 +63,9 @@ export class NullGameToken extends Token {
     let icon = new PIXI.Sprite(tex);
     if (tint) icon.tint = tint;
     this.effects.addChild(icon);
-    if(ID) icon.id = ID;
+    if (ID) icon.id = ID;
     return icon;
   }
-
 }
 function createEffectCounter(cnt, icon) {
   const style = new PIXI.TextStyle({
@@ -74,7 +76,7 @@ function createEffectCounter(cnt, icon) {
     strokeThickness: 1,
     align: "center",
     wordWrap: false,
-    padding: 1
+    padding: 1,
   });
 
   const text = new PIXI.Text(cnt, style);
@@ -87,16 +89,57 @@ function createEffectCounter(cnt, icon) {
 
   return text;
 }
+export function onRenderHud(tokenHud, html) {
+  html.find(".status-effects").off("click", ".effect-control");
+  html
+    .find(".status-effects")
+    .on("click", ".effect-control", onClickEffect.bind(tokenHud));
 
-export class NullGameTokenHUD extends TokenHUD {
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find(".status-effects").off("click", ".effect-control");
-    html.find(".status-effects").on("click", ".effect-control", this._onClickStatus.bind(this))
-  }
-  _onClickStatus(ev){
-    if(ev.shiftKey){
-      this._onToggleEffect(ev);
+  html.find(".status-effects").off("contextmenu", ".effect-control");
+  html
+    .find(".status-effects")
+    .on("contextmenu", ".effect-control", onRightClickEffect.bind(tokenHud));
+}
+function onClickEffect(ev) {
+  const actor = this.object.actor;
+  const efID = ev.currentTarget.dataset.statusId;
+  const effect = actor.effects.find(
+    (ef) => ef.getFlag("nullgame", "global") === efID
+  );
+  if (ev.shiftKey) {
+    effect.update({ disabled: !effect.disabled });
+  } else {
+    if (effect.disabled) {
+      effect.update({ disabled: !effect.disabled });
     }
+    effect.counter++;
+  }
+}
+async function onRightClickEffect(ev) {
+  const actor = this.object.actor;
+  const efID = ev.currentTarget.dataset.statusId;
+  const effect = actor.effects.find(
+    (ef) => ef.getFlag("nullgame", "global") === efID
+  );
+  if (ev.shiftKey) {
+    await new Dialog({
+      title: game.i18n.localize("statuscounter.stackInput.title"), //TODO localize
+      content: `<p> Insert ${effect.name} Counter:</p>
+          <p><input type="number" name="counter" value="${effect.counter}"/></p>`,
+      buttons: {
+        ok: {
+          icon: '<i class="fas fa-check"></i>',
+          label: game.i18n.localize("statuscounter.stackInput.button"),
+          callback: (html) => {
+            effect.counter = html[0].querySelector(
+              "input[name='counter']"
+            ).valueAsNumber;
+          },
+        },
+      },
+      default: "ok",
+    }).render(true);
+  } else {
+    effect.counter--;
   }
 }
