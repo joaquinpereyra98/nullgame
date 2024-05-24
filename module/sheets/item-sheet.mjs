@@ -52,7 +52,8 @@ export class NullGameItemSheet extends ItemSheet {
     const actor = context.item.actor;
     context.consumableResources = { //TODO add label and localize
       bars: actor.system.bars,
-      items: actor.items.filter(item => item.system.isResource)
+      items: actor.items.filter(item => item.system.isResource),
+      effects: actor.allApplicableEffects()
     }
   }
   /** @override */

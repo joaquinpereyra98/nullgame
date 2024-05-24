@@ -159,7 +159,6 @@ class AEGlobal extends FormApplication {
         },
         no: (html) => {},
         defaultYes: false,
-        rejectClose: true
       })   
     });
   }

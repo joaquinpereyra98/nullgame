@@ -67,10 +67,15 @@
 
                     {{/each}}
                     {{else if (eq system.details.consumption.rscType 'items')}}
-                    {{#each consumableResources.items as |item itemKey|}}
+                    {{#each consumableResources.items as |item|}}
                     <option value="{{item.id}}">{{item.name}}</option>
                     {{/each}}
+                    {{else if (eq system.details.consumption.rscType 'effects')}}
+                    {{#each consumableResources.effects as |effects|}}
+                    <option value="{{effects.id}}">{{effects.name}}</option>
+                    {{/each}}
                     {{/if}}
+                    
                     {{/select}}
 
                 </select>

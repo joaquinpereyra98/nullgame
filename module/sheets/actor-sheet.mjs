@@ -203,6 +203,13 @@ export class NullGameActorSheet extends ActorSheet {
             });
             return item.roll();
           }
+        } else if(consumption.rscType === "effects"){
+          const effect = this.actor.effects.get(consumption.rsc);
+          if (effect.counter >= consumption.qty) {
+            effect.counter-= consumption.qty;
+            return item.roll();
+          }
+          
         } else {
           return item.roll();
         }
