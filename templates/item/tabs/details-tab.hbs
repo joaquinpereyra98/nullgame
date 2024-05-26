@@ -4,7 +4,7 @@
         <div class="target-container flex-cont">
             <label class="label-usage" for="system.details.target">Target</label> {{! TODO localize}}
             <div class="usage-inputs-container flex-cont">
-                <input type="text" class="input-box" name="system.details.target.value"
+                <input type="number" class="input-box" name="system.details.target.value"
                     value="{{system.details.target.value}}">
 
                 <select class="input-box" name="system.details.target.type">
@@ -64,7 +64,6 @@
                     {{#if (eq system.details.consumption.rscType 'bars')}}
                     {{#each consumableResources.bars as |bar barKey|}}
                     <option value="{{barKey}}">{{bar.label}}</option>
-
                     {{/each}}
                     {{else if (eq system.details.consumption.rscType 'items')}}
                     {{#each consumableResources.items as |item|}}
@@ -74,6 +73,8 @@
                     {{#each consumableResources.effects as |effects|}}
                     <option value="{{effects.id}}">{{effects.name}}</option>
                     {{/each}}
+                    {{else}}
+                    <option value=""></option>
                     {{/if}}
                     
                     {{/select}}
@@ -90,7 +91,7 @@
             <div class="attack-inputs-container">
                 <select class="attack-input-select" name="system.details.attackType">
                     {{#select system.details.attackType}}
-                    <option value="none-attack"></option>
+                    <option value="none"></option>
                     <option value="melee-attack">Melee Attack</option>
                     <option value="range-attack">Range Attack</option>
                     <option value="spell-attack">Spell Attack</option>

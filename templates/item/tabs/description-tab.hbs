@@ -1,6 +1,13 @@
 <div class="description-tab flex-cont">
     <div class="properties-container">
         <h3>Properties</h3>
+        <div class="propierty-container">
+            {{#each propierties as |prop|}}
+                <div class="propierty-box">
+                    {{prop}}
+                </div>
+            {{/each}}
+        </div>
     </div>
     <div class="description-container accordion-container">
         <div class="accordion-headers center-align" data-element="description">

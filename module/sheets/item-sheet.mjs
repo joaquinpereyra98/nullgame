@@ -32,8 +32,10 @@ export class NullGameItemSheet extends ItemSheet {
       uncategorized: "Uncategorized",
     };
     const itemData = context.data;
-    if(context.item.actor){
-      context.actorSkils = context.item.actor.items.filter(item => item.type==='skill');
+    if (context.item.actor) {
+      context.actorSkils = context.item.actor.items.filter(
+        (item) => item.type === "skill"
+      );
       this._findResources(context);
     }
     context.rollData = this.item.getRollData();
@@ -44,39 +46,75 @@ export class NullGameItemSheet extends ItemSheet {
       { async: true, secrets: this.item.isOwner }
     );
     context.isExtend = this.accordionState;
+    this._prepareProperties(context);
     return context;
   }
 
   /* -------------------------------------------- */
   _findResources(context) {
     const actor = context.item.actor;
-    context.consumableResources = { //TODO add label and localize
+    context.consumableResources = {
+      //TODO add label and localize
       bars: actor.system.bars,
-      items: actor.items.filter(item => item.system.isResource),
-      effects: actor.allApplicableEffects()
+      items: actor.items.filter((item) => item.system.isResource),
+      effects: actor.effects,
+    };
+  }
+  _prepareProperties(context) {
+    const sys = context.system;
+    const props = [sys.category];
+
+    if (sys.isResource) props.push("Ammo");
+    if (sys.details.attackType !== "none") props.push(sys.details.attackType);
+    if(sys.details.target.type !== ''){
+      let type = sys.details.target.type;
+      type = type.charAt(0).toUpperCase()+type.slice(1)
+      props.push(`${sys.details.target.value}sq ${type}`)
     }
+    const { normal, long, units } = sys.details.range;
+    if (normal || long) {
+      const range = normal && long ? `${normal}/${long}` : normal || long;
+      props.push(`Range (${range})${units}`);
+    }
+    if(sys.details.duration.value > 0){
+      props.push(`Duration: ${sys.details.duration.value} Rounds`);
+    }
+    const { rsc ,rscType } = sys.details.consumption
+    if(rscType !== ''){
+      let tag = '';
+      if(rscType === 'effects'){
+        tag = context.consumableResources[rscType].get(rsc)?.name
+      } else if(rscType === 'items'){
+        tag = context.consumableResources[rscType][rsc]?.name
+      } else if(rscType === 'bars'){
+        tag = context.consumableResources[rscType][rsc]?.label
+      }
+      props.push(`Use: ${sys.details.consumption.qty} ${tag}`)
+    }
+    this.item.setFlag('nullgame', 'props', props)
+    context.propierties = props
   }
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-     html.on("click", ".accordion-headers", (ev) => {   
-       const img = $(ev.currentTarget).find(".accordion-icon");
-       img.css("rotate", this.accordionState ? "0deg" : "180deg");
-       $(ev.currentTarget).next(".accordion-content").slideToggle(500);
-       this.accordionState = !this.accordionState;
-     });
-     html.on("click", ".add-damage-formula", (ev) => {
+    html.on("click", ".accordion-headers", (ev) => {
+      const img = $(ev.currentTarget).find(".accordion-icon");
+      img.css("rotate", this.accordionState ? "0deg" : "180deg");
+      $(ev.currentTarget).next(".accordion-content").slideToggle(500);
+      this.accordionState = !this.accordionState;
+    });
+    html.on("click", ".add-damage-formula", (ev) => {
       ev.preventDefault();
       const dmgArray = this.item.system.rollFormula.damagesFormulas;
-      dmgArray.push({formula: '',type: ''});
-      this.item.update({'system.rollFormula.damagesFormulas': dmgArray});
-     });
-     html.on("click", ".delete-damage-formula", (ev) =>{
+      dmgArray.push({ formula: "", type: "" });
+      this.item.update({ "system.rollFormula.damagesFormulas": dmgArray });
+    });
+    html.on("click", ".delete-damage-formula", (ev) => {
       ev.preventDefault();
       const dmgArray = this.item.system.rollFormula.damagesFormulas;
       dmgArray.splice(ev.currentTarget.dataset.key, 1)[0];
-      this.item.update({'system.rollFormula.damagesFormulas': dmgArray});
-     })
+      this.item.update({ "system.rollFormula.damagesFormulas": dmgArray });
+    });
     if (!this.isEditable) return;
   }
 }

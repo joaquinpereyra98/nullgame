@@ -398,6 +398,21 @@
     border-right-width: 2px;
     flex: 2;
 }
+.null-game .propierty-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.null-game .propierty-box {
+    margin: 2px 0;
+    border: 2px groove;
+    display: flex;
+    justify-content: center;
+    background: var(--backBGMoreOpacity);
+    padding: 1px 3px;
+    font-size: small;
+}
+
 /* ++++++++++++++++++++++++++++++ ACCORDION ITEM ++++++++++++++++++++++++++*/
 .null-game.item .description-tab .accordion-container{
     flex: 6;
