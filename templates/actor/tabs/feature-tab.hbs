@@ -51,11 +51,14 @@
     </div>
     <div class="accordion-content" {{ifThen (lookup ../state item._id) "" "hidden" }}>
         {{{item.system.descriptions.description}}}
-        {{#each item.flags.nullgame.props as |prop|}}
-        <div class="propierty-box">
-            {{prop}}
+        <div class="propierty-container">
+            {{#each item.flags.nullgame.props as |prop|}}
+            <div class="propierty-box">
+                {{prop}}
+            </div>
+            {{/each}}
         </div>
-        {{/each}}
+
     </div>
     {{/each}}
 </div>
