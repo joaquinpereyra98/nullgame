@@ -66,6 +66,83 @@ export class NullGameToken extends Token {
     if (ID) icon.id = ID;
     return icon;
   }
+  async _draw() {
+    this.bars = this.addChild(this.#drawAttributeBars());
+    await super._draw();
+  }
+  #drawAttributeBars() {
+    const bars = new PIXI.Container();
+    bars.bar1 = bars.addChild(new PIXI.Graphics());
+    bars.bar2 = bars.addChild(new PIXI.Graphics());
+    bars.bar3 = bars.addChild(new PIXI.Graphics());
+    return bars;
+  }
+  drawBars() {
+    if (
+      !this.actor ||
+      this.document.displayBars === CONST.TOKEN_DISPLAY_MODES.NONE
+    )
+      return;
+    ["bar1", "bar2", "bar3"].forEach((b, i) => {
+      const bar = this.bars[b];
+      let attr = this.document.getBarAttribute(b);
+      if (!attr || attr.type !== "bar" || attr.max === 0)
+        return (bar.visible = false);
+      this._drawBar(i, bar, attr);
+      bar.visible = true;
+    });
+  }
+  _drawBar(number, bar, data) {
+    const val = Number(data.value);
+    const pct = Math.clamped(val, 0, data.max) / data.max;
+
+    // Determine sizing
+    let h = Math.max(canvas.dimensions.size / 12, 8);
+    const w = this.w;
+    const bs = Math.clamped(h / 8, 1, 2);
+    if (this.document.height >= 2) h *= 1.6; // Enlarge the bar for large tokens
+
+    // Determine the color to use
+    const blk = 0x000000;
+    let color;
+    let posY;
+    switch (number) {
+      case 0:
+        color = Color.fromRGB([1 - pct / 2, pct, 0]);
+        posY = this.h - h;
+        break;
+      case 1:
+        color = Color.fromRGB([0.5 * pct, 0.7 * pct, 0.5 + pct / 2]);
+        posY = 0;
+        break;
+      default:
+        color = Color.fromRGB([0.2 + 0.8 * pct, 0.2 + 0.8 * pct, 0]);
+        posY = h;
+        break;
+    }
+    // Draw the bar
+    bar.clear();
+    bar
+      .beginFill(blk, 0.5)
+      .lineStyle(bs, blk, 1.0)
+      .drawRoundedRect(0, 0, this.w, h, 3);
+    bar
+      .beginFill(color, 1.0)
+      .lineStyle(bs, blk, 1.0)
+      .drawRoundedRect(0, 0, pct * w, h, 2);
+
+    // Set position
+    bar.position.set(0, posY);
+    return true;
+  }
+  _onCreate(data, options, userId) {
+    super._onCreate(data, options, userId);
+    data.flags.nullgame = {
+      bar3: {
+        attribute: null,
+      },
+    };
+  }
 }
 function createEffectCounter(cnt, icon) {
   const style = new PIXI.TextStyle({
@@ -89,16 +166,64 @@ function createEffectCounter(cnt, icon) {
 
   return text;
 }
-export function onRenderHud(tokenHud, html) {
-  html.find(".status-effects").off("click", ".effect-control");
-  html
-    .find(".status-effects")
-    .on("click", ".effect-control", onClickEffect.bind(tokenHud));
+export function onRenderHud(tokenHud, html, tokenData) {
+  const stsEff = html.find(".status-effects");
+  stsEff.off("click", ".effect-control");
+  stsEff.on("click", ".effect-control", onClickEffect.bind(tokenHud));
 
-  html.find(".status-effects").off("contextmenu", ".effect-control");
-  html
-    .find(".status-effects")
-    .on("contextmenu", ".effect-control", onRightClickEffect.bind(tokenHud));
+  stsEff.off("contextmenu", ".effect-control");
+  stsEff.on(
+    "contextmenu",
+    ".effect-control",
+    onRightClickEffect.bind(tokenHud)
+  );
+  const bar3 = tokenHud.object.document.getBarAttribute("bar3");
+  if (bar3 && bar3.type !== "none") {
+    const divAttr = html.find(".attribute.bar2");
+    divAttr.append(
+      `<input class="bar3" type="text" name="bar3.value" data-bar="bar3" value="${
+        bar3.value
+      }" ${bar3.editable ? "" : "disabled"}>`
+    );
+    divAttr.on("click", ".bar3", tokenHud._onAttributeClick);
+    divAttr.on("keydown", ".bar3", tokenHud._onAttributeKeydown.bind(tokenHud));
+    divAttr.on("focusout", ".bar3", (event) => {
+      event.preventDefault();
+      if (!tokenHud.object) return;
+
+      // Acquire string input
+      const input = event.currentTarget;
+      let strVal = input.value.trim();
+      let isDelta = strVal.startsWith("+") || strVal.startsWith("-");
+      if (strVal.startsWith("=")) strVal = strVal.slice(1);
+      let value = Number(strVal);
+
+      const bar = input.dataset.bar;
+      const actor = tokenHud.object?.actor;
+      if (bar && actor) {
+        const attr = tokenHud.object.document.getBarAttribute(bar);
+        if (isDelta || attr.attribute !== value) {
+          actor.modifyTokenAttribute(
+            attr.attribute,
+            value,
+            isDelta,
+            attr.type === "bar"
+          );
+        }
+      }
+
+      // Otherwise update the Token directly
+      else {
+        const current = foundry.utils.getProperty(
+          tokenHud.object.document,
+          input.name
+        );
+        tokenHud.object.document.update({
+          [input.name]: isDelta ? current + value : value,
+        });
+      }
+    });
+  }
 }
 function onClickEffect(ev) {
   const actor = this.object.actor;

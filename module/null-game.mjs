@@ -9,6 +9,8 @@ import AbilityTemplate from "./utils/measuredTemplate.mjs";
 import { NullGameActiveEffect } from "./documents/activeEffect.mjs";
 import { NullGameActiveEffectConfig } from "./sheets/activeEffect-sheet.mjs";
 import { NullGameToken, onRenderHud } from "./utils/token.mjs";
+import { NullGameTokenDocument } from "./documents/token.mjs";
+import { NullGameTokenConfig } from "./sheets/token-config.mjs";
 import { registerSystemSettings } from "./utils/setting.mjs";
 async function preloadHandlebarsTemplates() {
   return loadTemplates([
@@ -37,6 +39,8 @@ Hooks.once("init", function () {
     skill: NullGameSkillData,
   };
   CONFIG.Token.objectClass = NullGameToken;
+  CONFIG.Token.documentClass = NullGameTokenDocument;
+  CONFIG.Token.prototypeSheetClass = NullGameTokenConfig;
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("null-game", NullGameActorSheet, {
     makeDefault: true,
@@ -54,6 +58,15 @@ Hooks.once("init", function () {
     "null-game",
     NullGameActiveEffectConfig
   );
+  DocumentSheetConfig.unregisterSheet(TokenDocument, "core", TokenConfig);
+  DocumentSheetConfig.registerSheet(
+    TokenDocument,
+    "null-game",
+    NullGameTokenConfig,
+    {
+      makeDefault: true
+    }
+  )
 
   // Preload templates and register system settings
   preloadHandlebarsTemplates();

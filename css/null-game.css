@@ -517,3 +517,12 @@
     text-align: center;
     background-color: var(--backBGMoreOpacity);
 }
+#token-hud .attribute.bar2 input{
+    width: 40%;
+    min-width: 30px;
+    font-size: x-large;
+    margin: 0px 3px;
+}
+#token-hud .attribute.bar2 input.bar3{
+    border: 1px solid #ffff00;
+}
