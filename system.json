@@ -10,9 +10,9 @@
         "discord": "joaquinp98"
       }
     ],
-    "url": "[Link to repository]",
+    "url": "https://github.com/joaquinpereyra98/nullgame",
     "readme": "README.md",
-    "bugs": "[Link issues or tickets]",
+    "bugs": "https://github.com/joaquinpereyra98/nullgame/issues",
     "version": "0.7.5",
     "compatibility": {
       "minimum": 11,
@@ -30,8 +30,8 @@
     "packs": [],
     "packFolders": [],
     "socket": false,
-    "manifest": "[Link to the latest release]",
-    "download": "[Link .zip file version]",
+    "manifest": "https://raw.githubusercontent.com/joaquinpereyra98/nullgame/main/system.json",
+    "download": "https://github.com/joaquinpereyra98/nullgame/releases",
     "gridDistance": 1,
     "gridUnits": "sq"
   }
