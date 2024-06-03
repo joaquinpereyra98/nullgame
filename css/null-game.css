@@ -287,13 +287,13 @@
     font-size: large;
     font-weight: bold;
 }
-.null-game.actor .biography-editor-container{
+.null-game.actor .html-editor-container{
     padding: 5px;
 }
-.null-game.actor .biography-editor-container,
-.null-game.actor .biography-editor-container .editor,
-.null-game.actor .biography-editor-container .prosemirror .editor-container {
-    min-height: 12em;
+.null-game.actor .html-editor-container,
+.null-game.actor .html-editor-container .editor,
+.null-game.actor .html-editor-container .prosemirror .editor-container {
+    min-height: 10em;
 }
 .null-game.actor .tab.effects .category-header .item-controls{
     flex: 5;

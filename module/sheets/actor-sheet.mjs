@@ -35,9 +35,15 @@ export class NullGameActorSheet extends ActorSheet {
       actorData.system.biography,
       { async: true }
     );
+    context.gmNoteHTML = await TextEditor.enrichHTML(
+      actorData.system.gmNotes,
+      { async: true }
+    )
     if (actorData.type == "character") {
       this._prepareItems(context);
       this._prepareEffects(context);
+    } else if (actorData.type == "npc"){
+      this._prepareItems(context);
     }
     context.rollData = context.actor.getRollData();
     context.isGM = game.user.isGM;
@@ -154,8 +160,16 @@ export class NullGameActorSheet extends ActorSheet {
     event.preventDefault();
     const { category } = event.currentTarget.dataset;
     const categories = duplicate(this.actor.system.categories.features);
-    categories[category] = "";
-    this.actor.update({ [`system.categories.features`]: categories });
+    Dialog.confirm({
+      title: `Delete Category`,
+      content: `Are you sure you want to remove ${categories[category]}`,
+      yes: (html) => {
+        categories[category] = "";
+        this.actor.update({ [`system.categories.features`]: categories });
+      },
+      no: (html) =>{}
+    })
+    
   }
   /**
    * Handle creating a new Item of Actor.
@@ -237,7 +251,12 @@ export class NullGameActorSheet extends ActorSheet {
     html.on("click", ".delete-item", (ev) => {
       const id = ev.currentTarget.dataset.id;
       const item = this.actor.items.get(id);
-      item.delete();
+      Dialog.confirm({
+        title: `Delete ${item.type.capitalize()}`,
+        content: `Are you sure you want to remove ${item.name}`,
+        yes: (html) => {item.delete();},
+        no: (html) =>{}
+      })
     });
     html.on("click", ".item-edit", (ev) => {
       const id = ev.currentTarget.dataset.id;
@@ -272,7 +291,15 @@ export class NullGameActorSheet extends ActorSheet {
         case 'edit':
           return effect.sheet.render(true);
         case 'delete':
-          return effect.delete();
+          Dialog.confirm({
+            title: `Delete Active Effect`,
+            content: `Are you sure you want to remove ${effect.name}`,
+            yes: (html) => {
+              effect.delete();
+            },
+            no: (html) =>{}
+          })
+          return
         case 'toggle':
           return effect.update({ disabled: !effect.disabled });
       }

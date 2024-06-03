@@ -8,7 +8,7 @@ export class NullGameToken extends Token {
     this.effects.overlay = null;
     // Categorize new effects
     const tokenEffects = this.document.effects;
-    const actorEffects = this.actor?.temporaryEffects || [];
+    const actorEffects = this.actor?.appliedEffects || [];
     let overlay = {
       src: this.document.overlayEffect,
       tint: null,
@@ -168,6 +168,17 @@ function createEffectCounter(cnt, icon) {
 }
 export function onRenderHud(tokenHud, html, tokenData) {
   const stsEff = html.find(".status-effects");
+  const newEffects = tokenHud.object.actor.effects.filter(
+    (ef) => !ef.getFlag("nullgame", "global")
+  );
+  const newEffectsIcons = newEffects
+    .map(
+      (effect) =>
+        `<img class="effect-control active" src="${effect.icon}" title="${effect.name}" data-status-id="${effect.id}" />`
+    )
+    .join("");
+
+  stsEff.append(newEffectsIcons);
   stsEff.off("click", ".effect-control");
   stsEff.on("click", ".effect-control", onClickEffect.bind(tokenHud));
 
@@ -228,38 +239,45 @@ export function onRenderHud(tokenHud, html, tokenData) {
 function onClickEffect(ev) {
   const actor = this.object.actor;
   const efID = ev.currentTarget.dataset.statusId;
-  const effect = actor.effects.find(
-    (ef) => ef.getFlag("nullgame", "global") === efID
-  );
+  const effect =
+    actor.effects.find((ef) => ef.getFlag("nullgame", "global") === efID) ??
+    actor.effects.find((ef) => ef.id === efID);
+
+  if (!effect) return;
+
   if (ev.shiftKey) {
     effect.update({ disabled: !effect.disabled });
   } else {
     if (effect.disabled) {
-      effect.update({ disabled: !effect.disabled });
+      effect.update({ disabled: false });
     }
     effect.counter++;
   }
 }
+
 async function onRightClickEffect(ev) {
   const actor = this.object.actor;
   const efID = ev.currentTarget.dataset.statusId;
-  const effect = actor.effects.find(
-    (ef) => ef.getFlag("nullgame", "global") === efID
-  );
+  const effect =
+    actor.effects.find((ef) => ef.getFlag("nullgame", "global") === efID) ??
+    actor.effects.find((ef) => ef.id === efID);
+
+  if (!effect) return;
+
   if (ev.shiftKey) {
     await new Dialog({
       title: game.i18n.localize("statuscounter.stackInput.title"), //TODO localize
-      content: `<p> Insert ${effect.name} Counter:</p>
-          <p><input type="number" name="counter" value="${effect.counter}"/></p>`,
+      content: `
+        <p>Insert ${effect.name} Counter:</p>
+        <p><input type="number" name="counter" value="${effect.counter}"/></p>`,
       buttons: {
         ok: {
           icon: '<i class="fas fa-check"></i>',
           label: game.i18n.localize("statuscounter.stackInput.button"),
-          callback: (html) => {
-            effect.counter = html[0].querySelector(
+          callback: (html) =>
+            (effect.counter = html[0].querySelector(
               "input[name='counter']"
-            ).valueAsNumber;
-          },
+            ).valueAsNumber),
         },
       },
       default: "ok",

@@ -1,6 +1,7 @@
 import { NullGameActor } from "./documents/actor.mjs";
 import { NullGameActorSheet } from "./sheets/actor-sheet.mjs";
 import NullGameActorData from "./data/actor-base.mjs";
+import NullGameNPCData from "./data/actor-npc.mjs";
 import { NullGameItem } from "./documents/item.mjs";
 import { NullGameItemSheet } from "./sheets/item-sheet.mjs";
 import NullGameFeatureData from "./data/item-feature.mjs";
@@ -33,6 +34,7 @@ Hooks.once("init", function () {
 
   CONFIG.Actor.dataModels = {
     character: NullGameActorData,
+    npc: NullGameNPCData,
   };
   CONFIG.Item.dataModels = {
     feature: NullGameFeatureData,

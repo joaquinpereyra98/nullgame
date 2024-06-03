@@ -62,13 +62,13 @@ export class NullGameItemSheet extends ItemSheet {
   }
   _prepareProperties(context) {
     const sys = context.system;
-    const props = [sys.category];
+    const props = [];
 
     if (sys.isResource) props.push("Ammo");
     if (sys.details.attackType !== "none") props.push(sys.details.attackType);
     if(sys.details.target.type !== ''){
       let type = sys.details.target.type;
-      type = type.charAt(0).toUpperCase()+type.slice(1)
+      type = type.capitalize()
       props.push(`${sys.details.target.value}sq ${type}`)
     }
     const { normal, long, units } = sys.details.range;
