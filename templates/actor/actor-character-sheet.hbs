@@ -77,7 +77,7 @@
             {{#if isGM}}
             <div class="html-editor-container dmnotes-container">
                 <h2>GM Notes</h2>
-                {{editor gmNoteHTML target="system.gmNotes" button=true editable=editable}}
+                {{editor gmNoteHTML target="system.gmNotes" button=true editable=editable engine="prosemirror" collaborate=false}}
             </div>
             {{/if}}
         </div>

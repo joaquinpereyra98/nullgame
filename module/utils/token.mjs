@@ -168,13 +168,15 @@ function createEffectCounter(cnt, icon) {
 }
 export function onRenderHud(tokenHud, html, tokenData) {
   const stsEff = html.find(".status-effects");
-  const newEffects = tokenHud.object.actor.effects.filter(
-    (ef) => !ef.getFlag("nullgame", "global")
-  );
+  console.log(stsEff)
+    for (const child of stsEff.children()) {
+      child.remove()
+    }
+  const newEffects = tokenHud.object.actor.effects;
   const newEffectsIcons = newEffects
     .map(
       (effect) =>
-        `<img class="effect-control active" src="${effect.icon}" title="${effect.name}" data-status-id="${effect.id}" />`
+        `<img class="effect-control active" src="${effect.icon}" data-status-id="${effect.id}" data-tooltip="${effect.name}: ${effect.description}</p>"/>`
     )
     .join("");
 

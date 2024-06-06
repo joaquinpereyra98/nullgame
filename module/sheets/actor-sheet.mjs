@@ -16,6 +16,7 @@ export class NullGameActorSheet extends ActorSheet {
           initial: "features",
         },
       ],
+      dragDrop: [{dragSelector: ".item-list-component", dropSelector: null}],
     });
   }
 
@@ -24,6 +25,23 @@ export class NullGameActorSheet extends ActorSheet {
     return `systems/nullgame/templates/actor/actor-${this.actor.type}-sheet.hbs`;
   }
 
+  /** @override */
+  _onDragStart(event) {
+    super._onDragStart(event);
+    const li = event.currentTarget;
+    let dragData;
+    if ( li.dataset.itemid ) {
+      const item = this.actor.items.get(li.dataset.itemid);
+      dragData = item.toDragData();
+    }
+    if ( li.dataset.effectid ) {
+      const effect = this.actor.effects.get(li.dataset.effectid);
+      dragData = effect.toDragData();
+    }
+    if ( !dragData ) return;
+    console.log(dragData)
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+  }
   /** @override */
   async getData() {
     const context = super.getData();
@@ -44,6 +62,7 @@ export class NullGameActorSheet extends ActorSheet {
       this._prepareEffects(context);
     } else if (actorData.type == "npc"){
       this._prepareItems(context);
+      this._prepareEffects(context);
     }
     context.rollData = context.actor.getRollData();
     context.isGM = game.user.isGM;
@@ -260,12 +279,13 @@ export class NullGameActorSheet extends ActorSheet {
     });
     html.on("click", ".item-edit", (ev) => {
       const id = ev.currentTarget.dataset.id;
+      event.stopImmediatePropagation();
       const item = this.actor.items.get(id);
       item.sheet.render(true);
     });
     html.on("click", ".accordion-headers", (ev) => {
       const img = $(ev.currentTarget).find(".accordion-icon");
-      const key = ev.currentTarget.dataset.key;
+      const key = ev.currentTarget.dataset.itemId;
       this.accordionState = this.accordionState || {};
       this.accordionState[key] = !this.accordionState[key];
       img.css("rotate", this.accordionState[key] ? "180deg" : "0deg");

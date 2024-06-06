@@ -13,7 +13,7 @@
   </div>
   <div class="category-body">
     {{#each section.effects as |effect|}}
-    <div class="item-list-component flex-cont">
+    <div class="item-list-component flex-cont" data-effectid="{{effect.id}}">
       <div class="item-details flex-cont">
         <div class='item-image center-align'>
           <img src="{{effect.icon}}" width='24' height='24' />

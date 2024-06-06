@@ -293,7 +293,10 @@
 .null-game.actor .html-editor-container,
 .null-game.actor .html-editor-container .editor,
 .null-game.actor .html-editor-container .prosemirror .editor-container {
-    min-height: 10em;
+    min-height: 8em;
+}
+.null-game.actor .html-editor-container .editor {
+    overflow-x: hidden;
 }
 .null-game.actor .tab.effects .category-header .item-controls{
     flex: 5;
@@ -313,12 +316,14 @@
     display: grid;
     grid-template-columns: auto auto auto;
     padding: 5px;
-    border-top: 2px groove;
+    border: var(--borderBox);
+    border-top-width: 2px;
     margin-top: 5px;
 }
 .null-game.actor .tab.effects .global-effect-item{
     margin: 2px;
-    border: 2px groove;
+    border: var(--borderBox);
+    border-width: 2px;
     padding: 2px 4px;
 }
 .null-game.actor .tab.effects .global-effect-item:hover{

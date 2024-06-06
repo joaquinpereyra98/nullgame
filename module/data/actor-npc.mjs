@@ -6,7 +6,7 @@ export default class NullGameNPCData extends foundry.abstract.TypeDataModel {
       return {
         bars: new fields.SchemaField({
           firstBar: new fields.SchemaField({
-            label: new fields.StringField({ ...requiredStringer }),
+            label: new fields.StringField({ required: true, inital: "Bar 1" }),
             value: new fields.NumberField({
               ...requiredInteger,
               initial: 10,
@@ -19,7 +19,7 @@ export default class NullGameNPCData extends foundry.abstract.TypeDataModel {
             }),
           }),
           secondBar: new fields.SchemaField({
-            label: new fields.StringField({ ...requiredStringer }),
+            label: new fields.StringField({ required: true, inital: "Bar 2" }),
             value: new fields.NumberField({
               ...requiredInteger,
               initial: 10,
@@ -28,7 +28,7 @@ export default class NullGameNPCData extends foundry.abstract.TypeDataModel {
             max: new fields.NumberField({ ...requiredInteger, initial: 10 }),
           }),
           thirdBar: new fields.SchemaField({
-            label: new fields.StringField({ ...requiredStringer }),
+            label: new fields.StringField({ required: true, inital: "Bar 3" }),
             value: new fields.NumberField({
               ...requiredInteger,
               initial: 10,
@@ -37,8 +37,8 @@ export default class NullGameNPCData extends foundry.abstract.TypeDataModel {
             max: new fields.NumberField({ ...requiredInteger, initial: 10 }),
           }),
         }),
-        biography: new fields.HTMLField({ required: true, initial: '<div style="display: flex;"><div style="flex: 50%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 50%; padding-left: 10px;"><p></p></div></div>' }),
-        gmNotes: new fields.HTMLField({required: true, initial: '<div style="display: flex;"><div style="flex: 50%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 50%; padding-left: 10px;"><p></p></div></div>' }),
+        biography: new fields.HTMLField({ required: true, initial: '<div style="display: flex;"><div style="flex: 48%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 48%; padding-left: 10px;"><p></p></div> </div>' }),
+        gmNotes: new fields.HTMLField({required: true, initial: '<div style="display: flex;"><div style="flex: 48%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 48%; padding-left: 10px;"><p></p></div> </div>' }),
         textBoxs: new fields.SchemaField({
           firstTextBox: new fields.StringField({ ...requiredStringer }),
           secondTextBox: new fields.StringField({ ...requiredStringer }),

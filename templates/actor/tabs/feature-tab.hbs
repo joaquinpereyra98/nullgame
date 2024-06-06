@@ -19,7 +19,7 @@
 </div>
 <div class="category-body">
     {{#each category.items as |item id|}}
-    <div class="item-list-component flex-cont accordion-headers" data-key="{{item._id}}">
+    <div class="item-list-component flex-cont accordion-headers draggable" data-itemId="{{item._id}}">
         <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state item._id) " rotate: 180deg" "rotate: 0deg"
             }}" src="systems/nullgame/assets/expand_more.svg">
         <div class="item-details flex-cont">
@@ -85,8 +85,8 @@
         </div>
     </div>
     <div class="category-body">
-        {{#each features.uncategorized.items as |item id|}}
-        <div class="item-list-component flex-cont accordion-headers" data-key="{{item._id}}">
+        {{#each features.uncategorized.items as |item|}}
+        <div class="item-list-component flex-cont accordion-headers draggable" data-itemId="{{item._id}}">
             <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state item._id) " rotate:
                 180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
             <div class="item-details flex-cont">

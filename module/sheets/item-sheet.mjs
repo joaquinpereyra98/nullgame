@@ -46,7 +46,9 @@ export class NullGameItemSheet extends ItemSheet {
       { async: true, secrets: this.item.isOwner }
     );
     context.isExtend = this.accordionState;
-    this._prepareProperties(context);
+    if(context.item.type === 'feature'){
+      this._prepareProperties(context);
+    }
     return context;
   }
 

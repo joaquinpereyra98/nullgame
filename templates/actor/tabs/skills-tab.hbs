@@ -8,10 +8,10 @@
         </a>
     </div>
 
-    {{#each skills as |skill skillKey|}}
+    {{#each skills as |skill|}}
     <div class="skill-conntainer flex-cont">
         <div class="accordion-skill-container">
-            <div class="accordion-headers center-align" data-key="{{skill._id}}">
+            <div class="accordion-headers item-list-component center-align" data-itemid="{{skill._id}}">
                 <span class="span-button flex-cont">
                     <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state skill._id) "rotate: 180deg" "rotate: 0deg"}}" src="systems/nullgame/assets/expand_more.svg">
                 </span>

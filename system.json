@@ -13,7 +13,7 @@
     "url": "https://github.com/joaquinpereyra98/nullgame",
     "readme": "README.md",
     "bugs": "https://github.com/joaquinpereyra98/nullgame/issues",
-    "version": "0.7.3",
+    "version": "0.7.5",
     "compatibility": {
       "minimum": 11,
       "verified": "11.315"
