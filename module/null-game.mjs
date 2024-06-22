@@ -13,6 +13,7 @@ import { NullGameToken, onRenderHud } from "./utils/token.mjs";
 import { NullGameTokenDocument } from "./documents/token.mjs";
 import { NullGameTokenConfig } from "./sheets/token-config.mjs";
 import { registerSystemSettings } from "./utils/setting.mjs";
+import { EffectTooltipHUD } from "./effectTooltipHUD.mjs";
 async function preloadHandlebarsTemplates() {
   return loadTemplates([
     "systems/nullgame/templates/actor/tabs/feature-tab.hbs",
@@ -97,3 +98,17 @@ Hooks.on("renderChatMessage", (msg, html, msgData) => {
   });
 });
 Hooks.on("renderTokenHUD", onRenderHud);
+
+Hooks.on("renderHeadsUpDisplay", (app, html, data) => {
+  html.append(`<template id="effect-tooltip-hover"></template>`);
+  canvas.hud.effectTooltipHover = new EffectTooltipHUD();
+});
+Hooks.on("hoverToken", (token, hovered) => {
+  const tooltip = canvas.hud.effectTooltipHover;
+  if (tooltip === undefined) return;
+  if (!hovered || token !== canvas.tokens.hover) {
+    tooltip.clear();
+  } else {
+    tooltip.bind(token);
+  }
+});

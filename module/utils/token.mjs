@@ -168,7 +168,6 @@ function createEffectCounter(cnt, icon) {
 }
 export function onRenderHud(tokenHud, html, tokenData) {
   const stsEff = html.find(".status-effects");
-  console.log(stsEff)
     for (const child of stsEff.children()) {
       child.remove()
     }
@@ -236,6 +235,12 @@ export function onRenderHud(tokenHud, html, tokenData) {
         });
       }
     });
+  }
+  const tooltip = canvas.hud.effectTooltipHover;
+  if (tooltip === undefined) return;
+  if (tokenHud.object.hover) {
+    tooltip.clear();
+    tooltip.bind(tokenHud.object)
   }
 }
 function onClickEffect(ev) {

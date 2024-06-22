@@ -1,0 +1,12 @@
+<div id="{{id}}" class="{{classes}}">
+    <div class="flex flex-col">
+        {{#each effects as |effect|}}
+        <div class="flex">
+            <h2>
+                {{effect.name}}
+            </h2>
+            {{{effect.description}}}
+        </div>
+        {{/each}}
+    </div>
+</div>
