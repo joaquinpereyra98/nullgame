@@ -50,7 +50,7 @@ export class NullGameActor extends Actor {
     const category = changed.system?.categories?.features;
     if (category) {
       for (const [oldKey, newKey] of Object.entries(category)) {
-        if (newKey === "") continue;
+        if (newKey === "" || newKey === oldKey ) continue;
         category[newKey] = category[oldKey];
         category[oldKey] = "";
         changed.items = this.itemTypes.feature
