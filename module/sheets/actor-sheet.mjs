@@ -39,7 +39,6 @@ export class NullGameActorSheet extends ActorSheet {
       dragData = effect.toDragData();
     }
     if ( !dragData ) return;
-    console.log(dragData)
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
   /** @override */
@@ -154,19 +153,13 @@ export class NullGameActorSheet extends ActorSheet {
     event.preventDefault();
     const featCategories = this.actor.system.categories.features;
 
-    let countKey = 0;
-    let finalCategoryKey = "category";
-    while (featCategories[finalCategoryKey]) {
-      countKey++;
-      finalCategoryKey = `category${countKey}`;
-    }
     let countName = 0;
     let finalCategoryName = categoryName;
     while (Object.values(featCategories).includes(finalCategoryName)) {
       countName++;
       finalCategoryName = `${categoryName} (${countName})`;
     }
-    featCategories[finalCategoryKey] = finalCategoryName;
+    featCategories[finalCategoryName] = finalCategoryName;
     featCategories["uncategorized"] = "Uncategorized"; //TODO localize
     this.actor.update({ "system.categories.features": featCategories });
   }
@@ -279,7 +272,7 @@ export class NullGameActorSheet extends ActorSheet {
     });
     html.on("click", ".item-edit", (ev) => {
       const id = ev.currentTarget.dataset.id;
-      event.stopImmediatePropagation();
+      ev.stopImmediatePropagation();
       const item = this.actor.items.get(id);
       item.sheet.render(true);
     });

@@ -19,10 +19,16 @@
             <div class="second-header-container flex-cont">
                 <select class="select-header" name="system.size" data-type="string">
                     {{#select system.size}}
+                    <option value="-1">{{localize 'NULL_GAME.SizesLabel.Custom'}}</option>
                     <option value="0.5">{{localize 'NULL_GAME.SizesLabel.Small'}}</option>
                     <option value="1">{{localize 'NULL_GAME.SizesLabel.Medium'}}</option>
                     <option value="2">{{localize 'NULL_GAME.SizesLabel.Large'}}</option>
                     <option value="3">{{localize 'NULL_GAME.SizesLabel.Huge'}}</option>
+                    <option value="4">{{localize 'NULL_GAME.SizesLabel.Gargantuam'}}</option>
+                    <option value="5">{{localize 'NULL_GAME.SizesLabel.Colossal'}}</option>
+                    <option value="6">{{localize 'NULL_GAME.SizesLabel.Enormous'}}</option>
+                    <option value="7">{{localize 'NULL_GAME.SizesLabel.Immense'}}</option>
+                    <option value="8">{{localize 'NULL_GAME.SizesLabel.Jumbo'}}</option>
                     {{/select}}
                 </select>
                 <div class="text-header-container flex-cont">

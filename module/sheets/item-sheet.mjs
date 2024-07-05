@@ -45,8 +45,13 @@ export class NullGameItemSheet extends ItemSheet {
       itemData.system.descriptions.description,
       { async: true, secrets: this.item.isOwner }
     );
+    context.gmNotesHTML = await TextEditor.enrichHTML(
+      itemData.system.descriptions.gmNotes,
+      { async: true, secrets: this.item.isOwner }
+    );
+    context.isGM = game.user.isGM;
     context.isExtend = this.accordionState;
-    if(context.item.type === 'feature'){
+    if (context.item.type === "feature") {
       this._prepareProperties(context);
     }
     return context;
@@ -68,43 +73,38 @@ export class NullGameItemSheet extends ItemSheet {
 
     if (sys.isResource) props.push("Ammo");
     if (sys.details.attackType !== "none") props.push(sys.details.attackType);
-    if(sys.details.target.type !== ''){
+    if (sys.details.target.type !== "") {
       let type = sys.details.target.type;
-      type = type.capitalize()
-      props.push(`${sys.details.target.value}sq ${type}`)
+      type = type.capitalize();
+      props.push(`${sys.details.target.value}sq ${type}`);
     }
     const { normal, long, units } = sys.details.range;
     if (normal || long) {
       const range = normal && long ? `${normal}/${long}` : normal || long;
       props.push(`Range (${range})${units}`);
     }
-    if(sys.details.duration.value > 0){
+    if (sys.details.duration.value > 0) {
       props.push(`Duration: ${sys.details.duration.value} Rounds`);
     }
-    const { rsc ,rscType } = sys.details.consumption
-    if(rscType !== ''){
-      let tag = '';
-      if(rscType === 'effects'){
-        tag = context.consumableResources[rscType].get(rsc)?.name
-      } else if(rscType === 'items'){
-        tag = context.consumableResources[rscType][rsc]?.name
-      } else if(rscType === 'bars'){
-        tag = context.consumableResources[rscType][rsc]?.label
+    const { rsc, rscType } = sys.details.consumption;
+    if (rscType !== "") {
+      let tag = "";
+      if (rscType === "effects") {
+        tag = context.consumableResources[rscType].get(rsc)?.name;
+      } else if (rscType === "items") {
+        tag = context.consumableResources[rscType][rsc]?.name;
+      } else if (rscType === "bars") {
+        tag = context.consumableResources[rscType][rsc]?.label;
       }
-      props.push(`Use: ${sys.details.consumption.qty} ${tag}`)
+      props.push(`Use: ${sys.details.consumption.qty} ${tag}`);
     }
-    this.item.setFlag('nullgame', 'props', props)
-    context.propierties = props
+    this.item.setFlag("nullgame", "props", props);
+    context.propierties = props;
   }
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-    html.on("click", ".accordion-headers", (ev) => {
-      const img = $(ev.currentTarget).find(".accordion-icon");
-      img.css("rotate", this.accordionState ? "0deg" : "180deg");
-      $(ev.currentTarget).next(".accordion-content").slideToggle(500);
-      this.accordionState = !this.accordionState;
-    });
+    html.on("click", ".accordion-headers", this._accordionFunction.bind(this));
     html.on("click", ".add-damage-formula", (ev) => {
       ev.preventDefault();
       const dmgArray = this.item.system.rollFormula.damagesFormulas;
@@ -118,5 +118,14 @@ export class NullGameItemSheet extends ItemSheet {
       this.item.update({ "system.rollFormula.damagesFormulas": dmgArray });
     });
     if (!this.isEditable) return;
+  }
+  _accordionFunction(ev) {
+    ev.preventDefault();
+    const element = ev.currentTarget.dataset.element; 
+    if(!this.accordionState)this.accordionState = {};
+    const img = $(ev.currentTarget).find(".accordion-icon");
+    img.css("rotate", this.accordionState[element] ? "0deg" : "180deg");
+    $(ev.currentTarget).next(".accordion-content").slideToggle(500);
+    this.accordionState[element] = !this.accordionState[element];
   }
 }

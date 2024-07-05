@@ -7,6 +7,7 @@ export default class NullGameSkillData extends foundry.abstract.TypeDataModel {
       return {
         descriptions: new fields.SchemaField({
           description: new fields.HTMLField({...requiredString}),
+          gmNotes: new fields.HTMLField({...requiredString})
         }),
         isRolleable: new fields.BooleanField({ initial: false}),
         advancement: new fields.SchemaField({

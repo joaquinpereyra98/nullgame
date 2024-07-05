@@ -3,22 +3,40 @@
         <h3>Properties</h3>
         <div class="propierty-container">
             {{#each propierties as |prop|}}
-                <div class="propierty-box">
-                    {{prop}}
-                </div>
+            <div class="propierty-box">
+                {{prop}}
+            </div>
             {{/each}}
         </div>
     </div>
-    <div class="description-container accordion-container">
-        <div class="accordion-headers center-align" data-element="description">
-            <span class="span-button flex-cont">
-                <img class="icon-img accordion-icon" style="{{ifThen isExtend "rotate: 180deg" "rotate: 0deg"}}" src="systems/nullgame/assets/expand_more.svg">
-            </span>
-            Description {{!- TODO localize}}
+    <div class="description-container">
+        <div class="description-container accordion-container">
+            <div class="accordion-headers center-align" data-element="description">
+                <span class="span-button flex-cont">
+                    <img class="icon-img accordion-icon" style="{{ifThen isExtend.description " rotate:
+                        180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
+                </span>
+                Description {{!- TODO localize}}
+            </div>
+            <div class="accordion-content {{ifThen isExtend.description "" " hidden"}}">
+                {{editor descriptionHTML target="system.descriptions.description" button=true editable=editable
+                engine="prosemirror" collaborate=false}}
+            </div>
         </div>
-        <div class="accordion-content {{ifThen isExtend "" "hidden"}}">
-            {{editor descriptionHTML target="system.descriptions.description" button=true editable=editable
-            engine="prosemirror" collaborate=false}}
+        {{#if isGM}}
+        <div class="description-container accordion-container">
+            <div class="accordion-headers center-align" data-element="gmNotes">
+                <span class="span-button flex-cont">
+                    <img class="icon-img accordion-icon" style="{{ifThen isExtend.gmNotes " rotate:
+                        180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
+                </span>
+                GM Notes {{!- TODO localize}}
+            </div>
+            <div class="accordion-content {{ifThen isExtend.gmNotes "" " hidden"}}">
+                {{editor gmNotesHTML target="system.descriptions.gmNotes" button=true editable=editable
+                engine="prosemirror" collaborate=false}}
+            </div>
         </div>
+        {{/if}}
     </div>
 </div>

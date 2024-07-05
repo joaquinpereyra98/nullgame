@@ -7,6 +7,7 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
       return {
         descriptions: new fields.SchemaField({
           description: new fields.HTMLField({...requiredString}),
+          gmNotes: new fields.HTMLField({...requiredString})
         }),
         details: new fields.SchemaField({
           duration: new fields.SchemaField({
@@ -22,7 +23,7 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
             value: new foundry.data.fields.NumberField({...requiredNumber, initial: 0}),
             type: new foundry.data.fields.StringField({...requiredString}),
           }),
-          attackType: new fields.StringField({...requiredString}),
+          attackType: new fields.StringField({required: true, inital: "none"}),
           consumption: new fields.SchemaField({
             qty: new fields.NumberField({...requiredNumber}),
             rsc: new fields.StringField({...requiredString}),

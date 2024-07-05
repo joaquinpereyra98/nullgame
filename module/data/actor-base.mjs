@@ -53,6 +53,6 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
   }
   prepareBaseData() {
     const deleteEmptyProperties = obj => Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== "" && v !== null));
-    this.categories.features=deleteEmptyProperties(this.categories.features);
+    this.categories.features = deleteEmptyProperties(this.categories.features);
   }
 }

@@ -8,10 +8,16 @@
             "Level": "Level"
         },
         "SizesLabel": {
+            "Custom": "Custom",
             "Small": "Small",
             "Medium": "Medium",
             "Large": "Large",
-            "Huge": "Huge"
+            "Huge": "Huge",
+            "Gargantuam": "Gargantuam",
+            "Colossal": "Colossal",
+            "Enormous": "Enormous",
+            "Immense": "Immense",
+            "Jumbo": "Jumbo"
         },
         "Tabs": {
             "Features": "Features",

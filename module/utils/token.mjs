@@ -53,7 +53,7 @@ export class NullGameToken extends Token {
       (effect) => effect.isSprite && effect.id
     )) {
       const eff = actorEffects.find((effect) => sprite.id === effect._id);
-      if (eff)
+      if (eff && eff.counter !== 0)
         this.effectCounters.addChild(createEffectCounter(eff.counter, sprite));
     }
   }
@@ -244,6 +244,7 @@ export function onRenderHud(tokenHud, html, tokenData) {
   }
 }
 function onClickEffect(ev) {
+  ev.stopPropagation();
   const actor = this.object.actor;
   const efID = ev.currentTarget.dataset.statusId;
   const effect =
