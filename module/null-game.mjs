@@ -67,9 +67,9 @@ Hooks.once("init", function () {
     "null-game",
     NullGameTokenConfig,
     {
-      makeDefault: true
+      makeDefault: true,
     }
-  )
+  );
 
   // Preload templates and register system settings
   preloadHandlebarsTemplates();

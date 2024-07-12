@@ -9,8 +9,8 @@ export class NullGameItem extends Item {
    */
   get hasAreaTarget() {
     const { type } = this.system.details?.target ?? {};
-    return ['circle', 'cone', 'ray', 'rect'].includes(type);
-}
+    return ["circle", "cone", "ray", "rect"].includes(type);
+  }
 
   /**
    * Augment the basic Item data model with additional dynamic data.
@@ -50,9 +50,9 @@ export class NullGameItem extends Item {
     if (this.type === "feature") {
       const { rollFormula } = this.system;
       parts.push(rollFormula.formula ?? "1d20");
-      if(rollFormula.skillMod !== ""){
+      if (rollFormula.skillMod !== "") {
         const item = actor.items.get(rollFormula.skillMod);
-        parts.push(`${item.system.advancement.mod}[${item.name} Skill]`) //TODO localize
+        parts.push(`${item.system.advancement.mod}[${item.name} Skill]`); //TODO localize
       }
       dmgParts = rollFormula.damagesFormulas
         .filter((dmg) => dmg.formula !== "" || dmg.type !== "")
@@ -81,4 +81,3 @@ export class NullGameItem extends Item {
     return roll;
   }
 }
-  
