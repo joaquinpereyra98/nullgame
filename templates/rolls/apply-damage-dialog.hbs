@@ -1,0 +1,10 @@
+<form>
+    <fieldset>
+        <label>Damage Suffered</label>
+        {{numberInput applyDamage name="applyDamage" step=1 min=0}}
+        <label>Target Bar</label>
+        <select name="targetBar">
+           {{selectOptions choices selected="firstBar" localize=true}} 
+        </select>   
+    </fieldset>
+</form>

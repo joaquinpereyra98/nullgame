@@ -87,6 +87,7 @@ Hooks.on("renderChatMessage", (msg, html, msgData) => {
       flavor: msg.flavor,
       rollMode: game.settings.get("core", "rollMode"),
     });
+    Hooks.callAll("nullgameRollDamage", roll, msgData.user);
   });
 
   html.on("click", ".create-measured-template", async (ev) => {
@@ -110,5 +111,48 @@ Hooks.on("hoverToken", (token, hovered) => {
     tooltip.clear();
   } else {
     tooltip.bind(token);
+  }
+});
+Hooks.on("nullgameRollDamage", async (roll, user) => {
+  console.log("nullgameRollDamage");
+  if (user.targets.size > 0 && game.user.isGM) {
+    user.targets.forEach(async (token) => {
+      const tokenActor = token.actor;
+      if (!tokenActor) return;
+      const { firstBar, secondBar, thirdBar } = tokenActor.system.bars;
+      const choices = {
+        firstBar: firstBar.label,
+        secondBar: secondBar.label,
+        thirdBar: thirdBar.label,
+      };
+      const dialog = new Dialog({
+        title: `Damage applied to ${tokenActor.name}`,
+        content: await renderTemplate(
+          "systems/nullgame/templates/rolls/apply-damage-dialog.hbs",
+          { choices, applyDamage: roll.result }
+        ),
+        buttons: {
+          submit: {
+            label: "Apply",
+            icon: '<i class="fa-regular fa-explosion"></i>',
+            callback: (html) => {
+              const formData = new FormDataExtended(
+                html[0].querySelector("form")
+              ).object;
+              const { value } = tokenActor.system.bars[formData.targetBar];
+              const newValue = value - formData.applyDamage;
+              tokenActor.update({
+                [`system.bars.${formData.targetBar}.value`]: newValue,
+              });
+            },
+          },
+          cancel: {
+            label: "Cancel",
+            icon: '<i class="fa-solid fa-ban"></i>',
+          },
+        },
+        default: "submit",
+      }).render(true);
+    });
   }
 });

@@ -6,7 +6,7 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
     return {
       bars: new fields.SchemaField({
         firstBar: new fields.SchemaField({
-          label: new fields.StringField({ required: true, inital: "Bar 1" }),
+          label: new fields.StringField({ required: true, initial: "Bar 1" }),
           value: new fields.NumberField({
             ...requiredInteger,
             initial: 10,
@@ -19,40 +19,70 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
           }),
         }),
         secondBar: new fields.SchemaField({
-          label: new fields.StringField({ required: true, inital: "Bar 2" }),
+          label: new fields.StringField({ required: true, initial: "Bar 2" }),
           value: new fields.NumberField({
             ...requiredInteger,
             initial: 10,
             min: 0,
           }),
-          max: new fields.NumberField({ ...requiredInteger, initial: 10 }),
+          max: new fields.NumberField({
+            ...requiredInteger,
+            initial: 10,
+            min: 0,
+          }),
         }),
         thirdBar: new fields.SchemaField({
-          label: new fields.StringField({ required: true, inital: "Bar 3" }),
+          label: new fields.StringField({ required: true, initial: "Bar 3" }),
           value: new fields.NumberField({
             ...requiredInteger,
             initial: 10,
             min: 0,
           }),
-          max: new fields.NumberField({ ...requiredInteger, initial: 10 }),
+          max: new fields.NumberField({
+            ...requiredInteger,
+            initial: 10,
+            min: 0,
+          }),
         }),
       }),
-      biography: new fields.HTMLField({ required: true, initial: '<div style="display: flex;"><div style="flex: 48%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 48%; padding-left: 10px;"><p></p></div> </div>' }),
-      gmNotes: new fields.HTMLField({required: true, initial: '<div style="display: flex;"><div style="flex: 48%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 48%; padding-left: 10px;"><p></p></div> </div>' }),
+      biography: new fields.HTMLField({
+        required: true,
+        initial:
+          '<div style="display: flex;"><div style="flex: 48%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 48%; padding-left: 10px;"><p></p></div> </div>',
+      }),
+      gmNotes: new fields.HTMLField({
+        required: true,
+        initial:
+          '<div style="display: flex;"><div style="flex: 48%; padding-right: 10px; border-right: 2px groove rgb(238, 238, 238);"><p></p></div><div style="flex: 48%; padding-left: 10px;"><p></p></div> </div>',
+      }),
       textBoxs: new fields.SchemaField({
         firstTextBox: new fields.StringField({ ...requiredStringer }),
         secondTextBox: new fields.StringField({ ...requiredStringer }),
         thirdTextBox: new fields.StringField({ ...requiredStringer }),
       }),
-      level: new fields.NumberField({required: true, integer: true, min: 0, initial: 0}),
-      size: new fields.NumberField({required: true, nullable: false, initial: 1}),
+      level: new fields.NumberField({
+        required: true,
+        integer: true,
+        min: 0,
+        initial: 0,
+      }),
+      size: new fields.NumberField({
+        required: true,
+        nullable: false,
+        initial: 1,
+      }),
       categories: new fields.SchemaField({
-        features: new fields.ObjectField({ initial: {'Uncategorized': 'Uncategorized'}}),//TODO localize
-      })
+        features: new fields.ObjectField({
+          initial: { Uncategorized: "Uncategorized" },
+        }), //TODO localize
+      }),
     };
   }
   prepareBaseData() {
-    const deleteEmptyProperties = obj => Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== "" && v !== null));
+    const deleteEmptyProperties = (obj) =>
+      Object.fromEntries(
+        Object.entries(obj).filter(([_, v]) => v !== "" && v !== null)
+      );
     this.categories.features = deleteEmptyProperties(this.categories.features);
   }
 }
