@@ -1,6 +1,6 @@
 {{#each features as |category categoryKey|}}
 {{#unless (eq category.label 'Uncategorized')}}
-<div class="category-header flex-cont">
+<div class="category-header flex-cont" data-drop="category" data-category='{{category.label}}'>
     <div class="category-name">
         <input class="category-name-input" type="text" data-key="{{categoryKey}}" value="{{category.label}}">
     </div>
@@ -18,7 +18,7 @@
 </div>
 <div class="category-body">
     {{#each category.items as |item id|}}
-    <div class="item-list-component flex-cont accordion-headers draggable" data-itemId="{{item._id}}">
+    <div class="item-list-component flex-cont accordion-headers draggable" data-drop="item" data-item-id="{{item._id}}">
         <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state item._id) " rotate: 180deg" "rotate: 0deg"
             }}" src="systems/nullgame/assets/expand_more.svg">
         <div class="item-details flex-cont">
@@ -64,7 +64,7 @@
 {{/unless}}
 {{/each}}
 <div class="uncategorized-feature-container">
-    <div class="category-header flex-cont">
+    <div class="category-header flex-cont" data-drop="category" data-category='Uncategorized'>
         <div class="category-name">{{features.0.label}}</div>
         <div class="tool-section">
             <a class="tool-button icon-button create-item center-align" data-type='feature'
@@ -85,7 +85,7 @@
     </div>
     <div class="category-body">
         {{#each features.0.items as |item|}}
-        <div class="item-list-component flex-cont accordion-headers draggable" data-itemId="{{item._id}}">
+        <div class="item-list-component flex-cont accordion-headers draggable" data-drop="item" data-item-id="{{item._id}}">
             <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state item._id) " rotate:
                 180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
             <div class="item-details flex-cont">

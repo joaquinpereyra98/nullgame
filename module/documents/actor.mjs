@@ -17,8 +17,7 @@ export class NullGameActor extends Actor {
     const itemFeatures = this.itemTypes.feature;
     const categories = this.system.categories.features;
     categories.forEach(category => {
-      category.items = category.items.filter(i => itemFeatures.includes(i))
-      category.items.push(...itemFeatures.filter(i => i.system.category === category.label && !category.items.includes(i)));
+      category.items = itemFeatures.filter(i => i.system.category === category.label).sort((a, b) => a.sort - b.sort);
     })
     const categoriesLabels = categories.map(c => (c.label))
     categories[0].items.push(...itemFeatures.filter(i => !categoriesLabels.includes(i.system.category)))

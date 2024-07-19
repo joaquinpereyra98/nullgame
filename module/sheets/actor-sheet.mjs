@@ -16,7 +16,7 @@ export class NullGameActorSheet extends ActorSheet {
           initial: "features",
         },
       ],
-      dragDrop: [{dragSelector: ".item-list-component", dropSelector: null}],
+      dragDrop: [{ dragSelector: ".item-list-component", dropSelector: null }],
     });
   }
 
@@ -30,16 +30,92 @@ export class NullGameActorSheet extends ActorSheet {
     super._onDragStart(event);
     const li = event.currentTarget;
     let dragData;
-    if ( li.dataset.itemid ) {
-      const item = this.actor.items.get(li.dataset.itemid);
+    if (li.dataset.itemId) {
+      const item = this.actor.items.get(li.dataset.itemId);
       dragData = item.toDragData();
     }
-    if ( li.dataset.effectid ) {
+    if (li.dataset.effectid) {
       const effect = this.actor.effects.get(li.dataset.effectid);
       dragData = effect.toDragData();
     }
-    if ( !dragData ) return;
+    if (!dragData) return;
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+  }
+  /** @override */
+  async _onDropItem(event, data) {
+    if (!this.actor.isOwner) return false;
+    const item = await Item.implementation.fromDropData(data);
+    const itemData = item.toObject();
+
+    // Handle item sorting within the same Actor
+    if (this.actor.uuid === item.parent?.uuid) {
+      const { drop } = event.target.closest("[data-drop]").dataset;
+      if(drop === "item") return this._onSortItem(event, itemData);
+      else if(drop === "category") return this._onChangeCategoryItem(event, itemData);
+      console.log("noTrigger")
+    }
+
+    // Create the owned item
+    return this._onDropItemCreate(itemData);
+  }
+  /** @override */
+  _onSortItem(event, itemData) {
+    // Get the drag source and drop target
+    const items = this.actor.items;
+    const source = items.get(itemData._id);
+    const dropTarget = event.target.closest("[data-item-id]");
+    if (!dropTarget) return;
+    const target = items.get(dropTarget.dataset.itemId);
+
+    // Don't sort on yourself or different types items
+    if (source.id === target.id || source.type !== target.type) return;
+
+    if (source.type === "feature") {
+      const featuresCategories = this.actor.system.categories.features;
+      const sourceCategory = featuresCategories.find(
+        (c) => c.label === source.system.category
+      );
+      const targetCategory = featuresCategories.find(
+        (c) => c.label === target.system.category
+      );
+
+      // Perform the sort
+      const sortUpdates = SortingHelpers.performIntegerSort(source, {
+        target,
+        siblings: targetCategory.items,
+      });
+      const updateData = sortUpdates.map((u) => {
+        const update = u.update;
+        update._id = u.target._id;
+        return update;
+      });
+      if (sourceCategory !== targetCategory) {
+        updateData.find((i) => i._id === source._id).system = {
+          category: targetCategory.label,
+        };
+      }
+      // Perform the update
+      return this.actor.updateEmbeddedDocuments("Item", updateData);
+    }
+  }
+  /**
+   * Handle a drop event for an existing embedded Item to move to another category
+   * @param {Event} event
+   * @param {Object} itemData
+   * @private
+   */
+  _onChangeCategoryItem(event, itemData) {
+    const items = this.actor.items;
+    const source = items.get(itemData._id); 
+    const { category } = event.target.closest("[data-category]").dataset;
+
+    if(source.system.category === category) return;
+    const targetCategory = this.actor.system.categories.features.find(
+      (c) => c.label === category
+    );
+    const sort = targetCategory.items[0]?.sort ?? 1;
+    return source.update({"system.category": category, sort: sort-1})
+
   }
   /** @override */
   async getData() {
@@ -52,14 +128,13 @@ export class NullGameActorSheet extends ActorSheet {
       actorData.system.biography,
       { async: true }
     );
-    context.gmNoteHTML = await TextEditor.enrichHTML(
-      actorData.system.gmNotes,
-      { async: true }
-    )
+    context.gmNoteHTML = await TextEditor.enrichHTML(actorData.system.gmNotes, {
+      async: true,
+    });
     if (actorData.type == "character") {
       this._prepareItems(context);
       this._prepareEffects(context);
-    } else if (actorData.type == "npc"){
+    } else if (actorData.type == "npc") {
       this._prepareItems(context);
       this._prepareEffects(context);
     }
@@ -88,10 +163,10 @@ export class NullGameActorSheet extends ActorSheet {
         effects: [],
       },
     };
-    const globalEffects =  {
+    const globalEffects = {
       type: "global",
-      effects: []
-    }
+      effects: [],
+    };
 
     for (let e of this.actor.allApplicableEffects()) {
       if (e.isGlobal) {
@@ -112,10 +187,10 @@ export class NullGameActorSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareItems(context) {
-    const { skill } = this.actor.itemTypes
-    
+    const { skill } = this.actor.itemTypes;
+
     context.skills = skill;
-    context.features = this.actor.system.categories.features
+    context.features = this.actor.system.categories.features;
   }
 
   /* -------------------------------------------- */
@@ -125,16 +200,26 @@ export class NullGameActorSheet extends ActorSheet {
    * @param {string} categoryName The name of the new category
    * @private
    */
-  async _onCategoryCreate(event, categoryName = game.i18n.format("DOCUMENT.New", {type: "Category"})) {
+  async _onCategoryCreate(
+    event,
+    categoryName = game.i18n.format("DOCUMENT.New", { type: "Category" })
+  ) {
     event.preventDefault();
     let countName = 0;
     let finalCategoryName = categoryName;
-    const categoriesLabel = this.actor.system.categories.features.map(i => (i.label))
+    const categoriesLabel = this.actor.system.categories.features.map(
+      (i) => i.label
+    );
     while (categoriesLabel.includes(finalCategoryName)) {
       countName++;
       finalCategoryName = `${categoryName} (${countName})`;
     }
-    this.actor.update({"system.categories.features": [...this.actor.system.categories.features, {label: finalCategoryName, items: []}]})
+    this.actor.update({
+      "system.categories.features": [
+        ...this.actor.system.categories.features,
+        { label: finalCategoryName, items: [] },
+      ],
+    });
   }
   /**
    * Handle delete a feature Category.
@@ -144,8 +229,10 @@ export class NullGameActorSheet extends ActorSheet {
   _onCategoryDelete(event) {
     event.preventDefault();
     const categoryLabel = event.currentTarget.dataset.category;
-    const newArray = this.actor.system.categories.features.filter(c => c.label !== categoryLabel)
-    this.actor.update({"system.categories.features": newArray})
+    const newArray = this.actor.system.categories.features.filter(
+      (c) => c.label !== categoryLabel
+    );
+    this.actor.update({ "system.categories.features": newArray });
   }
   /**
    * Handle for change a feature Category name.
@@ -159,14 +246,20 @@ export class NullGameActorSheet extends ActorSheet {
     const newArray = this.actor.system.categories.features;
     let countName = 0;
     let finalCategoryName = newLabel;
-    const categoriesLabel = newArray.map(i => (i.label))
+    const categoriesLabel = newArray.map((i) => i.label);
     while (categoriesLabel.includes(finalCategoryName)) {
       countName++;
       finalCategoryName = `${newLabel} (${countName})`;
     }
     newArray[featureKey].label = finalCategoryName;
-    const itemsUpdate = newArray[featureKey].items.map(i => ({_id: i._id, 'system.category': finalCategoryName}))
-    this.actor.update({"system.categories.features": newArray, items: itemsUpdate })
+    const itemsUpdate = newArray[featureKey].items.map((i) => ({
+      _id: i._id,
+      "system.category": finalCategoryName,
+    }));
+    this.actor.update({
+      "system.categories.features": newArray,
+      items: itemsUpdate,
+    });
   }
   /**
    * Handle creating a new Item of Actor.
@@ -190,21 +283,23 @@ export class NullGameActorSheet extends ActorSheet {
    */
   _onItemDelete(event) {
     event.preventDefault();
-    event.stopImmediatePropagation()
+    event.stopImmediatePropagation();
     const id = event.currentTarget.dataset.id;
     const item = this.actor.items.get(id);
-    if(!event.shiftKey){
+    if (!event.shiftKey) {
       Dialog.confirm({
         title: `Delete ${item.type.capitalize()}`,
         content: `Are you sure you want to remove ${item.name}`,
-        yes: (html) => {item.delete();},
-        no: (html) =>{}
-      })
-    }else {
+        yes: (html) => {
+          item.delete();
+        },
+        no: (html) => {},
+      });
+    } else {
       item.delete();
     }
   }
-  
+
   /**
    * Roll the item associated with the event
    * @param {Event} ev - The click event.
@@ -236,13 +331,12 @@ export class NullGameActorSheet extends ActorSheet {
             });
             return item.roll();
           }
-        } else if(consumption.rscType === "effects"){
+        } else if (consumption.rscType === "effects") {
           const effect = this.actor.effects.get(consumption.rsc);
           if (effect.counter >= consumption.qty) {
-            effect.counter-= consumption.qty;
+            effect.counter -= consumption.qty;
             return item.roll();
           }
-          
         } else {
           return item.roll();
         }
@@ -270,7 +364,7 @@ export class NullGameActorSheet extends ActorSheet {
     html.on("click", ".delete-item", this._onItemDelete.bind(this));
     html.on("click", ".item-edit", (ev) => {
       ev.preventDefault();
-      ev.stopImmediatePropagation()
+      ev.stopImmediatePropagation();
       const id = ev.currentTarget.dataset.id;
       const item = this.actor.items.get(id);
       item.sheet.render(true);
@@ -288,31 +382,31 @@ export class NullGameActorSheet extends ActorSheet {
       const data = ev.currentTarget.dataset;
       const effect = this.actor.effects.get(data.id);
       switch (data.action) {
-        case 'create':
-          return this.actor.createEmbeddedDocuments('ActiveEffect', [
+        case "create":
+          return this.actor.createEmbeddedDocuments("ActiveEffect", [
             {
-              name: game.i18n.format('DOCUMENT.New', {
-                type: game.i18n.localize('DOCUMENT.ActiveEffect'),
+              name: game.i18n.format("DOCUMENT.New", {
+                type: game.i18n.localize("DOCUMENT.ActiveEffect"),
               }),
-              icon: 'icons/svg/aura.svg',
+              icon: "icons/svg/aura.svg",
               origin: this.actor.uuid,
-              'duration.rounds': undefined,
-              disabled: data.type === 'inactive',
+              "duration.rounds": undefined,
+              disabled: data.type === "inactive",
             },
           ]);
-        case 'edit':
+        case "edit":
           return effect.sheet.render(true);
-        case 'delete':
+        case "delete":
           Dialog.confirm({
             title: `Delete Active Effect`,
             content: `Are you sure you want to remove ${effect.name}`,
             yes: (html) => {
               effect.delete();
             },
-            no: (html) =>{}
-          })
-          return
-        case 'toggle':
+            no: (html) => {},
+          });
+          return;
+        case "toggle":
           return effect.update({ disabled: !effect.disabled });
       }
     });
@@ -321,10 +415,14 @@ export class NullGameActorSheet extends ActorSheet {
       const effect = this.actor.effects.get(data.id);
       effect.counter = $(ev.currentTarget).val();
     });
-    html.on("change", ".category-name-input", this._onChangeCategoryName.bind(this));
+    html.on(
+      "change",
+      ".category-name-input",
+      this._onChangeCategoryName.bind(this)
+    );
   }
-  _getSubmitData(updateData={}) {
-    const data = super._getSubmitData(updateData)
+  _getSubmitData(updateData = {}) {
+    const data = super._getSubmitData(updateData);
     return data;
   }
 }
