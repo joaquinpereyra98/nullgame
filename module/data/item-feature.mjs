@@ -23,7 +23,7 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
             value: new foundry.data.fields.NumberField({...requiredNumber, initial: 0}),
             type: new foundry.data.fields.StringField({...requiredString}),
           }),
-          attackType: new fields.StringField({required: true, inital: "none"}),
+          attackType: new fields.StringField({required: true, initial: "none"}),
           consumption: new fields.SchemaField({
             qty: new fields.NumberField({...requiredNumber}),
             rsc: new fields.StringField({...requiredString}),
@@ -35,14 +35,14 @@ export default class NullGameFeatureData extends foundry.abstract.TypeDataModel 
           damagesFormulas: new fields.ArrayField(new fields.ObjectField()),
           skillMod: new fields.StringField({requiredString})
         }),
-        category: new fields.StringField({...requiredString}),
+        category: new fields.StringField({...requiredString, initial: 'Uncategorized'}),
         isResource: new fields.BooleanField({inital: false}),
         quantity: new fields.NumberField({min:0, inital: 0})
       };
     }
     prepareBaseData() {
       if(this.category===""){
-        this.category= 'uncategorized';
+        this.category = 'Uncategorized';
       }
       if(this.rollFormula.formula === "") {
         this.rollFormula.formula = null;

@@ -8,7 +8,21 @@ export class NullGameActor extends Actor {
     const actorData = this;
     const flags = actorData.flags.nullgame || {};
   }
-
+  /** @override */
+  prepareEmbeddedDocuments() {
+    super.prepareEmbeddedDocuments();
+    this.prepareFeaturesCategories();
+  }
+  prepareFeaturesCategories(){
+    const itemFeatures = this.itemTypes.feature;
+    const categories = this.system.categories.features;
+    categories.forEach(category => {
+      category.items = category.items.filter(i => itemFeatures.includes(i))
+      category.items.push(...itemFeatures.filter(i => i.system.category === category.label && !category.items.includes(i)));
+    })
+    const categoriesLabels = categories.map(c => (c.label))
+    categories[0].items.push(...itemFeatures.filter(i => !categoriesLabels.includes(i.system.category)))
+  }
   /** @override */
   getRollData() {
     return { ...super.getRollData(), ...(this.system.getRollData?.() ?? null) };
@@ -37,7 +51,7 @@ export class NullGameActor extends Actor {
   }
   async _preUpdate(changed, options, user) {
     const size = changed.system?.size;
-    if (size >= 0) {
+    if (size > 0) {
       changed["prototypeToken"] = {
         height: changed.system.size,
         width: changed.system.size,
@@ -46,20 +60,6 @@ export class NullGameActor extends Actor {
       tokens?.forEach(
         async (t) => await t.update({ height: size, width: size })
       );
-    }
-    const category = changed.system?.categories?.features;
-    if (category) {
-      for (const [oldKey, newKey] of Object.entries(category)) {
-        if (newKey === "" || newKey === oldKey ) continue;
-        category[newKey] = category[oldKey];
-        category[oldKey] = "";
-        changed.items = this.itemTypes.feature
-          .filter((i) => i.system.category === oldKey)
-          .map((i) => ({
-            _id: i._id,
-            "system.category": newKey,
-          }));
-      }
     }
     return super._preUpdate(changed, options, user);
   }

@@ -72,17 +72,17 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
         initial: 1,
       }),
       categories: new fields.SchemaField({
-        features: new fields.ObjectField({
-          initial: { Uncategorized: "Uncategorized" },
-        }), //TODO localize
+        features: new fields.ArrayField(new fields.ObjectField(), {
+          initial: [{ label: "Uncategorized", items: [] }],
+        }),
       }),
     };
   }
   prepareBaseData() {
-    const deleteEmptyProperties = (obj) =>
-      Object.fromEntries(
-        Object.entries(obj).filter(([_, v]) => v !== "" && v !== null)
+    this.categories.features.forEach((category) => {
+      category.items = category.items.filter(
+        (i) => i.system.category === category.label
       );
-    this.categories.features = deleteEmptyProperties(this.categories.features);
+    });
   }
 }

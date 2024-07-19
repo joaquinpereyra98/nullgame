@@ -13,15 +13,7 @@
       <div class="second-header-container flex-cont">
         <div class="category-select-header second-header-box">
           <select class="select-category" name="system.category" data-type="string">
-            {{#select system.category}}
-            {{#each features as |category key|}}
-            <option value="{{key}}">
-              {{#if (ne key "uncategorized")}}
-              {{category}}
-              {{/if}}
-            </option>
-            {{/each}}
-            {{/select}}
+             {{selectOptions featuresOptions selected=system.category nameAttr="key" labelAttr="label"}}
           </select>
         </div>
         <div class="ammo-checkbox-header middle-border-container second-header-box">

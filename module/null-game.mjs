@@ -114,7 +114,6 @@ Hooks.on("hoverToken", (token, hovered) => {
   }
 });
 Hooks.on("nullgameRollDamage", async (roll, user) => {
-  console.log("nullgameRollDamage");
   if (user.targets.size > 0 && game.user.isGM) {
     user.targets.forEach(async (token) => {
       const tokenActor = token.actor;

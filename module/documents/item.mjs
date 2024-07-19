@@ -11,7 +11,15 @@ export class NullGameItem extends Item {
     const { type } = this.system.details?.target ?? {};
     return ["circle", "cone", "ray", "rect"].includes(type);
   }
-
+  /**
+   * Checks if Item has attack data for rollAttack.
+   * @returns {boolean}
+   */
+  get hasAttack() {
+    if(!this.type === 'feature') return false;
+    const { attackType } = this.system.details;
+    return attackType !== 'none';
+  }
   /**
    * Augment the basic Item data model with additional dynamic data.
    */

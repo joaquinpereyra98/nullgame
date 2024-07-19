@@ -112,33 +112,10 @@ export class NullGameActorSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareItems(context) {
-    const skills = [];
-    const features = {};
-    const cf = context.system.categories.features;
-    for (let k in cf) {
-      features[k] = {
-        label: cf[k],
-        items: [],
-      };
-    }
-
-    for (let i of context.items) {
-      i.img = i.img || Item.DEFAULT_ICON;
-      if (i.type === "skill") {
-        skills.push(i);
-      } else if (i.type === "feature") {
-        if (features[i.system.category]) {
-          features[i.system.category].items.push(i);
-        } else {
-          features.uncategorized.items.push(i);
-          this.actor.items
-            .get(i._id)
-            .update({ "system.category": "uncategorized" });
-        }
-      }
-    }
-    context.skills = skills;
-    context.features = features;
+    const { skill } = this.actor.itemTypes
+    
+    context.skills = skill;
+    context.features = this.actor.system.categories.features
   }
 
   /* -------------------------------------------- */
@@ -149,19 +126,15 @@ export class NullGameActorSheet extends ActorSheet {
    * @private
    */
   async _onCategoryCreate(event, categoryName = game.i18n.format("DOCUMENT.New", {type: "Category"})) {
-    //TODO localize
     event.preventDefault();
-    const featCategories = this.actor.system.categories.features;
-
     let countName = 0;
     let finalCategoryName = categoryName;
-    while (Object.values(featCategories).includes(finalCategoryName)) {
+    const categoriesLabel = this.actor.system.categories.features.map(i => (i.label))
+    while (categoriesLabel.includes(finalCategoryName)) {
       countName++;
       finalCategoryName = `${categoryName} (${countName})`;
     }
-    featCategories[finalCategoryName] = finalCategoryName;
-    featCategories["uncategorized"] = "Uncategorized"; //TODO localize
-    this.actor.update({ "system.categories.features": featCategories });
+    this.actor.update({"system.categories.features": [...this.actor.system.categories.features, {label: finalCategoryName, items: []}]})
   }
   /**
    * Handle delete a feature Category.
@@ -170,18 +143,30 @@ export class NullGameActorSheet extends ActorSheet {
    */
   _onCategoryDelete(event) {
     event.preventDefault();
-    const { category } = event.currentTarget.dataset;
-    const categories = duplicate(this.actor.system.categories.features);
-    Dialog.confirm({
-      title: `Delete Category`,
-      content: `Are you sure you want to remove ${categories[category]}`,
-      yes: (html) => {
-        categories[category] = "";
-        this.actor.update({ [`system.categories.features`]: categories });
-      },
-      no: (html) =>{}
-    })
-    
+    const categoryLabel = event.currentTarget.dataset.category;
+    const newArray = this.actor.system.categories.features.filter(c => c.label !== categoryLabel)
+    this.actor.update({"system.categories.features": newArray})
+  }
+  /**
+   * Handle for change a feature Category name.
+   * @param {Event} event  The originating click event
+   * @private
+   */
+  _onChangeCategoryName(event) {
+    event.preventDefault();
+    const newLabel = event.currentTarget.value;
+    const featureKey = event.currentTarget.dataset.key;
+    const newArray = this.actor.system.categories.features;
+    let countName = 0;
+    let finalCategoryName = newLabel;
+    const categoriesLabel = newArray.map(i => (i.label))
+    while (categoriesLabel.includes(finalCategoryName)) {
+      countName++;
+      finalCategoryName = `${newLabel} (${countName})`;
+    }
+    newArray[featureKey].label = finalCategoryName;
+    const itemsUpdate = newArray[featureKey].items.map(i => ({_id: i._id, 'system.category': finalCategoryName}))
+    this.actor.update({"system.categories.features": newArray, items: itemsUpdate })
   }
   /**
    * Handle creating a new Item of Actor.
@@ -198,6 +183,28 @@ export class NullGameActorSheet extends ActorSheet {
     delete itemData.system.type;
     return await Item.create(itemData, { parent: this.actor });
   }
+  /**
+   * Handle Delete a Item of Actor.
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  _onItemDelete(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation()
+    const id = event.currentTarget.dataset.id;
+    const item = this.actor.items.get(id);
+    if(!event.shiftKey){
+      Dialog.confirm({
+        title: `Delete ${item.type.capitalize()}`,
+        content: `Are you sure you want to remove ${item.name}`,
+        yes: (html) => {item.delete();},
+        no: (html) =>{}
+      })
+    }else {
+      item.delete();
+    }
+  }
+  
   /**
    * Roll the item associated with the event
    * @param {Event} ev - The click event.
@@ -260,19 +267,11 @@ export class NullGameActorSheet extends ActorSheet {
     html.on("click", ".create-category", this._onCategoryCreate.bind(this));
     html.on("click", ".delete-category", this._onCategoryDelete.bind(this));
     html.on("click", ".create-item", this._onItemCreate.bind(this));
-    html.on("click", ".delete-item", (ev) => {
-      const id = ev.currentTarget.dataset.id;
-      const item = this.actor.items.get(id);
-      Dialog.confirm({
-        title: `Delete ${item.type.capitalize()}`,
-        content: `Are you sure you want to remove ${item.name}`,
-        yes: (html) => {item.delete();},
-        no: (html) =>{}
-      })
-    });
+    html.on("click", ".delete-item", this._onItemDelete.bind(this));
     html.on("click", ".item-edit", (ev) => {
+      ev.preventDefault();
+      ev.stopImmediatePropagation()
       const id = ev.currentTarget.dataset.id;
-      ev.stopImmediatePropagation();
       const item = this.actor.items.get(id);
       item.sheet.render(true);
     });
@@ -317,10 +316,15 @@ export class NullGameActorSheet extends ActorSheet {
           return effect.update({ disabled: !effect.disabled });
       }
     });
-    html.on("input", ".effect-counter-input", (ev) => {
+    html.on("change", ".effect-counter-input", (ev) => {
       const data = ev.currentTarget.dataset;
       const effect = this.actor.effects.get(data.id);
       effect.counter = $(ev.currentTarget).val();
-    })
+    });
+    html.on("change", ".category-name-input", this._onChangeCategoryName.bind(this));
+  }
+  _getSubmitData(updateData={}) {
+    const data = super._getSubmitData(updateData)
+    return data;
   }
 }

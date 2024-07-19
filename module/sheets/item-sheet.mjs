@@ -28,9 +28,9 @@ export class NullGameItemSheet extends ItemSheet {
   /** @override */
   async getData() {
     const context = super.getData();
-    context.features = context.item.actor?.system.categories.features || {
-      uncategorized: "Uncategorized",
-    };
+    context.featuresOptions = context.item.actor?.system.categories.features.map((c)=> ({key: c.label, label: c.label})) || [
+      {key: "Uncategorized", label: "Uncategorized"}
+    ];
     const itemData = context.data;
     if (context.item.actor) {
       context.actorSkils = context.item.actor.items.filter(

@@ -1,18 +1,17 @@
 {{#each features as |category categoryKey|}}
-{{#unless (eq categoryKey 'uncategorized')}}
+{{#unless (eq category.label 'Uncategorized')}}
 <div class="category-header flex-cont">
     <div class="category-name">
-        <input class="category-name-input" type="text" name="system.categories.features.{{categoryKey}}"
-            value="{{category.label}}">
+        <input class="category-name-input" type="text" data-key="{{categoryKey}}" value="{{category.label}}">
     </div>
     <div class="tool-section">
-        <a class="tool-button icon-button create-item center-align" data-type='feature' data-category='{{categoryKey}}'>
+        <a class="tool-button icon-button create-item center-align" data-type='feature' data-category='{{category.label}}'>
             <span class="span-button center-align">
                 <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                 Create Item{{!TODO localize }}
             </span>
         </a>
-        <a class="tool-button delete-button delete-category" data-type='features' data-category='{{categoryKey}}'>
+        <a class="tool-button delete-button delete-category" data-type='features' data-category='{{category.label}}'>
             <img class="icon-img" src="systems/nullgame/assets/delete.svg">
         </a>
     </div>
@@ -36,7 +35,7 @@
             </div>
         </div>
         <div class='item-controls center-align'>
-            {{#if (ne item.system.details.attackType 'none')}}
+            {{#if item.hasAttack}}
             <a class="icon-button roll-item center-align" data-id="{{item._id}}">
                 <img class="icon-img" src="systems/nullgame/assets/dice_d20.svg">
             </a>
@@ -66,10 +65,10 @@
 {{/each}}
 <div class="uncategorized-feature-container">
     <div class="category-header flex-cont">
-        <div class="category-name">{{features.uncategorized.label}}</div>
+        <div class="category-name">{{features.0.label}}</div>
         <div class="tool-section">
             <a class="tool-button icon-button create-item center-align" data-type='feature'
-                data-category='{{uncategorized}}'>
+                data-category='Uncategorized'>
                 <span class="span-button center-align">
                     <img class="icon-img" src="systems/nullgame/assets/add_box.svg">
                     Create Item{{!TODO localize }}
@@ -85,7 +84,7 @@
         </div>
     </div>
     <div class="category-body">
-        {{#each features.uncategorized.items as |item|}}
+        {{#each features.0.items as |item|}}
         <div class="item-list-component flex-cont accordion-headers draggable" data-itemId="{{item._id}}">
             <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state item._id) " rotate:
                 180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
@@ -103,7 +102,7 @@
                 </div>
             </div>
             <div class='item-controls center-align'>
-                {{#if (ne item.system.details.attackType 'none')}}
+                {{#if item.hasAttack}}
                 <a class="icon-button roll-item center-align" data-id="{{item._id}}">
                     <img class="icon-img" src="systems/nullgame/assets/dice_d20.svg">
                 </a>
