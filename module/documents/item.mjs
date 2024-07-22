@@ -17,8 +17,22 @@ export class NullGameItem extends Item {
    */
   get hasAttack() {
     if(!this.type === 'feature') return false;
-    const { attackType } = this.system.details;
+    const { attackType } = this.system.details ?? {};
     return attackType !== 'none';
+  }
+  /**
+   * Checks if Item have children skills
+   * @returns {boolean}
+   */
+  get isParentSkill() {
+    return (this.type === 'skill' && this.system.childrenSkills?.size > 0)
+  }
+  /**
+   * Checks if Item has a  parent skill
+   * @returns {boolean}
+   */
+  get isChildrenSkill() {
+    return (this.type === 'skill' && this.system.parentSkill);
   }
   /**
    * Augment the basic Item data model with additional dynamic data.

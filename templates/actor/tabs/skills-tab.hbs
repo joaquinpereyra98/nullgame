@@ -9,11 +9,12 @@
     </div>
 
     {{#each skills as |skill|}}
-    <div class="skill-conntainer flex-cont">
+    <div class="skill-container flex-cont">
         <div class="accordion-skill-container">
             <div class="accordion-headers item-list-component center-align" data-itemid="{{skill._id}}">
                 <span class="span-button flex-cont">
-                    <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state skill._id) "rotate: 180deg" "rotate: 0deg"}}" src="systems/nullgame/assets/expand_more.svg">
+                    <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state skill._id) " rotate:
+                        180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
                 </span>
                 <div class="item-name center-align">
                     <div class='item-image center-align'>
@@ -21,13 +22,11 @@
                     </div>
                     <span class="skill-name-span">
                         {{skill.name}}
-                    </span>               
+                    </span>
                 </div>
                 <div class="item-props center-align">
                     <label class="level-skill">Exp {{skill.system.advancement.experience}}</label> {{! TODO localize}}
-                </div>
-                <div class="item-props center-align">
-                    <label class="rank-skill">Level {{skill.system.advancement.level}}</label>  {{! TODO localize}}
+                    <label class="rank-skill">Level {{skill.system.advancement.level}}</label> {{! TODO localize}}
                 </div>
                 <div class='item-controls center-align'>
                     <a class="icon-button item-edit center-align" data-id="{{skill._id}}">
@@ -38,20 +37,75 @@
                     </a>
                 </div>
             </div>
-            <div class="accordion-content {{ifThen (lookup ../state skill._id) "" "hidden"}}">
+            <div class="accordion-content {{ifThen (lookup ../state skill._id) "" " hidden"}}">
                 {{{skill.system.descriptions.description}}}
             </div>
+                {{#each skill.system.childrenSkills as |childSkill|}}
+            <div class="skill-child-container">
+                <div class="accordion-skill-container">
+                    <div class="accordion-headers item-list-component center-align" data-itemid="{{childSkill._id}}">
+                        <span class="span-button flex-cont">
+                            <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state childSkill._id) " rotate:
+                                180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
+                        </span>
+                        <div class="item-name center-align">
+                            <div class='item-image center-align'>
+                                <img src='{{childSkill.img}}' title='{{item.name}}' width='24' height='24' />
+                            </div>
+                            <span class="skill-name-span">
+                                {{childSkill.name}}
+                            </span>
+                        </div>
+                        <div class="item-props center-align">
+                            <label class="level-skill">Exp {{childSkill.system.advancement.experience}}</label> {{! TODO
+                            localize}}
+                            <label class="rank-skill">Level {{childSkill.system.advancement.level}}</label> {{! TODO
+                            localize}}
+                        </div>
+                        <div class='item-controls center-align'>
+                            <a class="icon-button item-edit center-align" data-id="{{childSkill._id}}">
+                                <img class="icon-img" src="systems/nullgame/assets/edit.svg">
+                            </a>
+                            <a class="delete-button delete-item center-align" data-id="{{childSkill._id}}">
+                                <img class="icon-img" src="systems/nullgame/assets/delete.svg">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="accordion-content {{ifThen (lookup ../state childSkill._id) "" " hidden"}}">
+                        {{{childSkill.system.descriptions.description}}}
+                    </div>
+                </div>
+                {{#if childSkill.system.isRolleable}}
+                <a class="skill-roll-container roll-item" data-id="{{childSkill._id}}">
+                    <div class="dice-container">d20</div>
+                    <div for="childSkill.system.advancement.mod" class="mod-container">
+                        {{numberFormat childSkill.system.advancement.mod sign=true}}
+                    </div>
+                </a>
+                {{else}}
+                <div class="skill-roll-container">
+                    <div for="childSkill.system.advancement.mod" class="mod-container">
+                        {{numberFormat childSkill.system.advancement.mod sign=true}}
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+                {{/each}}
         </div>
         {{#if skill.system.isRolleable}}
         <a class="skill-roll-container roll-item" data-id="{{skill._id}}">
             <div class="dice-container">d20</div>
-            <div for="skill.system.advancement.mod" class="mod-container">+{{skill.system.advancement.mod}}</div>
+            <div for="skill.system.advancement.mod" class="mod-container">
+                {{numberFormat skill.system.advancement.mod sign=true}}
+            </div>
         </a>
         {{else}}
         <div class="skill-roll-container">
-            <div for="skill.system.advancement.mod" class="mod-container">+{{skill.system.advancement.mod}}</div>
+            <div for="skill.system.advancement.mod" class="mod-container">
+                {{numberFormat skill.system.advancement.mod sign=true}}
+            </div>
         </div>
         {{/if}}
-    </div>  
+    </div>
     {{/each}}
 </div>

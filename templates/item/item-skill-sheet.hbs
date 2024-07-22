@@ -26,6 +26,12 @@
           <label class="exp-label" for="system.advancement.experience">Exp{{! TODO localize}}</label>
           <input class="item-header-input" type="number" value="{{system.advancement.experience}}" min="0" max="75" name="system.advancement.experience">
         </div>
+        <div class="parent-select-header center-align second-header-box">
+          <label class="parent-select" for="system.parentSkill">Parent Skill{{! TODO localize}}</label>
+          <select name="system.parentSkill" {{disabled item.isParentSkill}}>
+            {{selectOptions parentSkillChoices selected=system.parentSkill localize=false}}
+          </select>
+        </div>
       </div>
     </div>
   </header>

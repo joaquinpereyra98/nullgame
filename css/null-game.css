@@ -259,29 +259,48 @@
     justify-content: flex-end;
     margin: 5px 2px;
 }
-.null-game.actor .skills-tab .skill-conntainer .accordion-skill-container {
+.null-game.actor .skills-tab .skill-container {
+    margin: 2px 0;
+    border-bottom: 2px groove rgb(238, 238, 238);
+    padding-bottom: 2px;
+}
+.null-game.actor .skills-tab .skill-container .accordion-skill-container {
     flex: 8;
-    max-width: 80%;
+    max-width: 85%;
 }
-.null-game.actor .skills-tab .skill-conntainer .accordion-skill-container .accordion-headers {
-    justify-content: space-between;
+.null-game.actor .skills-tab .skill-container .skill-child-container {
+    display: flex;
+    margin: 0 5px;
 }
-.null-game.actor .skills-tab .skill-conntainer .accordion-skill-container .accordion-headers .skill-name-span {
+.null-game.actor .skills-tab .skill-container .accordion-skill-container .accordion-headers .skill-name-span {
     margin: 0 2px;
 }
-
-.null-game.actor .skills-tab .skill-conntainer .skill-roll-container{
+.null-game.actor .skills-tab .skill-container .accordion-skill-container .accordion-headers .item-name {
+    flex: 4;
+    margin-left: 4px;
+}
+.null-game.actor .skills-tab .skill-container .accordion-skill-container .accordion-headers .item-props {
+    margin: 0 2px;
     flex: 2;
+    justify-content: space-between;
+}
+.null-game.actor .skills-tab .skill-container .accordion-skill-container .accordion-headers .item-controls {
+    justify-content: flex-end;
+    flex: 2;
+}
+
+.null-game.actor .skills-tab .skill-container .skill-roll-container{
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.null-game.actor .skills-tab .skill-conntainer .skill-roll-container .dice-container{
+.null-game.actor .skills-tab .skill-container .skill-roll-container .dice-container{
     font-size: x-large;
     font-weight: bold;
     margin-right: 4px;
 }
-.null-game.actor .skills-tab .skill-conntainer .skill-roll-container .mod-container{
+.null-game.actor .skills-tab .skill-container .skill-roll-container .mod-container{
     background: var(--backBGMoreOpacity);
     padding: 3px;
     font-size: large;
@@ -397,6 +416,9 @@
     background-color: var(--backBGMoreOpacity);
     text-align: center;
 }
+.null-game.item .second-header-container .parent-select-header select {
+    width: 100%;
+}
 .null-game.item .description-tab .properties-container {
     border: var(--borderBox);
     padding: 0 5px;
@@ -415,7 +437,7 @@
 }
 .null-game .propierty-box {
     margin: 2px 0;
-    border: 2px groove;
+    border: 2px groove rgb(238, 238, 238);
     display: flex;
     justify-content: center;
     background: var(--backBGMoreOpacity);

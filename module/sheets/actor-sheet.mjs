@@ -189,7 +189,7 @@ export class NullGameActorSheet extends ActorSheet {
   _prepareItems(context) {
     const { skill } = this.actor.itemTypes;
 
-    context.skills = skill;
+    context.skills = skill.filter(i => !i.isChildrenSkill);
     context.features = this.actor.system.categories.features;
   }
 
@@ -420,9 +420,5 @@ export class NullGameActorSheet extends ActorSheet {
       ".category-name-input",
       this._onChangeCategoryName.bind(this)
     );
-  }
-  _getSubmitData(updateData = {}) {
-    const data = super._getSubmitData(updateData);
-    return data;
   }
 }

@@ -28,9 +28,11 @@ export class NullGameItemSheet extends ItemSheet {
   /** @override */
   async getData() {
     const context = super.getData();
-    context.featuresOptions = context.item.actor?.system.categories.features.map((c)=> ({key: c.label, label: c.label})) || [
-      {key: "Uncategorized", label: "Uncategorized"}
-    ];
+    context.featuresOptions =
+      context.item.actor?.system.categories.features.map((c) => ({
+        key: c.label,
+        label: c.label,
+      })) || [{ key: "Uncategorized", label: "Uncategorized" }];
     const itemData = context.data;
     if (context.item.actor) {
       context.actorSkils = context.item.actor.items.filter(
@@ -53,6 +55,8 @@ export class NullGameItemSheet extends ItemSheet {
     context.isExtend = this.accordionState;
     if (context.item.type === "feature") {
       this._prepareProperties(context);
+    } else if (context.item.type === "skill") {
+      this._prepareSkillParentChoices(context);
     }
     return context;
   }
@@ -101,6 +105,19 @@ export class NullGameItemSheet extends ItemSheet {
     this.item.setFlag("nullgame", "props", props);
     context.propierties = props;
   }
+  _prepareSkillParentChoices(context) {
+    //Set blank option
+    const arrayChoices = [['null', '']];
+
+    if (this.item.system.childrenSkills.size === 0) {
+      //Look up the ids and names of the actor's skills.
+      const itemList = this.item.actor?.itemTypes.skill
+      .filter((i) => i._id !== this.item._id && !i.isChildrenSkill)
+      .map((i) => [i._id, i.name])
+      arrayChoices.push(...itemList);
+    }
+    context.parentSkillChoices = Object.fromEntries(arrayChoices);
+  }
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
@@ -121,11 +138,18 @@ export class NullGameItemSheet extends ItemSheet {
   }
   _accordionFunction(ev) {
     ev.preventDefault();
-    const element = ev.currentTarget.dataset.element; 
-    if(!this.accordionState)this.accordionState = {};
+    const element = ev.currentTarget.dataset.element;
+    if (!this.accordionState) this.accordionState = {};
     const img = $(ev.currentTarget).find(".accordion-icon");
     img.css("rotate", this.accordionState[element] ? "0deg" : "180deg");
     $(ev.currentTarget).next(".accordion-content").slideToggle(500);
     this.accordionState[element] = !this.accordionState[element];
+  }
+  _getSubmitData(updateData = {}) {
+    const data = super._getSubmitData(updateData);
+    if(data["system.parentSkill"] === "null"){
+      data["system.parentSkill"] = null
+    }
+    return data
   }
 }
