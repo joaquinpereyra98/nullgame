@@ -11,7 +11,8 @@
     {{#each skills as |skill|}}
     <div class="skill-container flex-cont">
         <div class="accordion-skill-container">
-            <div class="accordion-headers item-list-component center-align" data-itemid="{{skill._id}}">
+            <div class="accordion-headers item-list-component center-align draggable" data-item-id="{{skill._id}}"
+                data-drop="item">
                 <span class="span-button flex-cont">
                     <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state skill._id) " rotate:
                         180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
@@ -40,13 +41,13 @@
             <div class="accordion-content {{ifThen (lookup ../state skill._id) "" " hidden"}}">
                 {{{skill.system.descriptions.description}}}
             </div>
-                {{#each skill.system.childrenSkills as |childSkill|}}
+            {{#each skill.system.childrenSkills as |childSkill|}}
             <div class="skill-child-container">
                 <div class="accordion-skill-container">
-                    <div class="accordion-headers item-list-component center-align" data-itemid="{{childSkill._id}}">
+                    <div class="accordion-headers item-list-component center-align draggable" data-item-id="{{childSkill._id}}" data-drop="item">
                         <span class="span-button flex-cont">
-                            <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state childSkill._id) " rotate:
-                                180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
+                            <img class="icon-img accordion-icon" style="{{ifThen (lookup ../state childSkill._id) "
+                                rotate: 180deg" "rotate: 0deg" }}" src="systems/nullgame/assets/expand_more.svg">
                         </span>
                         <div class="item-name center-align">
                             <div class='item-image center-align'>
@@ -90,7 +91,7 @@
                 </div>
                 {{/if}}
             </div>
-                {{/each}}
+            {{/each}}
         </div>
         {{#if skill.system.isRolleable}}
         <a class="skill-roll-container roll-item" data-id="{{skill._id}}">

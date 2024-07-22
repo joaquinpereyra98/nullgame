@@ -49,10 +49,11 @@ export class NullGameActorSheet extends ActorSheet {
 
     // Handle item sorting within the same Actor
     if (this.actor.uuid === item.parent?.uuid) {
-      const { drop } = event.target.closest("[data-drop]").dataset;
-      if(drop === "item") return this._onSortItem(event, itemData);
-      else if(drop === "category") return this._onChangeCategoryItem(event, itemData);
-      console.log("noTrigger")
+      const drop = event.target.closest("[data-drop]")?.dataset?.drop;
+      if (drop === "item") return this._onSortItem(event, itemData);
+      else if (drop === "category")
+        return this._onChangeCategoryItem(event, itemData);
+      return;
     }
 
     // Create the owned item
@@ -96,7 +97,57 @@ export class NullGameActorSheet extends ActorSheet {
       }
       // Perform the update
       return this.actor.updateEmbeddedDocuments("Item", updateData);
+    } else if (source.type === "skill") {
+      const createSortUpdates = (target, siblings) => {
+        const sortUpdates = SortingHelpers.performIntegerSort(source, {
+          target,
+          siblings,
+        });
+        return sortUpdates.map((u) => ({ ...u.update, _id: u.target._id }));
+      };
+
+      let updateData;
+
+      if (source.isChildrenSkill) {
+        if (target.system.parentSkill === source.system.parentSkill) {
+          const siblings = items.get(target.system.parentSkill).system
+            .childrenSkills.contents;
+          updateData = createSortUpdates(target, siblings);
+        } else {
+          updateData = [{ _id: source._id, "system.parentSkill": null }];
+        }
+      } else if (source.isParentSkill) {
+        if (target.isChildrenSkill) {
+          const parentTarget = items.get(target.system.parentSkill);
+          updateData = createSortUpdates(
+            parentTarget,
+            items.filter((i) => !i.isChildrenSkill)
+          );
+        } else {
+          updateData = createSortUpdates(
+            target,
+            items.filter((i) => !i.isChildrenSkill)
+          );
+        }
+      } else {
+        if (target.isChildrenSkill) {
+          updateData = [
+            {
+              _id: source._id,
+              "system.parentSkill": target.system.parentSkill,
+            },
+          ];
+        } else {
+          updateData = createSortUpdates(
+            target,
+            items.filter((i) => !i.isChildrenSkill)
+          );
+        }
+      }
+
+      return this.actor.updateEmbeddedDocuments("Item", updateData);
     }
+    return;
   }
   /**
    * Handle a drop event for an existing embedded Item to move to another category
@@ -106,16 +157,15 @@ export class NullGameActorSheet extends ActorSheet {
    */
   _onChangeCategoryItem(event, itemData) {
     const items = this.actor.items;
-    const source = items.get(itemData._id); 
+    const source = items.get(itemData._id);
     const { category } = event.target.closest("[data-category]").dataset;
 
-    if(source.system.category === category) return;
+    if (source.system.category === category) return;
     const targetCategory = this.actor.system.categories.features.find(
       (c) => c.label === category
     );
     const sort = targetCategory.items[0]?.sort ?? 1;
-    return source.update({"system.category": category, sort: sort-1})
-
+    return source.update({ "system.category": category, sort: sort - 1 });
   }
   /** @override */
   async getData() {
@@ -189,7 +239,9 @@ export class NullGameActorSheet extends ActorSheet {
   _prepareItems(context) {
     const { skill } = this.actor.itemTypes;
 
-    context.skills = skill.filter(i => !i.isChildrenSkill);
+    context.skills = skill
+      .filter((i) => !i.isChildrenSkill)
+      .sort((a, b) => a.sort - b.sort);
     context.features = this.actor.system.categories.features;
   }
 

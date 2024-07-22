@@ -32,7 +32,7 @@ export class NullGameItem extends Item {
    * @returns {boolean}
    */
   get isChildrenSkill() {
-    return (this.type === 'skill' && this.system.parentSkill);
+    return (this.type === 'skill' && this.system.parentSkill !== null);
   }
   /**
    * Augment the basic Item data model with additional dynamic data.
