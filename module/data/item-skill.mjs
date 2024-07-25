@@ -10,7 +10,7 @@ export default class NullGameSkillData extends foundry.abstract.TypeDataModel {
       }),
       isRolleable: new fields.BooleanField({ initial: false }),
       advancement: new fields.SchemaField({
-        experience: new fields.NumberField({ ...requiredNumber, max: 75 }),
+        experience: new fields.NumberField({ ...requiredNumber, max: 106 }),
         mod: new fields.NumberField({ ...requiredNumber, max: 10 }),
         level: new fields.NumberField({ ...requiredNumber, max: 15 }),
       }),
@@ -20,27 +20,15 @@ export default class NullGameSkillData extends foundry.abstract.TypeDataModel {
     };
   }
   prepareBaseData() {
-    let exp = this.advancement.experience;
-    this.advancement.level = Math.floor(exp / 5);
-    this.advancement.mod =
-      exp >= 75
-        ? 10
-        : exp >= 65
-        ? 8
-        : exp >= 50
-        ? 6
-        : exp >= 40
-        ? 4
-        : exp >= 25
-        ? 3
-        : exp >= 15
-        ? 2
-        : exp >= 5
-        ? 1
-        : 0;
     if (this.parent.isParentSkill) {
       this.parentSkill = null;
+      this.calcExpParentSkill()
     }
+    this.#calcLevel();
+    
+      if(this.parent.isChildrenSkill){
+        this.parent.actor.items.get(this.parentSkill).system.calcExpParentSkill();
+      }
   }
   get childrenSkills() {
     return (
@@ -54,5 +42,34 @@ export default class NullGameSkillData extends foundry.abstract.TypeDataModel {
           collection.set(item.id, item);
         return collection;
       }, new foundry.utils.Collection());
+  }
+  calcExpParentSkill(){
+    const total = this.childrenSkills?.reduce((sum, item) => sum + item.system.advancement.level, 0);
+    this.advancement.experience =  total ?? 0;
+    this.#calcLevel();
+  }
+  #calcLevel() {
+    const exp = this.advancement.experience;
+    this.advancement.level = Math.floor(Math.sqrt(2 * exp - 1.75) + 0.5);
+    this.#calcMod();
+  }
+  #calcMod() {
+    const level = this.advancement.level;
+    this.advancement.mod =
+    level >= 15
+      ? 10
+      : level >= 13
+      ? 8
+      : level >= 10
+      ? 6
+      : level >= 8
+      ? 4
+      : level >= 5
+      ? 3
+      : level >= 3
+      ? 2
+      : level >= 1
+      ? 1
+      : 0;
   }
 }

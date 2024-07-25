@@ -12,7 +12,7 @@
         <div class="level-container">
           <label class="label-level"> {{system.advancement.level}}</label>
           <label class="level-label" for="system.advancement.level">
-            Level  {{! TODO localize}}
+            Star Rank  {{! TODO localize}}
           </label>
         </div>
       </div>
@@ -23,8 +23,8 @@
             data-dtype="Boolean">
         </div>
         <div class="exp-input-header middle-border-container center-align second-header-box">
-          <label class="exp-label" for="system.advancement.experience">Exp{{! TODO localize}}</label>
-          <input class="item-header-input" type="number" value="{{system.advancement.experience}}" min="0" max="75" name="system.advancement.experience">
+          <label class="exp-label" for="system.advancement.experience">Ticks{{! TODO localize}}</label>
+          <input class="item-header-input" type="number" value="{{system.advancement.experience}}" min="0" max="106" name="system.advancement.experience" {{disabled item.isParentSkill}}>
         </div>
         <div class="parent-select-header center-align second-header-box">
           <label class="parent-select" for="system.parentSkill">Parent Skill{{! TODO localize}}</label>

@@ -276,12 +276,12 @@
     margin: 0 2px;
 }
 .null-game.actor .skills-tab .skill-container .accordion-skill-container .accordion-headers .item-name {
-    flex: 4;
+    flex: 3;
     margin-left: 4px;
 }
 .null-game.actor .skills-tab .skill-container .accordion-skill-container .accordion-headers .item-props {
     margin: 0 2px;
-    flex: 2;
+    flex: 3;
     justify-content: space-between;
 }
 .null-game.actor .skills-tab .skill-container .accordion-skill-container .accordion-headers .item-controls {

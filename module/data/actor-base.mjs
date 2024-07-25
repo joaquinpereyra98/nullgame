@@ -79,6 +79,9 @@ export default class NullGameActorData extends foundry.abstract.TypeDataModel {
     };
   }
   prepareBaseData() {
+    if(this.categories.features[0].label !== "Uncategorized"){
+      this.categories.features= [{ label: "Uncategorized", items: [] }, ...this.categories.features]
+    }
     this.categories.features.forEach((category) => {
       category.items = category.items.filter(
         (i) => i.system.category === category.label
